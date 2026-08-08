@@ -1,0 +1,18 @@
+.output/
+.wxt/
+.smoke/
+node_modules/
+package-lock.json
+
+# Upstream JavaScript and vendored libraries, carried across unchanged.
+src/legacy/js/
+src/public/lib/
+
+# Upstream markup, reformatted when each page is rewritten in Svelte.
+src/entrypoints/**/index.html
+src/public/**/*.css
+tests/fixtures/
+tests/__snapshots__/
+
+# One key per line is upstream's convention and keeps locale diffs readable.
+src/public/_locales/

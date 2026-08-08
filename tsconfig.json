@@ -8,11 +8,6 @@
     // this exclusion goes with the last of them.
     "allowJs": false
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.svelte",
-    "wxt.config.ts",
-    ".wxt/wxt.d.ts"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.svelte", "wxt.config.ts", ".wxt/wxt.d.ts"],
   "exclude": ["node_modules", ".output", "src/legacy/js"]
 }

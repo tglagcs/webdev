@@ -12,12 +12,12 @@ This fork is being rebuilt. The upstream extension is functionally solid but its
 
 The rebuild is incremental — the extension stays loadable at every step — and covers:
 
-* TypeScript throughout, replacing the global `WebDeveloper.*` namespace and `gulp-concat` bundling
-* [WXT](https://wxt.dev/) + Vite in place of Gulp
-* Svelte 5 + Tailwind for the popup, options and report pages
-* A dark theme
-* A typed feature registry, driving menu search and keyboard shortcuts
-* Vitest and Playwright coverage, and CI
+- TypeScript throughout, replacing the global `WebDeveloper.*` namespace and `gulp-concat` bundling
+- [WXT](https://wxt.dev/) + Vite in place of Gulp
+- Svelte 5 + Tailwind for the popup, options and report pages
+- A dark theme
+- A typed feature registry, driving menu search and keyboard shortcuts
+- Vitest and Playwright coverage, and CI
 
 Progress is tracked against the phases described in the rebuild plan.
 
@@ -26,33 +26,43 @@ Browsers
 
 Chrome, Edge and Firefox are supported. Opera was dropped in this fork.
 
-The Disable menu and *Disable Cookies* depend on `chrome.contentSettings`, which only Chromium provides — they are hidden on Firefox.
+The Disable menu and _Disable Cookies_ depend on `chrome.contentSettings`, which only Chromium provides — they are hidden on Firefox.
 
 Developers
 ----------
 
 ### Build process
 
-*Being replaced. The upstream Gulp 3.9.1 pipeline does not run on current Node; see the rebuild plan.*
+    npm install
+    npm run build          # Chrome and Edge, into .output/chrome-mv3
+    npm run build:firefox   # Firefox, into .output/firefox-mv3
+
+Load the unpacked extension from `.output/chrome-mv3` via `chrome://extensions`, or `.output/firefox-mv3/manifest.json` via `about:debugging`.
+
+    npm test        # vitest
+    npm run typecheck
+    npm run lint
+
+`tools/smoke-serve.py` serves a build over HTTP with the browser APIs stubbed, for checking that the pages load and wire themselves up without installing the extension.
 
 ### Brand assets
 
-`brand/logo.png` is the master logo. Everything under `common/img/logos/` and `common/svg/logos/` is generated from it and must not be hand-edited:
+`brand/logo.png` is the master logo. Everything under `src/public/img/logos/` and `src/public/svg/logos/` is generated from it and must not be hand-edited:
 
-	python tools/generate-icons.py
+    python tools/generate-icons.py
 
 ### Included libraries
 
 The following libraries are used by and included in the extension as-is:
 
-* Bootstrap: [https://getbootstrap.com/](https://getbootstrap.com/)
-* CodeMirror: [https://codemirror.net/](https://codemirror.net/)
-* DOMPurify: [https://github.com/cure53/DOMPurify](https://github.com/cure53/DOMPurify)
-* Eric Meyer's Reset CSS: [https://meyerweb.com/eric/tools/css/reset/](https://meyerweb.com/eric/tools/css/reset/)
-* JS Beautifier: [https://github.com/beautify-web/js-beautify](https://github.com/beautify-web/js-beautify)
-* mustache.js: [https://github.com/janl/mustache.js/](https://github.com/janl/mustache.js/)
+- Bootstrap: [https://getbootstrap.com/](https://getbootstrap.com/)
+- CodeMirror: [https://codemirror.net/](https://codemirror.net/)
+- DOMPurify: [https://github.com/cure53/DOMPurify](https://github.com/cure53/DOMPurify)
+- Eric Meyer's Reset CSS: [https://meyerweb.com/eric/tools/css/reset/](https://meyerweb.com/eric/tools/css/reset/)
+- JS Beautifier: [https://github.com/beautify-web/js-beautify](https://github.com/beautify-web/js-beautify)
+- mustache.js: [https://github.com/janl/mustache.js/](https://github.com/janl/mustache.js/)
 
-These are vendored in `common/lib/` by upstream and move to npm dependencies during the rebuild.
+These are vendored in `src/public/lib/` and move to npm dependencies as the interface is rewritten.
 
 ### Icons
 

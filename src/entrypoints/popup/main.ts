@@ -39,4 +39,3 @@ flushDomReady();
 // action.default_title, the toolbar tooltip, which the browser does localise.
 // It does not localise HTML, so set the document title here.
 document.title = browser.i18n.getMessage("extensionName");
-

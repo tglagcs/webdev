@@ -40,7 +40,8 @@ interface CssApi {
   formatStyleValue(value: string): string;
 }
 
-const legacy = (globalThis as { WebDeveloper?: { CSS: CssApi; Content: ContentApi } }).WebDeveloper!;
+const legacy = (globalThis as { WebDeveloper?: { CSS: CssApi; Content: ContentApi } })
+  .WebDeveloper!;
 const Content = legacy.Content;
 const CSS = legacy.CSS;
 

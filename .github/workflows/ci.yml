@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npx prettier --check .
+      - run: npm test
+
+  locales:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Every translation must be a subset of en_US: an extra key is a typo or
+      # a string deleted from the source, and chrome.i18n would silently fall
+      # back rather than fail.
+      - name: Check translations against en_US
+        run: python tools/check-locales.py
+
+  feature-css:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # The feature stylesheets are injected into other people's pages, so
+      # they must never follow the extension's theme -- an outline that
+      # disappears on a dark site reads as a broken feature.
+      - name: Feature stylesheets must stay theme-blind
+        run: |
+          if grep -rlE 'prefers-color-scheme|light-dark\(|var\(--wd-' src/public/features/css/; then
+            echo "::error::feature stylesheets must not be theme-aware"
+            exit 1
+          fi
+          echo "ok"
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npx wxt zip -b ${{ matrix.browser }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: webdev-${{ matrix.browser }}
+          path: .output/*.zip
