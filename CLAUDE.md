@@ -204,8 +204,8 @@ gone, both targets build, and all ~119 features work.
 Phase 2 has landed the core: typed storage with ordered migrations, per-tab
 state in `storage.session`, generated message keys, the typed background
 contract, and `background.js`/`storage.js`/`locales.js`/`upgrade.js` deleted in
-favour of `src/lib` plus the two shims. Smoke-verified; **not yet confirmed
-in-browser.** Still open in this phase: collapsing the numbered settings (v2,
+favour of `src/lib` plus the two shims. Verified in-browser. Still open in this
+phase: collapsing the numbered settings (v2,
 deferred with the options page) and the spike on whether `chrome.i18n` is
 reachable from an injected script's isolated world — if it is, ~40 call sites
 stop passing pre-resolved strings through `args`. `hasI18n()` in `lib/i18n.ts`
@@ -224,5 +224,6 @@ popup behind a typed feature registry. Full plan:
 `globals.ts`, `dom-ready.ts`, the `allowJs` exclusion in `tsconfig.json`, the
 `src/types/legacy.d.ts` shim and the closure guard.
 
-**Open:** `HOMEPAGE_URL` in `src/branding.ts` is a guess derived from the git
-config. It feeds `homepage_url` and the help links in the locales.
+`HOMEPAGE_URL` in `src/branding.ts` is confirmed as the intended address; the
+repository behind it is not published yet, so the help links in the locales
+404 until it is.
