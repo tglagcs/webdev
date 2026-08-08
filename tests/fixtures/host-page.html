@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="A deliberately messy page for the extractor tests.">
+  <meta name="keywords" content="testing, extractors, fixtures">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Host page fixture">
+  <meta http-equiv="content-language" content="en">
+  <title>Host page fixture</title>
+  <style>
+    body { background-color: #ffffff; color: rgb(34, 34, 34); }
+    .accent { color: #ee6600; }
+  </style>
+</head>
+<body>
+
+<!-- Anchors: ids and named anchors, including a duplicate of each. -->
+<h1 id="top">Host page fixture</h1>
+<a name="named-anchor">named</a>
+<a name="named-anchor">named again</a>
+
+<h2 id="section-one">Section one</h2>
+<h3 id="section-one-a">Nested</h3>
+<h2 id="section-two">Section two</h2>
+<!-- Heading level skipped on purpose: h2 -> h4. -->
+<h4 id="section-two-a">Skipped a level</h4>
+
+<!-- Duplicate ids, one repeated three times. -->
+<p id="duplicate">first</p>
+<p id="duplicate">second</p>
+<p id="duplicate">third</p>
+<span id="also-duplicate">a</span>
+<span id="also-duplicate">b</span>
+<span id="unique">only once</span>
+
+<!-- Links: internal, external, mailto, anchor-only, and one with no text. -->
+<a href="/internal/page">Internal link</a>
+<a href="https://example.org/external">External link</a>
+<a href="mailto:someone@example.com">Mail link</a>
+<a href="#top">Back to top</a>
+<a href="https://example.net/no-text"><img src="/img/icon.png" alt="icon only"></a>
+<a href="javascript:void(0)">Script link</a>
+
+<!-- Images: with alt, empty alt, no alt, with and without dimensions. -->
+<img id="img-full" src="/img/one.png" alt="One" width="120" height="80">
+<img id="img-empty-alt" src="/img/two.png" alt="">
+<img id="img-no-alt" src="/img/three.png" width="40" height="40">
+<img id="img-no-dimensions" src="/img/four.png" alt="Four">
+
+<!-- Forms: one GET, one POST, covering most input types. -->
+<form id="search-form" action="/search" method="get" name="search">
+  <label for="q">Query</label>
+  <input id="q" name="q" type="text" value="initial" maxlength="20">
+  <input name="hidden-field" type="hidden" value="secret">
+  <input name="pass" type="password" value="hunter2">
+  <input name="agree" type="checkbox" checked>
+  <input name="choice" type="radio" value="one" checked>
+  <input name="choice" type="radio" value="two">
+  <select name="pick">
+    <option value="a">A</option>
+    <option value="b" selected>B</option>
+  </select>
+  <textarea name="notes">some notes</textarea>
+  <button type="submit">Go</button>
+</form>
+
+<form id="upload-form" action="https://example.org/upload" method="post">
+  <!-- No label, on purpose. -->
+  <input name="file" type="file">
+  <input name="email" type="email" required>
+  <input type="submit" value="Upload">
+</form>
+
+<!-- Colours, for getColors / tidyColors. -->
+<p class="accent" style="background-color: #ee6600;">Accent</p>
+<p style="color: rgb(0, 0, 255); background-color: rgba(0, 0, 0, 0);">Blue</p>
+
+</body>
+</html>

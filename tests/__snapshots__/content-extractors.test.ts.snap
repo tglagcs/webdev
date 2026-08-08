@@ -1,0 +1,281 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`colour formatting > de-duplicates and sorts colours 1`] = `
+[
+  "#000000",
+  "#ee6600",
+  "#ffffff",
+]
+`;
+
+exports[`cookie filtering > keeps only cookies matching the host and path, sorted 1`] = `[]`;
+
+exports[`document structure > builds the heading outline, including the skipped level 1`] = `
+{
+  "documents": [
+    {
+      "headings": [
+        {
+          "level": 1,
+          "text": "Host page fixture",
+        },
+        {
+          "level": 2,
+          "text": "Section one",
+        },
+        {
+          "level": 3,
+          "text": "Nested",
+        },
+        {
+          "level": 2,
+          "text": "Section two",
+        },
+        {
+          "level": 4,
+          "text": "Skipped a level",
+        },
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`document structure > collects unique anchors, collapsing the repeated name 1`] = `
+{
+  "documents": [
+    {
+      "anchors": [
+        "also-duplicate",
+        "duplicate",
+        "img-empty-alt",
+        "img-full",
+        "img-no-alt",
+        "img-no-dimensions",
+        "named-anchor",
+        "q",
+        "search-form",
+        "section-one",
+        "section-one-a",
+        "section-two",
+        "section-two-a",
+        "top",
+        "unique",
+        "upload-form",
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`document structure > reports only ids that appear more than once 1`] = `
+{
+  "documents": [
+    {
+      "ids": [
+        "also-duplicate",
+        "duplicate",
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`page contents > extracts forms with their fields 1`] = `
+{
+  "documents": [
+    {
+      "forms": [
+        {
+          "action": "/search",
+          "elements": [
+            {
+              "id": "q",
+              "label": "Query",
+              "maximumLength": "20",
+              "name": "q",
+              "type": "text",
+              "value": "initial",
+            },
+            {
+              "name": "hidden-field",
+              "type": "hidden",
+              "value": "secret",
+            },
+            {
+              "name": "pass",
+              "type": "password",
+              "value": "hunter2",
+            },
+            {
+              "name": "agree",
+              "type": "checkbox",
+              "value": "on",
+            },
+            {
+              "name": "choice",
+              "type": "radio",
+              "value": "one",
+            },
+            {
+              "name": "choice",
+              "type": "radio",
+              "value": "two",
+            },
+            {
+              "name": "pick",
+              "type": "select",
+              "value": "b",
+            },
+            {
+              "name": "notes",
+              "type": "textarea",
+              "value": "some notes",
+            },
+            {
+              "type": "button",
+            },
+          ],
+          "formId": "search-form",
+          "formName": "search",
+          "method": "get",
+        },
+        {
+          "action": "https://example.org/upload",
+          "elements": [
+            {
+              "name": "file",
+              "type": "file",
+              "value": "",
+            },
+            {
+              "name": "email",
+              "type": "email",
+              "value": "",
+            },
+            {
+              "type": "submit",
+              "value": "Upload",
+            },
+          ],
+          "formId": "upload-form",
+          "method": "post",
+        },
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`page contents > extracts images with alt text and dimensions 1`] = `
+{
+  "documents": [
+    {
+      "images": [
+        {
+          "alt": "Four",
+          "height": 0,
+          "src": "https://fixture.test/img/four.png",
+          "width": 0,
+        },
+        {
+          "alt": "icon only",
+          "height": 0,
+          "src": "https://fixture.test/img/icon.png",
+          "width": 0,
+        },
+        {
+          "alt": "One",
+          "height": 0,
+          "src": "https://fixture.test/img/one.png",
+          "width": 0,
+        },
+        {
+          "height": 0,
+          "src": "https://fixture.test/img/three.png",
+          "width": 0,
+        },
+        {
+          "alt": "",
+          "height": 0,
+          "src": "https://fixture.test/img/two.png",
+          "width": 0,
+        },
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`page contents > extracts links 1`] = `
+{
+  "documents": [
+    {
+      "links": [
+        "https://example.net/no-text",
+        "https://example.org/external",
+        "https://fixture.test/host-page.html#top",
+        "https://fixture.test/internal/page",
+        "javascript:void(0)",
+        "mailto:someone@example.com",
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`page contents > extracts meta tags 1`] = `
+{
+  "documents": [
+    {
+      "metaTags": [
+        {
+          "content": "utf-8",
+          "name": "charset",
+        },
+        {
+          "content": "en",
+          "name": "content-language",
+        },
+        {
+          "content": "A deliberately messy page for the extractor tests.",
+          "name": "description",
+        },
+        {
+          "content": "testing, extractors, fixtures",
+          "name": "keywords",
+        },
+        {
+          "content": "Host page fixture",
+          "name": "og:title",
+        },
+        {
+          "content": "width=device-width, initial-scale=1",
+          "name": "viewport",
+        },
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;

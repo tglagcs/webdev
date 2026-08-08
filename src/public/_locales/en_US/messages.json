@@ -136,7 +136,7 @@
   "displayImagePaths": { "message": "Display Image Paths" },
   "findBrokenImages": { "message": "Find Broken Images" },
   "hideBackgroundImages": { "message": "Hide Background Images" },
-  "hideImages": { "message": "Hide Images" },
+  "hideImages": { "message": "Remove Images" },
   "makeImagesFullSize": { "message": "Make Images Full Size" },
   "makeImagesInvisible": { "message": "Make Images Invisible" },
   "outlineAllImages": { "message": "Outline All Images" },

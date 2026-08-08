@@ -17,12 +17,12 @@
     "build:all": "wxt build && wxt build -b firefox",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
     "icons": "python tools/generate-icons.py",
-    "postinstall": "wxt prepare"
+    "postinstall": "wxt prepare",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "bootstrap": "5.3.3",
