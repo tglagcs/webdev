@@ -73,7 +73,7 @@ WebDeveloper.Overlay.Outline.outlineAbsolutePositionedElements = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Outline.outlinePositionedElements("absolute", !featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Outline.outlinePositionedElements("absolute", !featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -91,7 +91,7 @@ WebDeveloper.Overlay.Outline.outlineBlockLevelElements = function()
     {
       WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNamesStorage)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames) { WebDeveloper.Outline.outlineBlockLevelElements([document], showElementTagNames); }, [showElementTagNamesStorage]);
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames){ globalThis.WebDeveloper.Outline.outlineBlockLevelElements([document], showElementTagNames); }, [showElementTagNamesStorage]);
       });
     }
   });
@@ -109,7 +109,7 @@ WebDeveloper.Overlay.Outline.outlineDeprecatedElements = function()
     {
       WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNamesStorage)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames) { WebDeveloper.Outline.outlineDeprecatedElements([document], showElementTagNames); }, [showElementTagNamesStorage]);
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames){ globalThis.WebDeveloper.Outline.outlineDeprecatedElements([document], showElementTagNames); }, [showElementTagNamesStorage]);
       });
     }
   });
@@ -127,7 +127,7 @@ WebDeveloper.Overlay.Outline.outlineExternalLinks = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Outline.outlineExternalLinks(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Outline.outlineExternalLinks(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -145,7 +145,7 @@ WebDeveloper.Overlay.Outline.outlineFixedPositionedElements = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Outline.outlinePositionedElements("fixed", !featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Outline.outlinePositionedElements("fixed", !featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -163,7 +163,7 @@ WebDeveloper.Overlay.Outline.outlineFloatedElements = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Outline.outlineFloatedElements(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Outline.outlineFloatedElements(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -179,7 +179,7 @@ WebDeveloper.Overlay.Outline.outlineFrames = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Outline.outlineFrames([document]); });
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Outline.outlineFrames([document]); });
     }
   });
 };
@@ -196,7 +196,7 @@ WebDeveloper.Overlay.Outline.outlineHeadings = function()
     {
       WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNamesStorage)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames) { WebDeveloper.Outline.outlineHeadings([document], showElementTagNames); }, [showElementTagNamesStorage]);
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames){ globalThis.WebDeveloper.Outline.outlineHeadings([document], showElementTagNames); }, [showElementTagNamesStorage]);
       });
     }
   });
@@ -212,7 +212,7 @@ WebDeveloper.Overlay.Outline.outlineNonSecureElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Outline.outlineNonSecureElements([document]); });
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Outline.outlineNonSecureElements([document]); });
     }
   });
 };
@@ -229,7 +229,7 @@ WebDeveloper.Overlay.Outline.outlineRelativePositionedElements = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Outline.outlinePositionedElements("relative", !featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Outline.outlinePositionedElements("relative", !featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -245,7 +245,7 @@ WebDeveloper.Overlay.Outline.outlineTableCaptions = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Outline.outlineTableCaptions([document]); });
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Outline.outlineTableCaptions([document]); });
     }
   });
 };
@@ -262,7 +262,7 @@ WebDeveloper.Overlay.Outline.outlineTableCells = function()
     {
       WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNamesStorage)
       {
-        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames) { WebDeveloper.Outline.outlineTableCells([document], showElementTagNames); }, [showElementTagNamesStorage]);
+        WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(showElementTagNames){ globalThis.WebDeveloper.Outline.outlineTableCells([document], showElementTagNames); }, [showElementTagNamesStorage]);
       });
     }
   });
@@ -278,7 +278,7 @@ WebDeveloper.Overlay.Outline.outlineTables = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Outline.outlineTables([document]); });
+      WebDeveloper.Overlay.Outline.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Outline.outlineTables([document]); });
     }
   });
 };

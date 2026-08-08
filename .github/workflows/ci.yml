@@ -47,6 +47,35 @@ jobs:
           fi
           echo "ok"
 
+  build-tokens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # gulp substituted @name@ / @url@ / @version@ / @color.*@ into every
+      # file it copied. Nothing substitutes them now, so a leftover token
+      # ships literally -- as a URL that 404s, or a badge colour the browser
+      # rejects. Both happened; neither showed up until the extension was
+      # actually installed.
+      - name: No build tokens may survive into the source
+        run: |
+          set -o pipefail
+          if grep -rnoE '@(name|url|browser|version|description|author|build[.]date|color[.][a-z]+)@' --include='*.ts' --include='*.js' --include='*.html' --include='*.json' --include='*.css' src/ | grep -v '^src/public/lib/'; then
+            echo "::error::unsubstituted build token in source"
+            exit 1
+          fi
+          echo "ok"
+
+  injected-closures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # executeScript({ func }) serialises the function and runs it in the
+      # page, where the minified module binding does not exist. The feature
+      # then does nothing, silently -- the menu still toggles and no error is
+      # logged. This shipped once.
+      - name: Injected closures must reference globalThis
+        run: python tools/check-injected-closures.py
+
   build:
     runs-on: ubuntu-latest
     strategy:

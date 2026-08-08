@@ -1,4 +1,5 @@
 import { WebDeveloper } from "../../globals";
+import { BADGE_COLOUR, NAME } from "@/branding";
 
 WebDeveloper.Storage           = WebDeveloper.Storage || {};
 WebDeveloper.Storage.storageId = "web-developer";
@@ -188,7 +189,7 @@ WebDeveloper.Storage.toggleFeatureOnTab = function(feature, tab, callback)
 WebDeveloper.Storage.updateBadgeText = function(featureTabId, callback)
 {
   var badgeText    = "";
-  var badgeTooltip = "@name@";
+  var badgeTooltip = NAME;
 
   WebDeveloper.Storage.getFeaturesOnTab(featureTabId, function(featuresOnTab)
   {
@@ -244,7 +245,7 @@ WebDeveloper.Storage.updateOverlayIcon = function()
   });
 };
 
-chrome.action.setBadgeBackgroundColor({ color: "@color.success@" });
+chrome.action.setBadgeBackgroundColor({ color: BADGE_COLOUR.success });
 WebDeveloper.Storage.updateOverlayIcon();
 
 chrome.tabs.onActivated.addListener(WebDeveloper.Storage.tabActivated);

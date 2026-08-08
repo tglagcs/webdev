@@ -19,7 +19,7 @@ WebDeveloper.Overlay.Forms.checkAllCheckboxes = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.toggleCheckboxes(true, [document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.toggleCheckboxes(true, [document]); });
     }
   });
 };
@@ -34,7 +34,7 @@ WebDeveloper.Overlay.Forms.clearFormFields = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.clearFormFields([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.clearFormFields([document]); });
     }
   });
 };
@@ -49,7 +49,7 @@ WebDeveloper.Overlay.Forms.clearRadioButtons = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.clearRadioButtons([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.clearRadioButtons([document]); });
     }
   });
 };
@@ -64,7 +64,7 @@ WebDeveloper.Overlay.Forms.convertFormMethods = function(method)
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(formMethod) { WebDeveloper.Forms.convertFormMethods(formMethod, [document]); }, [method]);
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(formMethod){ globalThis.WebDeveloper.Forms.convertFormMethods(formMethod, [document]); }, [method]);
     }
   });
 };
@@ -79,7 +79,7 @@ WebDeveloper.Overlay.Forms.convertSelectElementsToTextInputs = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.convertSelectElementsToTextInputs([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.convertSelectElementsToTextInputs([document]); });
     }
   });
 };
@@ -94,7 +94,7 @@ WebDeveloper.Overlay.Forms.convertTextInputsToTextareas = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.convertTextInputsToTextareas([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.convertTextInputsToTextareas([document]); });
     }
   });
 };
@@ -111,7 +111,7 @@ WebDeveloper.Overlay.Forms.displayFormDetails = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Forms.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Forms.displayFormDetails(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Forms.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Forms.displayFormDetails(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -127,7 +127,7 @@ WebDeveloper.Overlay.Forms.displayPasswords = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.displayPasswords([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.displayPasswords([document]); });
     }
   });
 };
@@ -142,7 +142,7 @@ WebDeveloper.Overlay.Forms.enableAutoCompletion = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.enableAutoCompletion([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.enableAutoCompletion([document]); });
     }
   });
 };
@@ -157,7 +157,7 @@ WebDeveloper.Overlay.Forms.enableFormFields = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.enableFormFields([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.enableFormFields([document]); });
     }
   });
 };
@@ -172,7 +172,7 @@ WebDeveloper.Overlay.Forms.expandSelectElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.expandSelectElements([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.expandSelectElements([document]); });
     }
   });
 };
@@ -272,7 +272,7 @@ WebDeveloper.Overlay.Forms.makeFormFieldsWritable = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.makeFormFieldsWritable([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.makeFormFieldsWritable([document]); });
     }
   });
 };
@@ -289,7 +289,7 @@ WebDeveloper.Overlay.Forms.outlineFormFieldsWithoutLabels = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Forms.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Forms.outlineFormFieldsWithoutLabels(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Forms.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Forms.outlineFormFieldsWithoutLabels(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -307,7 +307,7 @@ WebDeveloper.Overlay.Forms.populateFormFields = function()
     {
       WebDeveloper.Storage.getItem("populate_email_address", function(item)
       {
-        WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(emailAddress, password) { WebDeveloper.Forms.populateFormFields([document], emailAddress, password); }, [item, WebDeveloper.Locales.getString("password").toLowerCase()]);
+        WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(emailAddress, password){ globalThis.WebDeveloper.Forms.populateFormFields([document], emailAddress, password); }, [item, WebDeveloper.Locales.getString("password").toLowerCase()]);
       });
     }
   });
@@ -323,7 +323,7 @@ WebDeveloper.Overlay.Forms.removeFormValidation = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.removeFormValidation([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.removeFormValidation([document]); });
     }
   });
 };
@@ -338,7 +338,7 @@ WebDeveloper.Overlay.Forms.removeMaximumLengths = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.removeMaximumLengths([document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.removeMaximumLengths([document]); });
     }
   });
 };
@@ -359,7 +359,7 @@ WebDeveloper.Overlay.Forms.uncheckAllCheckboxes = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Forms.toggleCheckboxes(false, [document]); });
+      WebDeveloper.Overlay.Forms.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Forms.toggleCheckboxes(false, [document]); });
     }
   });
 };

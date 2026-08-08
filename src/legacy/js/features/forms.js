@@ -1,4 +1,5 @@
 import { WebDeveloper } from "../../globals";
+import { BADGE_COLOUR, NAME } from "@/branding";
 
 WebDeveloper.Forms = WebDeveloper.Forms || {};
 
@@ -813,7 +814,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
           // If the input element type is set and is color
           if(inputElementType && inputElementType.toLowerCase() == "color")
           {
-            inputElement.value = "@color.danger@";
+            inputElement.value = BADGE_COLOUR.danger;
 
             populatedFormFields++;
           }
@@ -906,7 +907,7 @@ WebDeveloper.Forms.populateFormFields = function(documents, emailAddress, passwo
           }
           else
           {
-            inputElement.value = "@name@";
+            inputElement.value = NAME;
 
             populatedFormFields++;
           }

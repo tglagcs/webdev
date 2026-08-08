@@ -1,8 +1,8 @@
 /**
  * Fork identity.
  *
- * Replaces upstream's common/config/config.properties, whose @name@ / @url@
- * tokens were substituted into JS, CSS, HTML, JSON and locale files by
+ * Replaces upstream's common/config/config.properties, whose tokens were
+ * substituted into JS, CSS, HTML, JSON and locale files by
  * gulp-filter-java-properties at build time. Nothing substitutes tokens any
  * more -- import these instead.
  *
@@ -30,5 +30,5 @@ export const BADGE_COLOUR = {
  */
 export const DOM_PREFIX = "web-developer";
 
-/** Shown on the about page; was the @author@ build token. */
+/** Shown on the about page; was a build token. */
 export const AUTHOR = "WebDev contributors";

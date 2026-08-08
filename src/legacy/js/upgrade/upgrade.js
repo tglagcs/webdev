@@ -83,10 +83,10 @@ WebDeveloper.Upgrade.migrateTools = function()
   });
 };
 
-// Opens the upgrade URL
-WebDeveloper.Upgrade.openUpgradeURL = function(version)
+// The extension version, previously substituted in as a build token
+WebDeveloper.Upgrade.version = function()
 {
-  chrome.tabs.create({ url: "@url@@browser@/installed/" + version + "/" });
+  return chrome.runtime.getManifest().version;
 };
 
 // Removes any deleted settings
@@ -159,14 +159,12 @@ WebDeveloper.Upgrade.upgrade = function(details)
   // If the extension was installed or updated
   if(details.reason === "install" || details.reason === "update")
   {
-    WebDeveloper.Upgrade.openUpgradeURL("@version@");
-
     WebDeveloper.Storage.getItem("version", function(item)
     {
       // If the versions do not match
-      if(item != "@version@")
+      if(item != WebDeveloper.Upgrade.version())
       {
-        WebDeveloper.Storage.setItem("version", "@version@");
+        WebDeveloper.Storage.setItem("version", WebDeveloper.Upgrade.version());
 
         WebDeveloper.Upgrade.fixContentSettings();
         WebDeveloper.Upgrade.migrateLegacySettings();

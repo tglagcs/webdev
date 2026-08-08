@@ -67,7 +67,7 @@ WebDeveloper.Overlay.Miscellaneous.displayColorPicker = function()
 
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/embedded-color-picker.js", function(featureEnabled, featureLocale) { WebDeveloper.ColorPicker.displayColorPicker(!featureEnabled, document, featureLocale); }, [enabled, locale], true);
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/embedded-color-picker.js", function(featureEnabled, featureLocale){ globalThis.WebDeveloper.ColorPicker.displayColorPicker(!featureEnabled, document, featureLocale); }, [enabled, locale], true);
       });
     }
   });
@@ -83,7 +83,7 @@ WebDeveloper.Overlay.Miscellaneous.displayHiddenElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Miscellaneous.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Miscellaneous.displayHiddenElements([document]); });
+      WebDeveloper.Overlay.Miscellaneous.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Miscellaneous.displayHiddenElements([document]); });
     }
   });
 };
@@ -109,7 +109,7 @@ WebDeveloper.Overlay.Miscellaneous.displayLineGuides = function()
 
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/embedded-line-guides.js", function(featureEnabled, featureLocale) { WebDeveloper.LineGuides.displayLineGuides(!featureEnabled, document, featureLocale); }, [enabled, locale], true);
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/embedded-line-guides.js", function(featureEnabled, featureLocale){ globalThis.WebDeveloper.LineGuides.displayLineGuides(!featureEnabled, document, featureLocale); }, [enabled, locale], true);
       });
     }
   });
@@ -136,7 +136,7 @@ WebDeveloper.Overlay.Miscellaneous.displayRuler = function()
 
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/embedded-ruler.js", function(featureEnabled, featureLocale) { WebDeveloper.Ruler.displayRuler(!featureEnabled, document, featureLocale); }, [enabled, locale], true);
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/embedded-ruler.js", function(featureEnabled, featureLocale){ globalThis.WebDeveloper.Ruler.displayRuler(!featureEnabled, document, featureLocale); }, [enabled, locale], true);
       });
     }
   });
@@ -198,7 +198,7 @@ WebDeveloper.Overlay.Miscellaneous.linearizePage = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Miscellaneous.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Miscellaneous.linearizePage([document]); });
+      WebDeveloper.Overlay.Miscellaneous.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Miscellaneous.linearizePage([document]); });
     }
   });
 };
@@ -213,7 +213,7 @@ WebDeveloper.Overlay.Miscellaneous.makeFramesResizable = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Miscellaneous.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.Miscellaneous.makeFramesResizable([document]); });
+      WebDeveloper.Overlay.Miscellaneous.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Miscellaneous.makeFramesResizable([document]); });
     }
   });
 };

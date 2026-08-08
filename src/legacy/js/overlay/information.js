@@ -13,7 +13,7 @@ WebDeveloper.Overlay.Information.displayAbbreviations = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Information.displayAbbreviations([document]); });
+      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Information.displayAbbreviations([document]); });
     }
   });
 };
@@ -30,7 +30,7 @@ WebDeveloper.Overlay.Information.displayAccessKeys = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayAccessKeys(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Information.displayAccessKeys(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -48,7 +48,7 @@ WebDeveloper.Overlay.Information.displayAnchors = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayAnchors(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Information.displayAnchors(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -64,7 +64,7 @@ WebDeveloper.Overlay.Information.displayARIARoles = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Information.displayARIARoles([document]); });
+      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Information.displayARIARoles([document]); });
     }
   });
 };
@@ -86,7 +86,7 @@ WebDeveloper.Overlay.Information.displayDivDimensions = function()
 
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled, featureLocale) { WebDeveloper.Information.displayDivDimensions(!featureEnabled, [document], featureLocale); }, [enabled, locale]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled, featureLocale){ globalThis.WebDeveloper.Information.displayDivDimensions(!featureEnabled, [document], featureLocale); }, [enabled, locale]);
       });
     }
   });
@@ -104,7 +104,7 @@ WebDeveloper.Overlay.Information.displayDivOrder = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayDivOrder(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Information.displayDivOrder(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -134,7 +134,7 @@ WebDeveloper.Overlay.Information.displayElementInformation = function()
 
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, ["/embedded-dashboard.js", "/embedded-element-information.js"], function(featureEnabled, featureLocale) { WebDeveloper.ElementInformation.initialize(!featureEnabled, document, featureLocale); }, [enabled, locale], true);
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, ["/embedded-dashboard.js", "/embedded-element-information.js"], function(featureEnabled, featureLocale){ globalThis.WebDeveloper.ElementInformation.initialize(!featureEnabled, document, featureLocale); }, [enabled, locale], true);
       });
     }
   });
@@ -152,7 +152,7 @@ WebDeveloper.Overlay.Information.displayIdClassDetails = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayIdClassDetails(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Information.displayIdClassDetails(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -168,7 +168,7 @@ WebDeveloper.Overlay.Information.displayLinkDetails = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Information.displayLinkDetails([document]); });
+      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Information.displayLinkDetails([document]); });
     }
   });
 };
@@ -185,7 +185,7 @@ WebDeveloper.Overlay.Information.displayObjectInformation = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayObjectInformation(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Information.displayObjectInformation(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -203,7 +203,7 @@ WebDeveloper.Overlay.Information.displayStackLevels = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayStackLevels(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Information.displayStackLevels(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -221,7 +221,7 @@ WebDeveloper.Overlay.Information.displayTabIndex = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayTabIndex(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Information.displayTabIndex(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -239,7 +239,7 @@ WebDeveloper.Overlay.Information.displayTableDepth = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled, depth) { WebDeveloper.Information.displayTableDepth(!featureEnabled, [document], depth); }, [enabled, WebDeveloper.Locales.getString("depth")]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled, depth){ globalThis.WebDeveloper.Information.displayTableDepth(!featureEnabled, [document], depth); }, [enabled, WebDeveloper.Locales.getString("depth")]);
       });
     }
   });
@@ -257,7 +257,7 @@ WebDeveloper.Overlay.Information.displayTableInformation = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayTableInformation(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Information.displayTableInformation(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -275,7 +275,7 @@ WebDeveloper.Overlay.Information.displayTitleAttributes = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.Information.displayTitleAttributes(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Information.displayTitleAttributes(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -291,7 +291,7 @@ WebDeveloper.Overlay.Information.displayTopographicInformation = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.Information.displayTopographicInformation([document]); });
+      WebDeveloper.Overlay.Information.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Information.displayTopographicInformation([document]); });
     }
   });
 };

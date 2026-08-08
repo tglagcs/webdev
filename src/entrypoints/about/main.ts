@@ -10,8 +10,8 @@ import "@/legacy/js/about/about.js";
 
 flushDomReady();
 
-// These three were @author@ / @version@ / @build.date@, substituted by
-// gulp-filter-java-properties at build time. Nothing substitutes tokens now.
+// These three were build tokens, substituted by gulp-filter-java-properties.
+// Nothing substitutes tokens now, so fill them at runtime.
 document.getElementById("author-value")!.textContent = AUTHOR;
 document.getElementById("version-value")!.textContent = browser.runtime.getManifest().version;
 document.getElementById("build-date-value")!.textContent = __BUILD_DATE__;

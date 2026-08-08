@@ -21,7 +21,7 @@ WebDeveloper.Overlay.CSS.disableAllStyles = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.CSS.toggleAllStyles(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.CSS.toggleAllStyles(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -37,7 +37,7 @@ WebDeveloper.Overlay.CSS.disableBrowserDefaultStyles = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.CSS.toggleBrowserDefaultStyles([document]); });
+      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.CSS.toggleBrowserDefaultStyles([document]); });
     }
   });
 };
@@ -54,7 +54,7 @@ WebDeveloper.Overlay.CSS.disableEmbeddedStyles = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.CSS.toggleEmbeddedStyles(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.CSS.toggleEmbeddedStyles(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -72,7 +72,7 @@ WebDeveloper.Overlay.CSS.disableInlineStyles = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.CSS.toggleInlineStyles(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.CSS.toggleInlineStyles(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -90,7 +90,7 @@ WebDeveloper.Overlay.CSS.disableLinkedStyleSheets = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.CSS.toggleLinkedStyleSheets(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.CSS.toggleLinkedStyleSheets(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -108,7 +108,7 @@ WebDeveloper.Overlay.CSS.disablePrintStyles = function()
     {
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.CSS.togglePrintStyles(!featureEnabled, [document]); }, [enabled]);
+        WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.CSS.togglePrintStyles(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -131,10 +131,10 @@ WebDeveloper.Overlay.CSS.displayHandheldStyles = function()
           // If about to display handheld styles and print styles are being displayed
           if(!displayHandheldStylesEnabled && displayPrintStylesEnabled)
           {
-            WebDeveloper.Overlay.CSS.toggleFeatureOnTab(document.getElementById("display-print-styles"), tab, function() { WebDeveloper.CSS.toggleMediaTypeStyles("print", false, [document]); });
+            WebDeveloper.Overlay.CSS.toggleFeatureOnTab(document.getElementById("display-print-styles"), tab, function(){ globalThis.WebDeveloper.CSS.toggleMediaTypeStyles("print", false, [document]); });
           }
 
-          WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.CSS.toggleMediaTypeStyles("handheld", !featureEnabled, [document]); }, [displayHandheldStylesEnabled]);
+          WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.CSS.toggleMediaTypeStyles("handheld", !featureEnabled, [document]); }, [displayHandheldStylesEnabled]);
         });
       });
     }
@@ -158,10 +158,10 @@ WebDeveloper.Overlay.CSS.displayPrintStyles = function()
           // If about to display print styles and handheld styles are being displayed
           if(!displayPrintStylesEnabled && displayHandheldStylesEnabled)
           {
-            WebDeveloper.Overlay.CSS.toggleFeatureOnTab(document.getElementById("display-handheld-styles"), tab, function() { WebDeveloper.CSS.toggleMediaTypeStyles("handheld", false, [document]); });
+            WebDeveloper.Overlay.CSS.toggleFeatureOnTab(document.getElementById("display-handheld-styles"), tab, function(){ globalThis.WebDeveloper.CSS.toggleMediaTypeStyles("handheld", false, [document]); });
           }
 
-          WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled) { WebDeveloper.CSS.toggleMediaTypeStyles("print", !featureEnabled, [document]); }, [displayPrintStylesEnabled]);
+          WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.CSS.toggleMediaTypeStyles("print", !featureEnabled, [document]); }, [displayPrintStylesEnabled]);
         });
       });
     }
@@ -187,7 +187,7 @@ WebDeveloper.Overlay.CSS.editCSS = function()
 
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
-        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, ["/embedded-dashboard.js", "/embedded-edit-css.js"], function(featureEnabled, cssLocale) { WebDeveloper.EditCSS.editCSS(!featureEnabled, document, cssLocale); }, [enabled, locale], true);
+        WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, ["/embedded-dashboard.js", "/embedded-edit-css.js"], function(featureEnabled, cssLocale){ globalThis.WebDeveloper.EditCSS.editCSS(!featureEnabled, document, cssLocale); }, [enabled, locale], true);
       });
     }
   });
@@ -264,7 +264,7 @@ WebDeveloper.Overlay.CSS.reloadLinkedStyleSheets = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.CSS.addFeatureOnTab(featureItem, tab, function() { WebDeveloper.CSS.reloadLinkedStyleSheets([document]); });
+      WebDeveloper.Overlay.CSS.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.CSS.reloadLinkedStyleSheets([document]); });
     }
   });
 };
@@ -285,7 +285,7 @@ WebDeveloper.Overlay.CSS.useBorderBoxModel = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function() { WebDeveloper.CSS.useBorderBoxModel([document]); });
+      WebDeveloper.Overlay.CSS.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.CSS.useBorderBoxModel([document]); });
     }
   });
 };

@@ -1,4 +1,5 @@
 import { WebDeveloper } from "../../../globals";
+import { BADGE_COLOUR } from "@/branding";
 
 WebDeveloper.LineGuides                   = WebDeveloper.LineGuides || {};
 WebDeveloper.LineGuides.padding           = 2;
@@ -173,7 +174,7 @@ WebDeveloper.LineGuides.displayLineGuides = function(display, contentDocument, l
 // Returns the line guides color
 WebDeveloper.LineGuides.getColor = function()
 {
-  return "@color.danger@";
+  return BADGE_COLOUR.danger;
 };
 
 // Returns an array containing the horizontal line guide positions
