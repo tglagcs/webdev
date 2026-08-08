@@ -866,7 +866,7 @@ WebDeveloper.Common.isCSSURI = function(property)
 // Logs a message
 WebDeveloper.Common.log = function(message, exception)
 {
-  var consoleMessage = "WEB DEVELOPER LOG: " + message;
+  var consoleMessage = "WEBDEV LOG: " + message;
 
   // If an exception is set
   if(exception)

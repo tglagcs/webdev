@@ -1,71 +1,45 @@
-Web Developer
-=============
+WebDev
+======
 
-The Web Developer extension adds various web developer tools to a browser.
-The extension is available for Chrome, Edge, Firefox, and Opera, and will run on any platform that these browsers support including Windows, OS X and Linux.
+WebDev adds a toolbar button with a large set of web developer tools — inspecting and editing CSS, forms, images, page structure, cookies and more — to Chrome, Edge, and Firefox.
 
-The extension can be installed from its home page:
+It is a fork of [Web Developer](https://github.com/chrispederick/web-developer) by Chris Pederick, which has not seen a release since July 2024. See [notice.md](notice.md) for attribution.
 
-* Home page: [https://chrispederick.com/work/web-developer/](https://chrispederick.com/work/web-developer/)
+Status
+------
 
-Or directly from the Chrome, Edge, Firefox or Opera extension repositories:
+This fork is being rebuilt. The upstream extension is functionally solid but its build system (Gulp 3.9.1) no longer runs on current Node, and the source predates modules, types and any automated tests.
 
-* Chrome: [https://chromewebstore.google.com/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm](https://chromewebstore.google.com/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm)
-* Edge: [https://microsoftedge.microsoft.com/addons/detail/web-developer/ilbdhapjffldgngebmnkdodohjapjccm](https://microsoftedge.microsoft.com/addons/detail/web-developer/ilbdhapjffldgngebmnkdodohjapjccm)
-* Firefox: [https://addons.mozilla.org/en-US/firefox/addon/web-developer/](https://addons.mozilla.org/en-US/firefox/addon/web-developer/)
-* Opera:
-[https://addons.opera.com/en/extensions/details/web-developer/](https://addons.opera.com/en/extensions/details/web-developer/)
+The rebuild is incremental — the extension stays loadable at every step — and covers:
 
-Announcements
--------------
+* TypeScript throughout, replacing the global `WebDeveloper.*` namespace and `gulp-concat` bundling
+* [WXT](https://wxt.dev/) + Vite in place of Gulp
+* Svelte 5 + Tailwind for the popup, options and report pages
+* A dark theme
+* A typed feature registry, driving menu search and keyboard shortcuts
+* Vitest and Playwright coverage, and CI
 
-For announcements about the Web Developer extension including news about beta releases and previews of upcoming versions follow:
+Progress is tracked against the phases described in the rebuild plan.
 
-* Blog: [https://chrispederick.com/blog/](https://chrispederick.com/blog/)
-* Mastodon: [https://social.lol/@chrispederick](https://social.lol/@chrispederick)
+Browsers
+--------
 
-Help
-----
+Chrome, Edge and Firefox are supported. Opera was dropped in this fork.
 
-Help for the Web Developer extension can be found on its home page:
-
-* Help: [https://chrispederick.com/work/web-developer/help/](https://chrispederick.com/work/web-developer/help/)
-* Known issues: [https://chrispederick.com/work/web-developer/issues/](https://chrispederick.com/work/web-developer/issues/)
-* To-do list: [https://chrispederick.com/work/web-developer/to-do/](https://chrispederick.com/work/web-developer/to-do/)
-
-To report a new issue or suggest a new feature please contact me:
-
-* Contact: [https://chrispederick.com/contact/](http://chrispederick.com/contact/)
+The Disable menu and *Disable Cookies* depend on `chrome.contentSettings`, which only Chromium provides — they are hidden on Firefox.
 
 Developers
 ----------
 
-### Technologies
-
-The Web Developer extension is written in JavaScript, HTML, and CSS.
-
-### Extension documentation
-
-For information about how to write browser extensions check out the Chrome, Firefox, and Opera documentation:
-
-* Chrome: [https://developer.chrome.com/docs/extensions/](https://developer.chrome.com/docs/extensions/)
-* Edge: [https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/](https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/)
-* Firefox: [https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons)
-* Opera: [https://dev.opera.com/extensions/](https://dev.opera.com/extensions/)
-
 ### Build process
 
-The extension uses the [Gulp build system](https://gulpjs.com/).
+*Being replaced. The upstream Gulp 3.9.1 pipeline does not run on current Node; see the rebuild plan.*
 
-Once Gulp is installed the extension is built by running the following:
+### Brand assets
 
-	gulp
+`brand/logo.png` is the master logo. Everything under `common/img/logos/` and `common/svg/logos/` is generated from it and must not be hand-edited:
 
-To build the extension for Chrome, Edge, Firefox, or Opera only run `gulp chrome`, `gulp edge`, `gulp firefox`, or `gulp opera` respectively.
-
-When the extension is built it creates `build/chrome`, `build/edge`, `build/firefox`, and `build/opera` directories as well as packaged versions of the extensions `build/web-developer-chrome.zip`, `build/web-developer-edge.zip`, `build/web-developer-firefox.xpi`, and `build/web-developer-opera.nex`.
-
-The extension can be installed in Chrome, Edge, Firefox, or Opera by loading the unpacked extension in `build/chrome`, `build/edge`, `build/firefox`, or `build/opera` respectively as described in the [Chrome](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked), [Edge](https://learn.microsoft.com/en-us/microsoft-edge/extensions-chromium/getting-started/extension-sideloading), [Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension#trying_it_out), and [Opera](https://dev.opera.com/extensions/testing/) documentation.
+	python tools/generate-icons.py
 
 ### Included libraries
 
@@ -76,36 +50,21 @@ The following libraries are used by and included in the extension as-is:
 * DOMPurify: [https://github.com/cure53/DOMPurify](https://github.com/cure53/DOMPurify)
 * Eric Meyer's Reset CSS: [https://meyerweb.com/eric/tools/css/reset/](https://meyerweb.com/eric/tools/css/reset/)
 * JS Beautifier: [https://github.com/beautify-web/js-beautify](https://github.com/beautify-web/js-beautify)
-* mustache.js: [https://github.com/janl/mustache.js/](https://github.com/janl/mustache.js/) imported from [https://unpkg.com/browse/mustache@4.2.0/mustache.js](https://unpkg.com/browse/mustache@4.2.0/mustache.js)
+* mustache.js: [https://github.com/janl/mustache.js/](https://github.com/janl/mustache.js/)
 
-They should not be altered apart from to update to their latest versions for maintenance reasons.
+These are vendored in `common/lib/` by upstream and move to npm dependencies during the rebuild.
 
 ### Icons
 
-The icons used in the extension are from [Nucleo](https://nucleoapp.com) and any new icons used in the extension should also come from there for consistency.
+The interface icons are from [Nucleo](https://nucleoapp.com) and carry their own license. New interface icons should come from there for consistency.
 
-### Editor Configuration
+### Editor configuration
 
 An [EditorConfig](https://editorconfig.org/) file is included to unify the coding style for different editors.
-
-Acknowledgements
-----------------
-
-Supported by:
-
-* [BrowserStack](https://www.browserstack.com/)
-
-Author
-------
-
-### Chris Pederick
-
-* [https://chrispederick.com/](https://chrispederick.com/)
-* [https://social.lol/@chrispederick](https://social.lol/@chrispederick)
 
 License
 -------
 
-All files are distributed for free under the terms of the
-[GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.txt).
-This does not apply to the included libraries or icons mentioned in the Developer section which have their own individual licenses.
+Distributed under the terms of the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.txt), as required by the upstream project.
+
+This does not apply to the included libraries or icons mentioned above, which have their own individual licenses.

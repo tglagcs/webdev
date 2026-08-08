@@ -21,8 +21,6 @@ WebDeveloper.Locales.setupGeneratedLocale = function()
 
   locale.collapseAll   = WebDeveloper.Locales.getString("collapseAll");
   locale.documents     = WebDeveloper.Locales.getString("documents");
-  locale.donate        = WebDeveloper.Locales.getString("donate");
-  locale.donationCard  = WebDeveloper.Locales.getString("donationCard");
   locale.expandAll     = WebDeveloper.Locales.getString("expandAll");
   locale.extensionName = WebDeveloper.Locales.getString("extensionName");
   locale.from          = WebDeveloper.Locales.getString("from");

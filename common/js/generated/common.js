@@ -302,12 +302,6 @@ WebDeveloper.Generated.initializeHeader = function(type, data, locale)
   }
 };
 
-// Initializes the sidebar
-WebDeveloper.Generated.initializeSidebar = function(locale)
-{
-  document.getElementById("donate-link").prepend(locale.donate);
-  document.getElementById("sidebar").querySelector(".card-text").insertAdjacentHTML("beforeend", DOMPurify.sanitize('<span class="fw-bold">' + locale.extensionName + "</span> " + locale.donationCard));
-};
 
 // Initializes the syntax highlight functionality
 WebDeveloper.Generated.initializeSyntaxHighlight = function(color)

@@ -1,11 +1,11 @@
 {
-  "description": "Web Developer",
+  "description": "WebDev — a toolbar button with various web developer tools",
   "license": "GPL-3.0",
-  "name": "web-developer",
+  "name": "webdev",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chrispederick/web-developer"
+    "url": "https://github.com/tglagcs/webdev"
   },
   "devDependencies": {
     "dateformat": "4.5.1",

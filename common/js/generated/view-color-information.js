@@ -16,7 +16,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(colorInformation, data, locale);
-  WebDeveloper.Generated.initializeSidebar(locale);
   Mustache.parse(colorsTemplate);
 
   // Loop through the documents

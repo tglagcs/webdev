@@ -68,7 +68,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
   WebDeveloper.Generated.storeLocale(locale);
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(javaScriptDescription, data, locale);
-  WebDeveloper.Generated.initializeSidebar(locale);
   beautify.querySelector(".beautify").append(locale.beautifyJavaScript);
   beautify.querySelector(".undo-beautify").append(locale.undoBeautifyJavaScript);
 

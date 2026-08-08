@@ -20,7 +20,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(metaTagsDescription, data, locale);
-  WebDeveloper.Generated.initializeSidebar(locale);
   Mustache.parse(metaTagsTemplate);
 
   // Loop through the documents

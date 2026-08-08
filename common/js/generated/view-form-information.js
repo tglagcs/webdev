@@ -144,7 +144,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(formsDescription, data, locale);
-  WebDeveloper.Generated.initializeSidebar(locale);
   Mustache.parse(formElementsTemplate);
   Mustache.parse(formTemplate);
 

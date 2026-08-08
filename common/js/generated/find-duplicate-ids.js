@@ -18,7 +18,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(duplicateIds, data, locale);
-  WebDeveloper.Generated.initializeSidebar(locale);
   Mustache.parse(duplicateIdTemplate);
 
   // Loop through the documents

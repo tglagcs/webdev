@@ -524,11 +524,9 @@ WebDeveloper.Options.localize = function()
   document.getElementById("colors-tab").querySelector("a").append(WebDeveloper.Locales.getString("colors"));
   document.getElementById("delete-dialog").querySelector(".btn-outline-secondary").append(WebDeveloper.Locales.getString("cancel"));
   document.getElementById("delete-submit").append(WebDeveloper.Locales.getString("delete"));
-  document.getElementById("donate-link").prepend(WebDeveloper.Locales.getString("donate"));
   document.getElementById("general-tab").querySelector("a").append(WebDeveloper.Locales.getString("general"));
   document.getElementById("resize-tab").querySelector("a").append(WebDeveloper.Locales.getString("resize"));
   document.getElementById("responsive-layouts-tab").querySelector("a").append(WebDeveloper.Locales.getString("responsive"));
-  document.getElementById("sidebar").querySelector(".card-text").insertAdjacentHTML("beforeend", DOMPurify.sanitize('<span class="fw-bold">' + extensionName + "</span> " + WebDeveloper.Locales.getString("donationCard")));
   document.getElementById("tools-tab").querySelector("a").append(WebDeveloper.Locales.getString("tools"));
   document.querySelector(".navbar-brand span").replaceChildren(extensionName + " " + WebDeveloper.Locales.getString("options"));
   document.querySelector("h1.visually-hidden").replaceChildren(extensionName + " " + WebDeveloper.Locales.getString("options"));

@@ -51,7 +51,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(locale.responsiveLayouts, data, locale);
-  WebDeveloper.Generated.initializeSidebar(locale);
   Mustache.parse(layoutTemplate);
 
   useElement.setAttribute("href", "/svg/icons/icons.svg#warning-sign");

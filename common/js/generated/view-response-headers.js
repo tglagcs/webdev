@@ -31,7 +31,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(locale.responseHeaders, data, locale);
-  WebDeveloper.Generated.initializeSidebar(locale);
 
   // Try to get the response headers
   try

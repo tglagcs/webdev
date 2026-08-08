@@ -15,7 +15,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
 
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(brokenImages, data, locale);
-  WebDeveloper.Generated.initializeSidebar(locale);
   Mustache.parse(brokenImageTemplate);
 
   // Loop through the documents

@@ -21,7 +21,6 @@ WebDeveloper.Generated.initialize = function(data, locale)
   WebDeveloper.Generated.storeLocale(locale);
   WebDeveloper.Generated.emptyContent();
   WebDeveloper.Generated.initializeHeader(css, data, locale);
-  WebDeveloper.Generated.initializeSidebar(locale);
 
   // Loop through the documents
   for(var i = 0, l = documents.length; i < l; i++)
