@@ -1,0 +1,18 @@
+{
+  "extends": "./.wxt/tsconfig.json",
+  "compilerOptions": {
+    // The legacy files are plain ES5-era JavaScript being carried across
+    // unchanged. Type-checking them would mean either annotating 16,000 lines
+    // that are scheduled for deletion, or drowning the real errors in noise.
+    // Every one of them is replaced by typed TypeScript over Phases 2-7, and
+    // this exclusion goes with the last of them.
+    "allowJs": false
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.svelte",
+    "wxt.config.ts",
+    ".wxt/wxt.d.ts"
+  ],
+  "exclude": ["node_modules", ".output", "src/legacy/js"]
+}

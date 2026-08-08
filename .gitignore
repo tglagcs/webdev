@@ -7,6 +7,9 @@ node_modules/
 stats.html
 web-ext.config.ts
 
+# Smoke-test staging (tools/smoke-serve.py)
+.smoke/
+
 # Test artefacts
 coverage/
 test-results/
