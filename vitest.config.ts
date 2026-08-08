@@ -7,6 +7,9 @@ export default defineConfig({
   test: {
     environment: "happy-dom",
     include: ["tests/**/*.test.ts"],
+    // fakeBrowser throws for i18n.getMessage; this resolves it against the
+    // real en_US catalogue instead.
+    setupFiles: ["tests/setup/i18n.ts"],
     environmentOptions: {
       happyDOM: {
         // Pinned because the extractors resolve relative hrefs against it and

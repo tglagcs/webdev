@@ -1,7 +1,7 @@
 {
   "name": "webdev",
   "version": "1.0.0",
-  "description": "WebDev — a toolbar button with various web developer tools",
+  "description": "WebDev \u2014 a toolbar button with various web developer tools",
   "license": "GPL-3.0",
   "private": true,
   "type": "module",
@@ -21,6 +21,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "icons": "python tools/generate-icons.py",
+    "i18n:keys": "python tools/generate-i18n-keys.py",
     "postinstall": "wxt prepare",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },

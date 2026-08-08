@@ -61,7 +61,10 @@ export default defineConfig({
             browser_specific_settings: {
               gecko: {
                 id: FIREFOX_EXTENSION_ID,
-                strict_min_version: "109.0",
+                // 115 is the floor for storage.session, which holds the
+                // per-tab feature state. 115 is also an ESR, so this drops
+                // only the 109-114 window rather than a supported release.
+                strict_min_version: "115.0",
                 // AMO requires this to be declared. The extension sends
                 // nothing anywhere; everything it reads stays on the device.
                 data_collection_permissions: { required: ["none"] },

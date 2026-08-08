@@ -16,3 +16,7 @@ tests/__snapshots__/
 
 # One key per line is upstream's convention and keeps locale diffs readable.
 src/public/_locales/
+
+# Generated from the above by tools/generate-i18n-keys.py, which CI checks is
+# current. Reformatting it would make that check and this one disagree.
+src/lib/i18n-keys.ts

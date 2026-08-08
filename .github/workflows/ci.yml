@@ -32,6 +32,12 @@ jobs:
       - name: Check translations against en_US
         run: python tools/check-locales.py
 
+      # src/lib/i18n-keys.ts is generated from en_US and committed. Stale, it
+      # would reject a key that exists or accept one that does not, which is
+      # exactly the check it was added to provide.
+      - name: Message-key union must match en_US
+        run: python tools/generate-i18n-keys.py --check
+
   feature-css:
     runs-on: ubuntu-latest
     steps:

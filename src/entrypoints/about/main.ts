@@ -5,7 +5,7 @@ import "@/legacy/globals";
 // initialisers instead of running each one on import.
 import { flushDomReady } from "@/legacy/dom-ready";
 import { AUTHOR } from "@/branding";
-import "@/legacy/js/common/locales.js";
+import "@/legacy/shims/locales";
 import "@/legacy/js/about/about.js";
 
 flushDomReady();

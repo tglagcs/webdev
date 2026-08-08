@@ -221,6 +221,8 @@
   "addVerticalLineGuide": { "message": "Add Vertical Line Guide" },
   "anchorInformation": { "message": "Anchor Information" },
   "atEndOfSession": { "message": "At end of session" },
+  "badgeTooltipSingle": { "message": "1 active feature on this tab" },
+  "badgeTooltipMultiple": { "message": "$count$ active features on this tab", "placeholders": { "count": { "content": "$1" } } },
   "beautifyJavaScript": { "message": "Beautify JavaScript" },
   "brokenImage": { "message": "broken image" },
   "brokenImages": { "message": "Broken Images" },

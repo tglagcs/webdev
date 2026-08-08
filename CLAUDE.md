@@ -18,9 +18,11 @@ npm run typecheck          # tsc; excludes src/legacy/js
 npm run lint               # eslint
 npx prettier --check .
 npm run icons              # regenerate icons from brand/logo.png
+npm run i18n:keys          # regenerate src/lib/i18n-keys.ts from en_US
 
-python tools/check-injected-closures.py   # see "Injected closures" below
-python tools/check-locales.py             # translations must subset en_US
+python tools/check-injected-closures.py    # see "Injected closures" below
+python tools/check-locales.py              # translations must subset en_US
+python tools/generate-i18n-keys.py --check # the committed union matches en_US
 python tools/smoke-serve.py --build chrome-mv3 --port 8730
 ```
 
@@ -42,8 +44,13 @@ src/
   legacy/
     globals.ts           the WebDeveloper namespace, anchored to globalThis
     dom-ready.ts         restores upstream's DOMContentLoaded timing
-    js/                  52 files / ~16,800 lines of upstream ES5, being ported
-  lib/capabilities.ts    runtime browser feature detection
+    shims/               WebDeveloper.Storage / .Locales over the typed core
+    js/                  48 files / ~13,500 lines of upstream ES5, being ported
+  lib/
+    i18n.ts              t(); i18n-keys.ts is generated from en_US
+    storage/             schema, settings, tab-state, migrations, defaults
+    messaging.ts         the typed background message contract
+    badge.ts  capabilities.ts  content-settings.ts
   public/                static assets at the URLs the legacy code expects
 tools/                   one-shot migrations and CI guards
 tests/                   vitest; fixtures/host-page.html is the extractor input
@@ -92,6 +99,25 @@ dispatching a synthetic event, because Bootstrap has already handled the real
 one and would re-initialise. Import it before the legacy files and call
 `flushDomReady()` after them.
 
+### Background listeners register synchronously, at the top level
+
+The MV3 worker is torn down when idle and restarted **by** the event it has to
+handle. A listener added from inside a callback — even one awaiting a single
+storage read — is not in place when that event is delivered, and the event is
+lost. Upstream satisfied this by accident, its registrations being the last
+statements of a concatenated script.
+
+So in `entrypoints/background.ts`: every `addListener` at module scope, and
+anything else inside `defineBackground`'s `main()`. That split is also load
+bearing for `wxt prepare`, which **imports the entrypoint** to read its options
+against a fake browser that implements listeners but not `action.setIcon` — a
+top-level `updateActionIcon()` fails the build with a `MockNotImplementedError`
+pointing into `src/lib`, not into WXT.
+
+Subscribing to `runtime.onStartup` is what makes the browser wake the worker at
+launch, which is in turn what restores the badge colour. It does not survive a
+restart, so dropping that listener would silently un-colour the badge.
+
 ### Feature stylesheets must stay theme-blind
 
 `src/public/features/css/**` is injected into other people's pages. Colours are
@@ -122,6 +148,27 @@ capabilities.ts` detects `chrome.contentSettings` at runtime; the popup imports
 a rule in `overlay.css`. `browsingData` **does** exist on Firefox; only
 `contentSettings` is Chromium-only.
 
+### Storage has a schema now; the legacy code reaches it through a shim
+
+`src/lib/storage` is the only implementation. `src/legacy/shims/storage.ts`
+re-exposes the old callback API (`getItem(key, cb)` and friends) to the ~180
+call sites still in `src/legacy/js`, including its habit of calling back with
+`null` rather than `undefined` — ported and unported readers have to agree on
+what "unset" looks like. Same for `shims/locales.ts` over `lib/i18n`.
+
+Two things follow. Per-tab feature state lives in **`storage.session`** under
+`tab:<id>`, not in `storage.local` under the bare numeric id: tab ids are
+session-scoped, so entries for tabs open at shutdown used to persist forever
+and then collide with a reused id. And the numbered settings (`tool_3_url`,
+`resize_1_width`) are still flat, because the legacy options page reads and
+writes those exact names; collapsing them to arrays is migration v2, in the
+phase that rewrites that page.
+
+Migrations are keyed by the version they produce and run in order, each
+awaited — `SCHEMA_VERSION` in `schema.ts` must match the highest key in
+`MIGRATIONS`. They must be no-ops on empty storage, because a fresh install
+goes through the same path.
+
 ## Verification
 
 The smoke server checks wiring, not behaviour. It cannot catch anything that
@@ -138,19 +185,39 @@ Golden snapshots in `tests/__snapshots__` pin the extractor output taken from
 the legacy implementation. A diff means the port changed behaviour and needs
 justifying — regenerating them to make a test pass defeats their purpose.
 
+`tests/setup/i18n.ts` gives the fake browser a real `getMessage`, resolved
+against `en_US` including placeholders, because `@webext-core/fake-browser`
+throws for it and a stub returning `""` would let a test pass against a message
+key that does not exist.
+
+Note that `smoke-serve.py` refuses to start if the port is already serving. It
+used to set `allow_reuse_address`, which on Windows lets a second server bind
+over one left running from an earlier session — while the _old_ one keeps
+answering. The symptom is a smoke run against a stale build, which reads as a
+real failure.
+
 ## Status
 
 Phases 0 and 1 are done and verified in-browser: the fork is rebranded, gulp is
 gone, both targets build, and all ~119 features work.
+
+Phase 2 has landed the core: typed storage with ordered migrations, per-tab
+state in `storage.session`, generated message keys, the typed background
+contract, and `background.js`/`storage.js`/`locales.js`/`upgrade.js` deleted in
+favour of `src/lib` plus the two shims. Smoke-verified; **not yet confirmed
+in-browser.** Still open in this phase: collapsing the numbered settings (v2,
+deferred with the options page) and the spike on whether `chrome.i18n` is
+reachable from an injected script's isolated world — if it is, ~40 call sites
+stop passing pre-resolved strings through `args`. `hasI18n()` in `lib/i18n.ts`
+is there for that check. Verify, do not assume.
 
 Upstream PRs #40 and #37 landed as-is; #39 only half — `hideImages` really is
 `img { display: none }` so "Remove Images" is right, but renaming
 `makeImagesInvisible` to "Hide Images" is wrong: it does not touch `<img>` at
 all, it swaps background images for a transparent PNG.
 
-Next is Phase 2 (typed storage with migrations, i18n key codegen, typed
-messaging), then content.js and the feature bundles, then the Svelte popup
-behind a typed feature registry. Full plan:
+Next is Phase 3 (`content.js` and the six feature bundles), then the Svelte
+popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.
 
 `src/legacy/js` shrinks each phase; when it is empty, delete it along with

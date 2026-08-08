@@ -20,6 +20,7 @@ import functools
 import http.server
 import pathlib
 import shutil
+import socket
 import socketserver
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -28,7 +29,13 @@ STUB = """
 <script>
 // Minimal stand-in for the extension APIs the pages call while loading.
 (() => {
-  const store = {};
+  // A never-installed profile is a state that does not occur: the worker
+  // seeds the defaults on install, and there is no worker here. Without at
+  // least the two the options page reads back into form controls, it crashes
+  // on getElementById("overlay_icon_" + null) -- a false positive that says
+  // nothing about the build.
+  const store = { overlay_icon: "color", display_overlay_with: "icons_text" };
+  const session = {};
   let messages = {};
 
   try {
@@ -41,7 +48,37 @@ STUB = """
   }
 
   const noop = () => {};
-  const callback = (value) => (fn) => typeof fn === "function" && fn(value);
+
+  // The real MV3 APIs resolve a promise when no callback is passed, and the
+  // ported TypeScript awaits them. The legacy files still pass callbacks, so
+  // both shapes have to work off the same stub.
+  const settle = (value) => (fn) => {
+    if (typeof fn === "function") {
+      fn(value);
+      return undefined;
+    }
+    return Promise.resolve(value);
+  };
+  const callback = settle;
+
+  // Reads the subset of a store that `keys` asks for, matching the real API:
+  // a string, an array of strings, or null for everything.
+  const select = (store, keys) => {
+    if (keys === null || keys === undefined) return { ...store };
+    const wanted = [].concat(keys);
+    const result = {};
+    wanted.forEach((key) => {
+      if (key in store) result[key] = store[key];
+    });
+    return result;
+  };
+
+  const area = (store) => ({
+    get: (keys, fn) => settle(select(store, keys))(fn),
+    set: (items, fn) => (Object.assign(store, items), settle(undefined)(fn)),
+    remove: (keys, fn) => ([].concat(keys).forEach((key) => delete store[key]), settle(undefined)(fn)),
+    clear: (fn) => (Object.keys(store).forEach((key) => delete store[key]), settle(undefined)(fn)),
+  });
 
   window.__SMOKE__ = { calls: [] };
   const record = (name) => (...args) => {
@@ -55,9 +92,13 @@ STUB = """
       getMessage: (key, subs) => {
         const entry = messages[key];
         if (!entry) return "";
+        const values = [].concat(subs ?? []);
         let message = entry.message;
-        [].concat(subs ?? []).forEach((value, index) => {
-          message = message.replace("$" + (index + 1), value);
+        // A placeholder maps a name used in the message to a positional
+        // argument, so "$count$" resolves via placeholders.count.content.
+        Object.entries(entry.placeholders ?? {}).forEach(([name, { content }]) => {
+          const index = Number(content.replace("$", "")) - 1;
+          message = message.replaceAll("$" + name + "$", values[index] ?? "");
         });
         return message;
       },
@@ -71,12 +112,8 @@ STUB = """
       lastError: undefined,
     },
     storage: {
-      local: {
-        get: (keys, fn) => callback(store)(fn),
-        set: (items, fn) => (Object.assign(store, items), callback()(fn)),
-        remove: (keys, fn) => callback()(fn),
-      },
-      session: { get: (k, fn) => callback({})(fn), set: (i, fn) => callback()(fn) },
+      local: area(store),
+      session: area(session),
       onChanged: { addListener: noop },
     },
     tabs: {
@@ -123,6 +160,16 @@ CHROMIUM_EXTRAS = """
 """
 
 
+def require_free(port: int) -> None:
+    """Refuses to start if something is already listening on the port."""
+    with socket.socket() as probe:
+        if probe.connect_ex(("127.0.0.1", port)) == 0:
+            raise SystemExit(
+                f"port {port} is already serving -- an earlier run is still up.\n"
+                f"Stop it, or pass --port with a free one."
+            )
+
+
 def stage(build: str, chromium: bool) -> pathlib.Path:
     source = ROOT / ".output" / build
     if not source.exists():
@@ -150,10 +197,16 @@ def main() -> None:
     parser.add_argument("--firefox-apis", action="store_true", help="omit the Chromium-only APIs")
     args = parser.parse_args()
 
+    require_free(args.port)
+
     directory = stage(args.build, chromium=not args.firefox_apis)
 
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(directory))
-    socketserver.TCPServer.allow_reuse_address = True
+    # Deliberately not allow_reuse_address: on Windows that is SO_REUSEADDR
+    # in its permissive form, so a second server binds successfully over a
+    # server left running from an earlier session -- and the *old* one keeps
+    # answering. The result is a smoke run against a stale build that looks
+    # like a real failure. Cost an hour once; the probe above is the fix.
 
     with socketserver.TCPServer(("127.0.0.1", args.port), handler) as server:
         print(f"serving {directory} at http://127.0.0.1:{args.port}/")
