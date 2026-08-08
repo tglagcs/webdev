@@ -8,7 +8,171 @@ exports[`colour formatting > de-duplicates and sorts colours 1`] = `
 ]
 `;
 
-exports[`cookie filtering > keeps only cookies matching the host and path, sorted 1`] = `[]`;
+exports[`cookie filtering > collects domain cookies across documents, unsorted and unwrapped 1`] = `
+[
+  {
+    "host": "fixture.test",
+    "name": "b-exact",
+    "path": "/",
+    "value": "2",
+  },
+  {
+    "host": "fixture.test",
+    "name": "a-exact",
+    "path": "/",
+    "value": "1",
+  },
+  {
+    "host": ".fixture.test",
+    "name": "c-dotted",
+    "path": "/",
+    "value": "3",
+  },
+  {
+    "host": "test",
+    "name": "d-parent-domain",
+    "path": "/",
+    "value": "4",
+  },
+  {
+    "host": "fixture.test",
+    "name": "e-deep-path",
+    "path": "/deep",
+    "value": "5",
+  },
+  {
+    "host": "fixture.test",
+    "name": "f-page-path",
+    "path": "/host-page.html",
+    "value": "6",
+  },
+]
+`;
+
+exports[`cookie filtering > collects path cookies against the document's own path 1`] = `
+[
+  {
+    "host": "fixture.test",
+    "name": "f-page-path",
+    "path": "/host-page.html",
+    "value": "6",
+  },
+]
+`;
+
+exports[`cookie filtering > keeps only cookies matching the host and path, sorted 1`] = `
+[
+  {
+    "host": ".fixture.test",
+    "name": "c-dotted",
+    "path": "/",
+    "value": "3",
+  },
+  {
+    "host": "fixture.test",
+    "name": "a-exact",
+    "path": "/",
+    "value": "1",
+  },
+  {
+    "host": "fixture.test",
+    "name": "b-exact",
+    "path": "/",
+    "value": "2",
+  },
+  {
+    "host": "fixture.test",
+    "name": "e-deep-path",
+    "path": "/deep",
+    "value": "5",
+  },
+  {
+    "host": "fixture.test",
+    "name": "f-page-path",
+    "path": "/host-page.html",
+    "value": "6",
+  },
+  {
+    "host": "test",
+    "name": "d-parent-domain",
+    "path": "/",
+    "value": "4",
+  },
+]
+`;
+
+exports[`cookie filtering > wraps the document's cookies with its title and URL 1`] = `
+{
+  "documents": [
+    {
+      "cookies": [
+        {
+          "host": ".fixture.test",
+          "name": "c-dotted",
+          "path": "/",
+          "value": "3",
+        },
+        {
+          "host": "fixture.test",
+          "name": "a-exact",
+          "path": "/",
+          "value": "1",
+        },
+        {
+          "host": "fixture.test",
+          "name": "b-exact",
+          "path": "/",
+          "value": "2",
+        },
+        {
+          "host": "fixture.test",
+          "name": "e-deep-path",
+          "path": "/deep",
+          "value": "5",
+        },
+        {
+          "host": "fixture.test",
+          "name": "f-page-path",
+          "path": "/host-page.html",
+          "value": "6",
+        },
+        {
+          "host": "test",
+          "name": "d-parent-domain",
+          "path": "/",
+          "value": "4",
+        },
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`document and window details > reports the document title and URL 1`] = `
+{
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`document and window details > reports the location host and path 1`] = `
+{
+  "host": "fixture.test",
+  "path": "/host-page.html",
+}
+`;
+
+exports[`document and window details > reports the window size 1`] = `
+{
+  "innerHeight": 768,
+  "innerWidth": 1024,
+  "outerHeight": 768,
+  "outerWidth": 1024,
+}
+`;
 
 exports[`document structure > builds the heading outline, including the skipped level 1`] = `
 {
@@ -271,6 +435,80 @@ exports[`page contents > extracts meta tags 1`] = `
           "content": "width=device-width, initial-scale=1",
           "name": "viewport",
         },
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`page resources > collects every image src, leaving the broken-image test to the caller 1`] = `
+{
+  "documents": [
+    {
+      "images": [
+        "https://fixture.test/img/four.png",
+        "https://fixture.test/img/icon.png",
+        "https://fixture.test/img/one.png",
+        "https://fixture.test/img/three.png",
+        "https://fixture.test/img/two.png",
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`page resources > collects the colours used on the page 1`] = `
+{
+  "documents": [
+    {
+      "colors": [
+        "#0000ff",
+        "#222222",
+      ],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`page resources > extracts stylesheets and embedded styles 1`] = `
+{
+  "documents": [
+    {
+      "embedded": "body { background-color: #ffffff; color: rgb(34, 34, 34); }
+    .accent { color: #ee6600; }
+
+",
+      "styleSheets": [],
+      "url": "https://fixture.test/host-page.html",
+    },
+  ],
+  "pageTitle": "Host page fixture",
+  "pageURL": "https://fixture.test/host-page.html",
+}
+`;
+
+exports[`page resources > separates linked scripts from embedded source 1`] = `
+{
+  "documents": [
+    {
+      "embedded": "var fixtureCounter = 0;
+  function fixtureNoop() { return fixtureCounter; }
+
+{ "not": "javascript" }
+
+",
+      "javaScript": [
+        "https://fixture.test/js/analytics.js",
+        "https://cdn.example.org/vendor.js",
       ],
       "url": "https://fixture.test/host-page.html",
     },

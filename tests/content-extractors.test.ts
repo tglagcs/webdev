@@ -27,12 +27,22 @@ interface ContentApi {
   /** Formats a single 0-255 channel as two hex digits. */
   formatColor(channel: number): string;
   getAnchors(): unknown;
+  getBrokenImages(): unknown;
+  getColors(): unknown;
+  getCookies(all: unknown[]): unknown;
+  getCSS(): unknown;
+  getDocumentDetails(): unknown;
   getDocumentOutline(): unknown;
+  getDomainCookies(all: unknown[]): unknown;
   getDuplicateIds(): unknown;
   getForms(): unknown;
   getImages(): unknown;
+  getJavaScript(): unknown;
   getLinks(): unknown;
+  getLocationDetails(): unknown;
   getMetaTags(): unknown;
+  getPathCookies(all: unknown[]): unknown;
+  getWindowSize(): unknown;
   tidyColors(colors: string[]): string[];
 }
 
@@ -122,14 +132,94 @@ describe("colour formatting", () => {
 });
 
 describe("cookie filtering", () => {
+  // `host`, not `domain`: the popup's convertCookies renames the field on the
+  // way in, and filterCookies reads only `host`. The first version of this
+  // fixture used `domain`, so every assertion below pinned an empty array and
+  // proved nothing -- a port returning [] unconditionally would have passed.
   const cookies = [
-    { domain: "fixture.test", name: "b", path: "/", value: "2" },
-    { domain: "fixture.test", name: "a", path: "/", value: "1" },
-    { domain: "other.test", name: "c", path: "/", value: "3" },
-    { domain: "fixture.test", name: "d", path: "/deep", value: "4" },
+    { host: "fixture.test", name: "b-exact", path: "/", value: "2" },
+    { host: "fixture.test", name: "a-exact", path: "/", value: "1" },
+    // Leading dot is stripped before comparing, so this matches too.
+    { host: ".fixture.test", name: "c-dotted", path: "/", value: "3" },
+    // Matches by suffix: the document host ends with "." + cookie host.
+    { host: "test", name: "d-parent-domain", path: "/", value: "4" },
+    // A deeper path still matches a request for "/", since the test is a
+    // prefix match on the *cookie* path.
+    { host: "fixture.test", name: "e-deep-path", path: "/deep", value: "5" },
+    // Only reachable from getPathCookies, whose path is the document's.
+    { host: "fixture.test", name: "f-page-path", path: "/host-page.html", value: "6" },
+    { host: "other.test", name: "g-other-host", path: "/", value: "7" },
+    // No host, so skipped entirely rather than matched.
+    { name: "h-hostless", path: "/", value: "8" },
   ];
 
   it("keeps only cookies matching the host and path, sorted", () => {
     expect(Content.filterCookies(cookies, "fixture.test", "/", true)).toMatchSnapshot();
+  });
+
+  // The three report-level entry points differ only in which path they filter
+  // on and whether they wrap the result per document. Pinning all three is
+  // what stops the port collapsing them into one and quietly changing which
+  // cookies a report shows.
+  it("wraps the document's cookies with its title and URL", () => {
+    expect(Content.getCookies(cookies)).toMatchSnapshot();
+  });
+
+  it("collects domain cookies across documents, unsorted and unwrapped", () => {
+    expect(Content.getDomainCookies(cookies)).toMatchSnapshot();
+  });
+
+  it("collects path cookies against the document's own path", () => {
+    expect(Content.getPathCookies(cookies)).toMatchSnapshot();
+  });
+});
+
+/**
+ * What these snapshots do *not* cover, so the port does not mistake a green
+ * run for proof:
+ *
+ *  - getDocuments' frame traversal and its same-origin guards. Every snapshot
+ *    below therefore has exactly one entry in `documents`.
+ *  - getDocumentCSS's linked-stylesheet branch: happy-dom fetches <link> hrefs
+ *    for real, the fetch fails, and the sheet never registers -- so only the
+ *    embedded <style> branch runs here.
+ *  - getDocumentColors depends on getComputedStyle, which happy-dom implements
+ *    partially. Colours reachable only through cascade or inheritance may be
+ *    missing from the snapshot without that being a bug in the extractor.
+ *
+ * Those three need checking in a real browser when they are ported.
+ */
+describe("page resources", () => {
+  it("collects every image src, leaving the broken-image test to the caller", () => {
+    expect(Content.getBrokenImages()).toMatchSnapshot();
+  });
+
+  it("separates linked scripts from embedded source", () => {
+    // Note the non-JavaScript <script type="application/json">: upstream
+    // branches on src alone, so its body lands in `embedded` with the rest.
+    // Pinned as behaviour, not endorsed as correct.
+    expect(Content.getJavaScript()).toMatchSnapshot();
+  });
+
+  it("extracts stylesheets and embedded styles", () => {
+    expect(Content.getCSS()).toMatchSnapshot();
+  });
+
+  it("collects the colours used on the page", () => {
+    expect(Content.getColors()).toMatchSnapshot();
+  });
+});
+
+describe("document and window details", () => {
+  it("reports the document title and URL", () => {
+    expect(Content.getDocumentDetails()).toMatchSnapshot();
+  });
+
+  it("reports the location host and path", () => {
+    expect(Content.getLocationDetails()).toMatchSnapshot();
+  });
+
+  it("reports the window size", () => {
+    expect(Content.getWindowSize()).toMatchSnapshot();
   });
 });

@@ -8,6 +8,10 @@
   <meta property="og:title" content="Host page fixture">
   <meta http-equiv="content-language" content="en">
   <title>Host page fixture</title>
+  <!-- No <link rel="stylesheet"> on purpose: happy-dom tries to fetch them,
+       the fetch fails, and the sheet never registers, so the linked branch of
+       getDocumentCSS stays uncovered either way -- with added network noise.
+       See the coverage note in tests/content-extractors.test.ts. -->
   <style>
     body { background-color: #ffffff; color: rgb(34, 34, 34); }
     .accent { color: #ee6600; }
@@ -75,6 +79,16 @@
 <!-- Colours, for getColors / tidyColors. -->
 <p class="accent" style="background-color: #ee6600;">Accent</p>
 <p style="color: rgb(0, 0, 255); background-color: rgba(0, 0, 0, 0);">Blue</p>
+
+<!-- Scripts, for getJavaScript: linked, inline, and one that is neither
+     (no src and no body), which upstream still reports. -->
+<script src="/js/analytics.js"></script>
+<script src="https://cdn.example.org/vendor.js" defer></script>
+<script>
+  var fixtureCounter = 0;
+  function fixtureNoop() { return fixtureCounter; }
+</script>
+<script type="application/json">{ "not": "javascript" }</script>
 
 </body>
 </html>
