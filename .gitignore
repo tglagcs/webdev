@@ -1,5 +1,13 @@
 .DS_Store
-build/
-merge/
 node_modules/
-package-lock.json
+
+# WXT
+.output/
+.wxt/
+stats.html
+web-ext.config.ts
+
+# Test artefacts
+coverage/
+test-results/
+playwright-report/

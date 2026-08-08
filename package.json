@@ -1,33 +1,48 @@
 {
-  "description": "WebDev — a toolbar button with various web developer tools",
-  "license": "GPL-3.0",
   "name": "webdev",
   "version": "1.0.0",
+  "description": "WebDev — a toolbar button with various web developer tools",
+  "license": "GPL-3.0",
+  "private": true,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/tglagcs/webdev"
   },
-  "devDependencies": {
-    "dateformat": "4.5.1",
-    "del": "5.1.0",
-    "fancy-log": "1.3.3",
-    "gulp": "3.9.1",
-    "gulp-concat": "*",
-    "gulp-csslint": "*",
-    "gulp-eslint": "*",
-    "gulp-filter-java-properties": "*",
-    "gulp-footer": "*",
-    "gulp-imagemin": "4.1.0",
-    "gulp-load-plugins": "*",
-    "gulp-plumber": "*",
-    "gulp-rename": "*",
-    "gulp-replace": "*",
-    "gulp-zip": "4.2.0",
-    "lazypipe": "*",
-    "merge-stream": "*",
-    "require-dir": "*",
-    "run-sequence": "*",
-    "web-ext": "*"
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "build:all": "wxt build && wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "icons": "python tools/generate-icons.py",
+    "postinstall": "wxt prepare"
   },
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap": "5.3.3",
+    "codemirror": "^5.65.20",
+    "dompurify": "^3.2.7",
+    "js-beautify": "^1.15.4",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/chrome": "^0.2.5",
+    "@types/codemirror": "^5.60.16",
+    "@types/mustache": "^4.2.6",
+    "@wxt-dev/module-svelte": "^2.0.5",
+    "happy-dom": "^20.0.10",
+    "svelte": "^5.56.8",
+    "svelte-check": "^4.4.4",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.10",
+    "wxt": "^0.21.3"
+  }
 }
