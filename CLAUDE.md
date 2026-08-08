@@ -44,9 +44,11 @@ src/
   legacy/
     globals.ts           the WebDeveloper namespace, anchored to globalThis
     dom-ready.ts         restores upstream's DOMContentLoaded timing
-    shims/               WebDeveloper.Storage / .Locales over the typed core
-    js/                  48 files / ~13,500 lines of upstream ES5, being ported
+    shims/               Storage / Locales / dom over the typed core
+    js/                  47 files / ~12,400 lines of upstream ES5, being ported
+  content/               the extractors feeding all 16 reports, + dispatch
   lib/
+    dom/                 documents, css-values, stylesheets
     i18n.ts              t(); i18n-keys.ts is generated from en_US
     storage/             schema, settings, tab-state, migrations, defaults
     messaging.ts         the typed background message contract
@@ -164,6 +166,20 @@ and then collide with a reused id. And the numbered settings (`tool_3_url`,
 writes those exact names; collapsing them to arrays is migration v2, in the
 phase that rewrites that page.
 
+### `shims/dom` must be imported _after_ `common.js` and `css.js`
+
+Fourteen DOM helpers moved to `src/lib/dom`, but ~130 call sites in
+`src/legacy/js` still reach them through `WebDeveloper.Common` and
+`WebDeveloper.CSS`. `src/legacy/shims/dom.ts` overwrites those namespace
+entries so one implementation is live, rather than leaving the ported copy
+under test and the original running in the features.
+
+Overwriting only works in import order, and ES imports are hoisted — an import
+at the top of `common.js` would run _before_ its own definitions and be undone
+by them. So every entrypoint loading `common.js` or `css.js` loads the shim on
+the line after, and the now-dead originals stay in those files until the
+feature bundles are ported and the files are deleted.
+
 Migrations are keyed by the version they produce and run in order, each
 awaited — `SCHEMA_VERSION` in `schema.ts` must match the highest key in
 `MIGRATIONS`. They must be no-ops on empty storage, because a fresh install
@@ -216,8 +232,14 @@ Upstream PRs #40 and #37 landed as-is; #39 only half — `hideImages` really is
 `makeImagesInvisible` to "Hide Images" is wrong: it does not touch `<img>` at
 all, it swaps background images for a transparent PNG.
 
-Next is Phase 3 (`content.js` and the six feature bundles), then the Svelte
-popup behind a typed feature registry. Full plan:
+Phase 3 is half done. `content.js` is ported to `src/content` and deleted; the
+golden snapshots are byte-identical across the port, which is the evidence it
+preserved behaviour, and the seventeen-branch `else if` chain is a dispatch
+table with its own tests. **Not yet confirmed in-browser.** The six feature
+bundles and `common.js`/`css.js`/`cookies.js` are still legacy — that is the
+rest of the phase.
+
+Then the Svelte popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.
 
 `src/legacy/js` shrinks each phase; when it is empty, delete it along with
