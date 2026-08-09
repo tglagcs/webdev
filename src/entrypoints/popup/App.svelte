@@ -186,14 +186,25 @@
       </div>
     {/if}
 
-    <div class="tab-content grow p-2">
+    <!--
+      All eleven menus share one grid cell, so the popup is always as tall as
+      the tallest of them and does not resize when the user switches to
+      Information. Measuring them and setting a height would do the same, but
+      a number in the source is one a longer translation quietly outgrows.
+
+      The inactive ones are hidden with `visibility`, not `display`: they stay
+      laid out, which is what gives the cell its height, and they stay out of
+      the tab order and off the hit-testing. They also have to stay in the DOM
+      regardless -- resize.js and tools.js fill their lists in at startup and
+      find them by id, whichever menu is open.
+    -->
+    <div class="tab-content grid grow p-2">
       {#each menus as menu (menu.id)}
-        <!--
-          Every menu is in the DOM and the inactive ones are hidden: resize.js
-          and tools.js still fill their lists in at startup and find the
-          container by id, whichever menu is open.
-        -->
-        <div hidden={menu.id !== current.id} class="space-y-2.5">
+        <div
+          class="col-start-1 row-start-1 space-y-2.5"
+          class:invisible={menu.id !== current.id}
+          inert={menu.id !== current.id}
+        >
           {#each groups(menu.features) as group (group.kind)}
             <section>
               <h2
