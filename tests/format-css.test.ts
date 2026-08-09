@@ -92,4 +92,27 @@ describe("formatCSS", () => {
   it("returns an empty string unchanged", () => {
     expect(formatCSS("")).toBe("");
   });
+
+  /**
+   * Real stylesheets are hundreds of kilobytes. The first version of this
+   * trimmed trailing whitespace by rewriting the whole accumulated output on
+   * every character, which is quadratic: on a page like Google it hung long
+   * enough for Firefox to report the extension as slowing the browser down,
+   * and Edit CSS opened onto an unstyled page because the CSS never arrived.
+   *
+   * A quadratic implementation does not fail this test, it exceeds the
+   * timeout -- which is the point. Half a megabyte is a realistic sheet.
+   */
+  it("stays linear on a stylesheet the size of a real one", () => {
+    const rule = '.c{color:#fff;background:url(data:image/png;base64,AAAA);content:"x;y"}';
+    const large = rule.repeat(8000);
+
+    expect(large.length).toBeGreaterThan(500_000);
+
+    const started = Date.now();
+    const formatted = formatCSS(large);
+
+    expect(formatted.length).toBeGreaterThan(large.length);
+    expect(Date.now() - started).toBeLessThan(2000);
+  });
 });

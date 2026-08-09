@@ -1,8 +1,8 @@
 /**
- * Pretty-prints CSS for the Edit CSS panel and the CSS report.
+ * Pretty-prints CSS for the Edit CSS panel.
  *
  * The bundled beautify.js only does JavaScript, which is why View JavaScript
- * has a Beautify command and Edit CSS shows minified stylesheets as one
+ * has a Beautify command and Edit CSS showed minified stylesheets as one
  * unreadable line.
  *
  * This is a formatter, not a parser: it never interprets a declaration, only
@@ -17,6 +17,13 @@
  *   - url() tokens, which may hold an unquoted data: URI full of braces
  *   - comments, which may hold anything at all, including commented-out rules
  *   - nested blocks, `@media`, `@supports` and modern nested selectors
+ *
+ * It must also be linear in the length of the input. Real stylesheets run to
+ * hundreds of kilobytes, and the first version of this trimmed trailing
+ * whitespace by rewriting the accumulated output on every character -- which
+ * is quadratic, and made Firefox report the extension as slowing the browser
+ * down. Nothing here may look backwards at what has already been emitted: the
+ * spacing decisions are held as two pending flags instead.
  */
 
 const INDENT = "  ";
@@ -48,28 +55,36 @@ export function formatCSS(css: string): string {
     depth: 0,
     inDeclaration: false,
   };
-  let out = "";
-  // Whether the next non-space character starts a new line.
-  let pendingNewline = false;
 
-  const write = (text: string): void => {
+  const parts: string[] = [];
+  // Deferred, so a run of source whitespace collapses to at most one space and
+  // disappears entirely where a line break or a delimiter follows it.
+  let pendingNewline = false;
+  let pendingSpace = false;
+
+  const emit = (text: string): void => {
     if (pendingNewline) {
-      out += `\n${INDENT.repeat(state.depth)}`;
-      pendingNewline = false;
+      parts.push(`\n${INDENT.repeat(state.depth)}`);
+    } else if (pendingSpace && parts.length > 0) {
+      parts.push(" ");
     }
 
-    out += text;
+    pendingNewline = false;
+    pendingSpace = false;
+    parts.push(text);
   };
 
   for (let index = 0; index < css.length; index++) {
     const character = css[index]!;
     const next = css[index + 1];
 
+    // Inside a literal nothing is interpreted, and no pending flag can be
+    // set, so the characters go straight out.
     if (state.inComment) {
-      out += character;
+      parts.push(character);
 
       if (character === "*" && next === "/") {
-        out += next;
+        parts.push(next);
         index++;
         state.inComment = false;
         pendingNewline = true;
@@ -79,11 +94,11 @@ export function formatCSS(css: string): string {
     }
 
     if (state.quote) {
-      out += character;
+      parts.push(character);
 
       // A backslash escapes the next character, quote included.
       if (character === "\\" && next !== undefined) {
-        out += next;
+        parts.push(next);
         index++;
       } else if (character === state.quote) {
         state.quote = null;
@@ -93,7 +108,7 @@ export function formatCSS(css: string): string {
     }
 
     if (state.inUrl) {
-      out += character;
+      parts.push(character);
 
       if (character === ")") {
         state.inUrl = false;
@@ -103,7 +118,7 @@ export function formatCSS(css: string): string {
     }
 
     if (character === "/" && next === "*") {
-      write("/*");
+      emit("/*");
       index++;
       state.inComment = true;
 
@@ -111,7 +126,7 @@ export function formatCSS(css: string): string {
     }
 
     if (character === '"' || character === "'") {
-      write(character);
+      emit(character);
       state.quote = character;
 
       continue;
@@ -119,8 +134,8 @@ export function formatCSS(css: string): string {
 
     // url( is a token, not a function call: its contents are not a string and
     // an unquoted data: URI inside it can contain braces and semicolons.
-    if (/[uU]/.test(character) && /^url\(/i.test(css.slice(index, index + 4))) {
-      write(css.slice(index, index + 4));
+    if ((character === "u" || character === "U") && /^url\(/i.test(css.slice(index, index + 4))) {
+      emit(css.slice(index, index + 4));
       index += 3;
       state.inUrl = true;
 
@@ -128,9 +143,9 @@ export function formatCSS(css: string): string {
     }
 
     if (character === "{") {
-      // The source may or may not have had a space here; the layout is ours.
-      out = out.replace(/[ \t]+$/, "");
-      write(" {");
+      // Exactly one space before the brace, whatever the source had.
+      pendingSpace = parts.length > 0 && !pendingNewline;
+      emit("{");
       state.depth++;
       state.inDeclaration = false;
       pendingNewline = true;
@@ -141,16 +156,17 @@ export function formatCSS(css: string): string {
     if (character === "}") {
       state.depth = Math.max(0, state.depth - 1);
       state.inDeclaration = false;
+      pendingSpace = false;
       pendingNewline = true;
-      write("}");
+      emit("}");
       pendingNewline = true;
 
       continue;
     }
 
     if (character === ";") {
-      out = out.replace(/[ \t]+$/, "");
-      write(";");
+      pendingSpace = false;
+      emit(";");
       state.inDeclaration = false;
       pendingNewline = true;
 
@@ -160,50 +176,40 @@ export function formatCSS(css: string): string {
     // The colon that opens a declaration takes a space after it; the ones in
     // `a:hover` and `a::before` are part of the selector and take none.
     if (character === ":" && state.depth > 0 && !state.inDeclaration) {
-      out = out.replace(/[ \t]+$/, "");
+      pendingSpace = false;
+      emit(":");
       state.inDeclaration = true;
-      write(": ");
-
-      // Swallow the source's own spacing so it does not double up.
-      while (/[ \t]/.test(css[index + 1] ?? "")) {
-        index++;
-      }
+      pendingSpace = true;
 
       continue;
     }
 
-    // Collapse the run of whitespace the source used; the layout is ours now.
-    if (/\s/.test(character)) {
-      if (!pendingNewline && out && !/[\s{]$/.test(out)) {
-        out += " ";
-      }
-
-      continue;
-    }
-
-    // A comma at the top of a rule separates selectors, which read better one
-    // per line; inside a declaration it separates values and must not.
+    // A comma between selectors reads better one per line; inside a
+    // declaration it separates values and must stay on the line.
     if (character === ",") {
-      out = out.replace(/[ \t]+$/, "");
-      write(",");
+      pendingSpace = false;
+      emit(",");
 
       if (state.inDeclaration) {
-        write(" ");
+        pendingSpace = true;
       } else {
         pendingNewline = true;
       }
 
-      while (/[ \t]/.test(css[index + 1] ?? "")) {
-        index++;
-      }
+      continue;
+    }
+
+    if (character === " " || character === "\t" || character === "\n" || character === "\r") {
+      pendingSpace = true;
 
       continue;
     }
 
-    write(character);
+    emit(character);
   }
 
-  return out
+  return parts
+    .join("")
     .replace(/[ \t]+$/gm, "")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
