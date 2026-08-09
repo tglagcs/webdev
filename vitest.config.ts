@@ -16,6 +16,19 @@ export default defineConfig({
         // put documentURI in every payload. Left to default, the snapshots
         // would encode happy-dom's localhost base and differ in CI.
         url: "https://fixture.test/host-page.html",
+        // The features inject <link href="chrome-extension://...">, which
+        // happy-dom tries to fetch and then reports as an unsupported scheme,
+        // once per injected stylesheet. The tests assert on the element being
+        // in the document, not on the sheet loading, so the fetch is pure
+        // noise -- and it cannot succeed for any of these fixtures anyway.
+        // handleDisabledFileLoadingAsSuccess is the half that matters: with
+        // loading merely disabled, happy-dom still fires an error event per
+        // link and prints the stack.
+        settings: {
+          disableCSSFileLoading: true,
+          disableJavaScriptFileLoading: true,
+          handleDisabledFileLoadingAsSuccess: true,
+        },
       },
     },
   },

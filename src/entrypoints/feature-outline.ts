@@ -1,12 +1,23 @@
 // Injected into the page with chrome.scripting.executeScript({ files }).
-// Concat order from common/gulp/build.js buildFeatures.
 //
-// Upstream appended "void(0);" so the script's completion value stayed
-// serialisable. main() returning nothing does the same job here.
-import "@/legacy/globals";
+// The popup then runs a second executeScript({ func }) whose body reads
+// globalThis.WebDeveloper.Outline.*, so this has to publish onto the namespace
+// even though the implementation is a module now -- see the closure note in
+// CLAUDE.md for why that spelling is not optional.
+//
+// common.js and css.js are still here because the outline features share the
+// page with the other bundles and the embedded widgets, which have not been
+// ported and expect the rest of WebDeveloper.Common to exist.
+import { WebDeveloper } from "@/legacy/globals";
 import "@/legacy/js/common/common.js";
+import "@/legacy/js/common/css.js";
 import "@/legacy/shims/dom";
 import "@/legacy/js/features/common.js";
-import "@/legacy/js/features/outline.js";
 
+import * as outline from "@/features/outline";
+
+WebDeveloper.Outline = { ...WebDeveloper.Outline, ...outline };
+
+// Upstream appended "void(0);" so the script's completion value stayed
+// serialisable. main() returning nothing does the same job here.
 export default defineUnlistedScript(() => {});

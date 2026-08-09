@@ -1,0 +1,340 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`external links > generates a stylesheet scoped to the document host 1`] = `
+{
+  "injected": [
+    {
+      "css": "a:not([href^=http\\:\\/\\/fixture\\.test]):not([href^=https\\:\\/\\/fixture\\.test]) { outline: 1px solid #b94a48 !important; }a:not([href^=http\\:\\/\\/]):not([href^=https\\:\\/\\/]) { outline-style: none !important; }",
+      "href": null,
+      "id": "web-developer-outline-external-links",
+      "rel": null,
+      "tag": "style",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`outlines that tag elements by computed style > adds a class to absolute elements 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-positioned-elements.css",
+      "id": "web-developer-outline-absolute-positioned-elements",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [
+    {
+      "className": "absolute web-developer-outline-absolute-positioned-elements",
+      "tag": "div",
+    },
+  ],
+}
+`;
+
+exports[`outlines that tag elements by computed style > adds a class to fixed elements 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-positioned-elements.css",
+      "id": "web-developer-outline-fixed-positioned-elements",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [
+    {
+      "className": "fixed web-developer-outline-fixed-positioned-elements",
+      "tag": "div",
+    },
+  ],
+}
+`;
+
+exports[`outlines that tag elements by computed style > adds a class to floated elements and a stylesheet 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-floated-elements.css",
+      "id": "web-developer-outline-floated-elements",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [
+    {
+      "className": "floated-left web-developer-outline-floated-elements",
+      "tag": "div",
+    },
+    {
+      "className": "floated-right web-developer-outline-floated-elements",
+      "tag": "div",
+    },
+    {
+      "className": "floated-left existing-class web-developer-outline-floated-elements",
+      "tag": "div",
+    },
+  ],
+}
+`;
+
+exports[`outlines that tag elements by computed style > adds a class to relative elements 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-positioned-elements.css",
+      "id": "web-developer-outline-relative-positioned-elements",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [
+    {
+      "className": "relative web-developer-outline-relative-positioned-elements",
+      "tag": "div",
+    },
+  ],
+}
+`;
+
+exports[`outlines with an optional tag-name overlay > outlines block level elements with tag names 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-block-level-elements.css",
+      "id": "web-developer-outline-block-level-elements",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/before.css",
+      "id": "web-developer-outline-block-level-elements-before-common",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-block-level-elements-before.css",
+      "id": "web-developer-outline-block-level-elements-before",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`outlines with an optional tag-name overlay > outlines block level elements without tag names 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-block-level-elements.css",
+      "id": "web-developer-outline-block-level-elements",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`outlines with an optional tag-name overlay > outlines deprecated elements with tag names 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-deprecated-elements.css",
+      "id": "web-developer-outline-deprecated-elements",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/before.css",
+      "id": "web-developer-outline-deprecated-elements-before-common",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-deprecated-elements-before.css",
+      "id": "web-developer-outline-deprecated-elements-before",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`outlines with an optional tag-name overlay > outlines deprecated elements without tag names 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-deprecated-elements.css",
+      "id": "web-developer-outline-deprecated-elements",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`outlines with an optional tag-name overlay > outlines headings with tag names 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-headings.css",
+      "id": "web-developer-outline-headings",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/before.css",
+      "id": "web-developer-outline-headings-before-common",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-headings-before.css",
+      "id": "web-developer-outline-headings-before",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`outlines with an optional tag-name overlay > outlines headings without tag names 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-headings.css",
+      "id": "web-developer-outline-headings",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`outlines with an optional tag-name overlay > outlines table cells with tag names 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-table-cells.css",
+      "id": "web-developer-outline-table-cells",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/before.css",
+      "id": "web-developer-outline-table-cells-before-common",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-table-cells-before.css",
+      "id": "web-developer-outline-table-cells-before",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`outlines with an optional tag-name overlay > outlines table cells without tag names 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-table-cells.css",
+      "id": "web-developer-outline-table-cells",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`stylesheet-only outlines > outlines frames 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-frames.css",
+      "id": "web-developer-outline-frames",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`stylesheet-only outlines > outlines non-secure elements 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-non-secure-elements.css",
+      "id": "web-developer-outline-non-secure-elements",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`stylesheet-only outlines > outlines table captions 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-table-captions.css",
+      "id": "web-developer-outline-table-captions",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;
+
+exports[`stylesheet-only outlines > outlines tables 1`] = `
+{
+  "injected": [
+    {
+      "css": undefined,
+      "href": "chrome-extension://test-extension-id/features/css/outline/outline-tables.css",
+      "id": "web-developer-outline-tables",
+      "rel": "stylesheet",
+      "tag": "link",
+    },
+  ],
+  "tagged": [],
+}
+`;

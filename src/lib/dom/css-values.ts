@@ -75,3 +75,18 @@ export function getCSSURI(property: CSSValue): string | null {
 
   return URI.exec(String(property))?.[1] ?? null;
 }
+
+/**
+ * The text of a computed value.
+ *
+ * The old CSSOM returned an object carrying `cssText`; every engine shipping
+ * today returns the string itself. Both are handled for the same reason as
+ * getPropertyCSSValue above.
+ */
+export function getCSSText(property: CSSValue): string | null {
+  if (!property) {
+    return null;
+  }
+
+  return (property as { cssText?: string }).cssText ?? String(property);
+}

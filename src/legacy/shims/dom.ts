@@ -21,10 +21,20 @@
 import { WebDeveloper } from "../globals";
 import {
   getCSSPrimitiveValue,
+  getCSSText,
   getCSSURI,
   getPropertyCSSValue,
   isCSSURI,
 } from "@/lib/dom/css-values";
+import {
+  addClass,
+  getDocumentHeadElement,
+  getExtensionURL,
+  hasClass,
+  removeClass,
+  removeMatchingElements,
+  toggleClass,
+} from "@/lib/dom/elements";
 import {
   getContentDocument,
   getContentWindow,
@@ -38,6 +48,7 @@ import {
   isAlternateStyleSheet,
   isMediaStyleSheet,
   isValidStyleSheet,
+  toggleStyleSheet,
 } from "@/lib/dom/stylesheets";
 import { getDocuments } from "@/content/report";
 import { getDocumentCSS } from "@/content/resources";
@@ -47,6 +58,11 @@ WebDeveloper.CSS = WebDeveloper.CSS || {};
 WebDeveloper.Content = WebDeveloper.Content || {};
 
 Object.assign(WebDeveloper.Common, {
+  addClass,
+  getCSSText,
+  // Renamed on the way across: it returns any extension URL, and only Chromium
+  // ever called the scheme "chrome".
+  getChromeURL: getExtensionURL,
   getContentDocument,
   getContentWindow,
   getCSSPrimitiveValue,
@@ -55,8 +71,14 @@ Object.assign(WebDeveloper.Common, {
   getDocumentImages,
   getElementText,
   getPropertyCSSValue,
+  getDocumentHeadElement,
+  hasClass,
   isCSSURI,
+  removeClass,
+  removeMatchingElements,
   removeReloadParameterFromURL,
+  toggleClass,
+  toggleStyleSheet,
 });
 
 Object.assign(WebDeveloper.CSS, {

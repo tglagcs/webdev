@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Feature fixture</title>
+  <style id="embedded-one">
+    .floated-left { float: left; }
+    .floated-right { float: right; }
+    .not-floated { float: none; }
+    .absolute { position: absolute; }
+    .relative { position: relative; }
+    .fixed { position: fixed; }
+  </style>
+</head>
+<body>
+
+<!-- Floated and positioned elements, for the two outline features that walk
+     the tree and tag nodes by computed style rather than by selector. -->
+<div class="floated-left">left</div>
+<div class="floated-right">right</div>
+<div class="not-floated">static</div>
+<div class="absolute">absolute</div>
+<div class="relative">relative</div>
+<div class="fixed">fixed</div>
+<div class="plain">plain</div>
+
+<!-- An element that already carries an unrelated class, so add/removeClass is
+     exercised against a non-empty className rather than an empty one. -->
+<div class="floated-left existing-class">left, with a class already</div>
+
+<!-- Links: same host, other host, and protocol-relative, for
+     outlineExternalLinks. -->
+<a href="https://fixture.test/internal">internal</a>
+<a href="https://example.org/external">external</a>
+<a href="#anchor">anchor only</a>
+
+<table>
+  <caption>A caption</caption>
+  <tr><td>cell</td></tr>
+</table>
+
+</body>
+</html>

@@ -48,8 +48,9 @@ src/
     shims/               Storage / Locales / dom over the typed core
     js/                  47 files / ~12,400 lines of upstream ES5, being ported
   content/               the extractors feeding all 16 reports, + dispatch
+  features/              the injected bundles' logic (Outline done)
   lib/
-    dom/                 documents, css-values, stylesheets
+    dom/                 documents, css-values, elements, stylesheets
     i18n.ts              t(); i18n-keys.ts is generated from en_US
     storage/             schema, settings, tab-state, migrations, defaults
     messaging.ts         the typed background message contract
@@ -249,12 +250,22 @@ Upstream PRs #40 and #37 landed as-is; #39 only half — `hideImages` really is
 `makeImagesInvisible` to "Hide Images" is wrong: it does not touch `<img>` at
 all, it swaps background images for a transparent PNG.
 
-Phase 3 is half done. `content.js` is ported to `src/content` and deleted; the
-golden snapshots are byte-identical across the port, which is the evidence it
-preserved behaviour, and the seventeen-branch `else if` chain is a dispatch
-table with its own tests. **Not yet confirmed in-browser.** The six feature
-bundles and `common.js`/`css.js`/`cookies.js` are still legacy — that is the
-rest of the phase.
+Phase 3: `content.js` is ported to `src/content` and confirmed in-browser, and
+the Outline bundle is ported to `src/features/outline.ts`. Both were done under
+golden snapshots taken from the legacy implementation first, and both left the
+`.snap` files byte-identical — that equality is the evidence, not the fact that
+the tests pass.
+
+The feature bundles have their own kind of snapshot: they return nothing and
+only mutate the DOM, so `tests/outline-features.test.ts` asserts on the
+mutation — which `[id^=web-developer-]` elements exist, and which elements
+carry a `web-developer-` class. That is the failure mode the executeScript
+closure bug had, so it is the one worth pinning. The built bundle was also
+loaded in a browser and driven directly, since it is the built artifact that
+shipped broken last time.
+
+Still legacy: the CSS, Forms, Images, Information and Miscellaneous bundles,
+and `common.js`/`css.js`/`cookies.js`.
 
 Then the Svelte popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.
