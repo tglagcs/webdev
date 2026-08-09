@@ -83,7 +83,12 @@ WebDeveloper.Overlay.Miscellaneous.displayHiddenElements = function()
     // If the tab is valid
     if(WebDeveloper.Overlay.isValidTab(tab))
     {
-      WebDeveloper.Overlay.Miscellaneous.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Miscellaneous.displayHiddenElements([document]); });
+      // A toggle rather than a one-shot action: upstream had no way back from
+      // this short of reloading the page.
+      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
+      {
+        WebDeveloper.Overlay.Miscellaneous.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Miscellaneous.displayHiddenElements(!featureEnabled, [document]); }, [enabled]);
+      });
     }
   });
 };

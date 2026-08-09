@@ -23,11 +23,21 @@ export interface DisplayNotification {
 export function displayNotification(message: MessageKey, parameters?: (string | number)[]): void {
   const notification: DisplayNotification = { type: "display-notification", message, parameters };
 
-  void browser.runtime.sendMessage(notification).catch(() => {
-    // No popup listening. Nothing to do, and nothing worth logging: this is
-    // the ordinary case for a feature the user triggered and then closed the
-    // popup on.
-  });
+  // Nothing here may throw. The popup runs the feature through
+  // executeScript and only updates the menu state once that promise
+  // resolves, so an exception on this line would leave the feature applied to
+  // the page but shown as inactive -- the failure is invisible at the point
+  // it happens and surfaces as a menu item that will not toggle.
+  //
+  // Both halves are load-bearing: sendMessage does not return a promise on
+  // every path, and the promise it does return rejects when no popup is
+  // listening, which is the ordinary case for a feature applied from a popup
+  // the user then closed.
+  try {
+    void Promise.resolve(browser.runtime.sendMessage(notification)).catch(() => {});
+  } catch {
+    // No receiver at all.
+  }
 }
 
 /**

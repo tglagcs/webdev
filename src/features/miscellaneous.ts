@@ -59,24 +59,96 @@ const invisibleNodeFilter: NodeFilter = {
   },
 };
 
-function forceStyle(
-  contentDocument: Document,
-  filter: NodeFilter,
-  property: string,
-  value: string,
-): number {
-  const walker = contentDocument.createTreeWalker(
-    getDocumentBodyElement(contentDocument),
-    NodeFilter.SHOW_ELEMENT,
-    filter,
-  );
+/**
+ * Attributes recording what displayHiddenElements changed, so it can be undone.
+ *
+ * Parked on the elements themselves rather than held in a module-level map,
+ * for the same reason toggleElementInlineStyles does it: the injected script
+ * is re-evaluated on every invocation and keeps no state between them. The
+ * page is the only memory there is.
+ *
+ * The whole `style` attribute is stored as text rather than the one property
+ * being changed, because putting a property back through the CSSOM rewrites
+ * the attribute -- "display: none" comes back as "display: none;" -- and the
+ * page's own markup should survive a toggle untouched.
+ */
+const PARKED_STYLE = "web-developer-hidden-style";
+const PARKED_INPUT = "web-developer-hidden-input";
 
+function force(element: HTMLElement, property: string, value: string): void {
+  // An element can match both filters; only the first visit is the original.
+  if (!element.hasAttribute(PARKED_STYLE)) {
+    element.setAttribute(PARKED_STYLE, element.getAttribute("style") ?? "");
+  }
+
+  // !important, because whatever is hiding the element is winning already.
+  element.style.setProperty(property, value, "important");
+}
+
+function restoreStyle(element: HTMLElement): void {
+  const original = element.getAttribute(PARKED_STYLE)!;
+
+  if (original) {
+    element.setAttribute("style", original);
+  } else {
+    element.removeAttribute("style");
+  }
+
+  element.removeAttribute(PARKED_STYLE);
+
+  // Belt and braces: an element that had no style attribute must not come
+  // back with an empty one. Removing the attribute is enough in isolation,
+  // but the element's CSSStyleDeclaration has been touched, and engines
+  // differ on whether that re-materialises the attribute.
+  if (element.getAttribute("style") === "") {
+    element.removeAttribute("style");
+  }
+}
+
+function reveal(contentDocument: Document): number {
   let count = 0;
-  let node: Node | null;
 
-  while ((node = walker.nextNode()) !== null) {
-    // !important, because whatever is hiding the element is winning already.
-    (node as HTMLElement).style.setProperty(property, value, "important");
+  // A hidden input is hidden by its type, not by CSS, so removing the type is
+  // the only thing that shows it -- and it becomes a text input, which is
+  // what makes the value visible and editable.
+  for (const input of Array.from(contentDocument.querySelectorAll("input[type=hidden]"))) {
+    input.setAttribute(PARKED_INPUT, "");
+    input.removeAttribute("type");
+    count++;
+  }
+
+  for (const [filter, property, value] of [
+    [hiddenNodeFilter, "display", "revert"],
+    [invisibleNodeFilter, "visibility", "visible"],
+  ] as const) {
+    const walker = contentDocument.createTreeWalker(
+      getDocumentBodyElement(contentDocument),
+      NodeFilter.SHOW_ELEMENT,
+      filter,
+    );
+
+    let node: Node | null;
+
+    while ((node = walker.nextNode()) !== null) {
+      force(node as HTMLElement, property, value);
+      count++;
+    }
+  }
+
+  return count;
+}
+
+function hideAgain(contentDocument: Document): number {
+  let count = 0;
+
+  for (const input of Array.from(contentDocument.querySelectorAll(`[${PARKED_INPUT}]`))) {
+    input.setAttribute("type", "hidden");
+    input.removeAttribute(PARKED_INPUT);
+    count++;
+  }
+
+  for (const element of Array.from(contentDocument.querySelectorAll(`[${PARKED_STYLE}]`))) {
+    restoreStyle(element as HTMLElement);
     count++;
   }
 
@@ -84,30 +156,29 @@ function forceStyle(
 }
 
 /**
- * Reveals everything the page is hiding, by three different mechanisms.
+ * Reveals everything the page is hiding, by three different mechanisms -- or
+ * puts it all back.
  *
  * `revert` rather than `block`: the element goes back to whatever its own
  * cascade would have given it, so a hidden table row is revealed as a row and
  * not as a block.
+ *
+ * Upstream had no way back from this: it was a one-shot action, so the only
+ * way to un-see a page's hidden markup was to reload. It is a toggle now.
  */
-export function displayHiddenElements(documents: Document[]): void {
-  let displayed = 0;
+export function displayHiddenElements(display: boolean, documents: Document[]): void {
+  let affected = 0;
 
   for (const contentDocument of documents) {
-    // A hidden input is hidden by its type, not by CSS, so removing the type
-    // is the only thing that shows it -- and it becomes a text input, which
-    // is what makes the value visible and editable.
-    for (const input of Array.from(contentDocument.querySelectorAll("input[type=hidden]"))) {
-      input.removeAttribute("type");
-      displayed++;
-    }
+    affected += display ? reveal(contentDocument) : hideAgain(contentDocument);
+  }
 
-    displayed += forceStyle(contentDocument, hiddenNodeFilter, "display", "revert");
-    displayed += forceStyle(contentDocument, invisibleNodeFilter, "visibility", "visible");
+  if (!display) {
+    return;
   }
 
   displayCount(
-    displayed,
+    affected,
     "displayHiddenElementsSingleResult",
     "displayHiddenElementsMultipleResult",
   );

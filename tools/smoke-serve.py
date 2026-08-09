@@ -81,10 +81,12 @@ STUB = """
   });
 
   window.__SMOKE__ = { calls: [] };
+  // Returns a promise when no callback is given, like the real MV3 APIs --
+  // code that awaits or .catch()es the result has to work here too.
   const record = (name) => (...args) => {
     window.__SMOKE__.calls.push(name);
     const fn = args[args.length - 1];
-    if (typeof fn === "function") fn(undefined);
+    return settle(undefined)(typeof fn === "function" ? fn : undefined);
   };
 
   window.chrome = {

@@ -127,13 +127,43 @@ describe("stylesheet-only CSS features", () => {
 
 describe("displayHiddenElements", () => {
   it("reveals elements hidden by CSS, by inline style and by input type", () => {
-    Miscellaneous.displayHiddenElements(documents());
+    Miscellaneous.displayHiddenElements(true, documents());
 
     expect(styleState()).toMatchSnapshot();
   });
 
+  // Upstream was a one-shot action, so the only way back was a page reload.
+  //
+  // Compared attribute by attribute rather than on innerHTML: restoring a
+  // hidden input means removeAttribute("type") then setAttribute("type"),
+  // which moves it to the end of the attribute list. Nothing can observe
+  // that, and preserving it would mean rebuilding the element.
+  it("puts everything back", () => {
+    const snapshot = () =>
+      Array.from(document.querySelectorAll("*"), (element) =>
+        Object.fromEntries(
+          Array.from(element.attributes, (attribute) => [attribute.name, attribute.value]).sort(),
+        ),
+      );
+    const before = snapshot();
+
+    Miscellaneous.displayHiddenElements(true, documents());
+    Miscellaneous.displayHiddenElements(false, documents());
+
+    expect(snapshot()).toEqual(before);
+  });
+
+  it("restores an element's own inline value rather than dropping it", () => {
+    // hidden-inline carries `display: none` of its own, so undoing has to put
+    // that back -- not merely remove what the feature added.
+    Miscellaneous.displayHiddenElements(true, documents());
+    Miscellaneous.displayHiddenElements(false, documents());
+
+    expect(document.getElementById("hidden-inline")!.getAttribute("style")).toBe("display: none");
+  });
+
   it("leaves the extension's own elements alone", () => {
-    Miscellaneous.displayHiddenElements(documents());
+    Miscellaneous.displayHiddenElements(true, documents());
 
     // Both node filters skip ids starting web-developer, so this one keeps
     // its display: none rather than being revealed by the feature.
@@ -143,7 +173,7 @@ describe("displayHiddenElements", () => {
   });
 
   it("reports how many it displayed", () => {
-    Miscellaneous.displayHiddenElements(documents());
+    Miscellaneous.displayHiddenElements(true, documents());
 
     expect(notifications).toMatchSnapshot();
   });
