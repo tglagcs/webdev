@@ -393,6 +393,13 @@ mouseover handler with it), and a toggle used where the state was known (the
 section above). The pattern to distrust is a defensive check that looks
 redundant in isolation.
 
+The cookie report is the one report that no longer goes through the content
+script. It could only see same-origin frames, so a page whose frames are
+third-party reported one section where devtools lists several; the popup builds
+it from `scripting.executeScript({ allFrames: true })` instead, one section per
+frame host. `localStorage` and `sessionStorage` come from the same call and the
+same grouping, and are queued for phase 8 — see the plan.
+
 Then the Svelte popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.
 
