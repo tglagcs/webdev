@@ -24,6 +24,7 @@ python tools/check-injected-closures.py    # see "Injected closures" below
 python tools/check-locales.py              # translations must subset en_US
 python tools/generate-i18n-keys.py --check # the committed union matches en_US
 python tools/smoke-serve.py --build chrome-mv3 --port 8730
+python tools/extractor-harness.py          # colours + CSS in a real engine
 ```
 
 `smoke-serve.py` serves a build over HTTP with the browser APIs stubbed. It
@@ -201,6 +202,16 @@ Golden snapshots in `tests/__snapshots__` pin the extractor output taken from
 the legacy implementation. A diff means the port changed behaviour and needs
 justifying — regenerating them to make a test pass defeats their purpose.
 
+Two extractor branches are unreachable from vitest and need
+`tools/extractor-harness.py`, which bundles `src/content` and serves it beside
+a fixture in a real browser. happy-dom fetches a `<link href>` for real, the
+fetch fails, and `sheet` stays null — so the whole linked-stylesheet half of
+`getDocumentCSS` never runs, `@import` following included. And
+`getDocumentColors` reads `getComputedStyle`, which happy-dom implements only
+partially, so a colour arriving by cascade or inheritance is invisible to the
+snapshots. Both were verified correct after the port; the harness docstring
+records the expected output.
+
 `tests/setup/i18n.ts` gives the fake browser a real `getMessage`, resolved
 against `en_US` including placeholders, because `@webext-core/fake-browser`
 throws for it and a stub returning `""` would let a test pass against a message
@@ -226,6 +237,12 @@ deferred with the options page) and the spike on whether `chrome.i18n` is
 reachable from an injected script's isolated world — if it is, ~40 call sites
 stop passing pre-resolved strings through `args`. `hasI18n()` in `lib/i18n.ts`
 is there for that check. Verify, do not assume.
+
+`Generated.addItem` takes the target id now. It used to assume `item-N`, which
+only the reports built through `Generated.output` use — the cookie and form
+reports label their entries `cookie-N` and `form-N`, so every sidebar link on
+those two pages pointed at an id that did not exist and silently did nothing.
+Upstream bug, and adjacent to PR #36 without being it.
 
 Upstream PRs #40 and #37 landed as-is; #39 only half — `hideImages` really is
 `img { display: none }` so "Remove Images" is right, but renaming

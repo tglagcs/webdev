@@ -1,6 +1,7 @@
 .output/
 .wxt/
 .smoke/
+.harness/
 node_modules/
 package-lock.json
 
@@ -12,6 +13,9 @@ src/public/lib/
 src/entrypoints/**/index.html
 src/public/**/*.css
 tests/fixtures/
+# Fixture CSS and markup for tools/extractor-harness.py, kept literal.
+tests/harness/*.css
+tests/harness/page.html
 tests/__snapshots__/
 
 # One key per line is upstream's convention and keeps locale diffs readable.

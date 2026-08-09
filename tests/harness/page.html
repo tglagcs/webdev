@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Real-engine extractor check</title>
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="print.css" media="print">
+<link rel="alternate stylesheet" href="alt.css" title="Alt">
+<style>
+  .inherits-me { color: rgb(70, 80, 90); }
+  .embedded { background-color: rgb(238, 102, 0); }
+</style>
+</head>
+<body>
+  <p class="from-linked">colour from a linked stylesheet</p>
+  <p class="from-import">colour from an @import inside a linked stylesheet</p>
+  <p class="embedded">colour from an embedded style block</p>
+  <div class="inherits-me"><span>colour reaching me only by inheritance</span></div>
+  <p style="color: rgb(0, 0, 255);">inline</p>
+  <script src="extractors.js"></script>
+  <!-- Bundled by tools/extractor-harness.py; exposes window.__WD__ -->
+</body>
+</html>

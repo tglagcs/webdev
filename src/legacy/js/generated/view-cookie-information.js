@@ -189,7 +189,7 @@ WebDeveloper.Generated.displayCookie = function(cookie, container, documentCount
   container.appendChild(separator);
   document.getElementById("content").appendChild(container);
 
-  WebDeveloper.Generated.addItem(cookieName, cookiesCounter, documentCount + 1);
+  WebDeveloper.Generated.addItem(cookieName, cookiesCounter, documentCount + 1, "cookie-" + cookiesCounter);
 };
 
 // Edits a cookie

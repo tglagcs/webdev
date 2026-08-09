@@ -73,13 +73,19 @@ WebDeveloper.Generated.addDocument = function(documentURL, documentCount, itemDe
 };
 
 // Adds an item
-WebDeveloper.Generated.addItem = function(itemName, itemIndex, documentIndex)
+//
+// targetId is the id of the element the sidebar link should jump to. It used
+// to be assumed to be "item-" + itemIndex, which is only what the reports
+// built through Generated.output actually use -- the cookie and form reports
+// label their entries "cookie-N" and "form-N", so every one of their sidebar
+// links pointed at an id that does not exist on the page and did nothing.
+WebDeveloper.Generated.addItem = function(itemName, itemIndex, documentIndex, targetId)
 {
   var childElement = document.createElement("a");
   var element      = document.createElement("li");
 
   childElement.appendChild(document.createTextNode(itemName));
-  childElement.setAttribute("href", "#item-" + itemIndex);
+  childElement.setAttribute("href", "#" + (targetId || "item-" + itemIndex));
   element.appendChild(childElement);
   document.getElementById("items-" + documentIndex).querySelector("ol").appendChild(element);
 };

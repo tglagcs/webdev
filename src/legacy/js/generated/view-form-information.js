@@ -109,7 +109,7 @@ WebDeveloper.Generated.displayForm = function(form, container, documentCount, fo
   separator.setAttribute("class", "m-5");
   container.appendChild(separator);
 
-  WebDeveloper.Generated.addItem(WebDeveloper.Generated.formatFormDescription(form), formsCounter, documentCount + 1);
+  WebDeveloper.Generated.addItem(WebDeveloper.Generated.formatFormDescription(form), formsCounter, documentCount + 1, "form-" + formsCounter);
 };
 
 // Formats the form description

@@ -1,0 +1,3 @@
+@import url("imported.css");
+.from-linked { color: rgb(17, 34, 51); }
+body { background-color: rgb(250, 250, 250); }

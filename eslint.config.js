@@ -14,6 +14,8 @@ export default tseslint.config(
       ".output/",
       ".wxt/",
       ".smoke/",
+      // Bundled output of tools/extractor-harness.py.
+      ".harness/",
       "node_modules/",
       // Upstream JavaScript, carried across unchanged and deleted file by file
       // over Phases 2-7. Linting it would only produce noise about code that
