@@ -18,6 +18,7 @@ import { get } from "@/lib/storage/settings";
 import type { AnySettingKey } from "@/lib/storage/schema";
 import { getFeaturesOnTab, toggleFeatureOnTab } from "@/lib/storage/tab-state";
 import { log } from "@/lib/log";
+import { t } from "@/lib/i18n";
 
 /** The pages where an extension cannot inject, and what to say about them. */
 const REFUSED: {
@@ -61,6 +62,8 @@ async function resolvePayload(
       payload[name] = source.value;
     } else if (source.from === "enabled") {
       payload[name] = enabled;
+    } else if (source.from === "message") {
+      payload[name] = t(source.key);
     } else {
       payload[name] = !!(await get(source.key as AnySettingKey));
     }
@@ -110,12 +113,20 @@ export async function inject({ tabId, feature }: Injection): Promise<void> {
  * marshal the script's return value counts as success -- the feature has
  * already run in the page by then, and treating it as a failure is what left
  * Display Handheld Styles stuck on. See the note in CLAUDE.md.
+ *
+ * Only a feature with an on state records anything. Make Images Full Size and
+ * Reload Images inject and are finished; upstream ran those through
+ * `addFeatureOnTab` rather than `toggleFeatureOnTab` for the same reason.
  */
 export async function runInjected(feature: Feature, tabId: number): Promise<boolean> {
   try {
     await inject({ tabId, feature });
   } catch (exception) {
     log("Injected script did not return a usable result.", exception);
+  }
+
+  if (!feature.stateful) {
+    return false;
   }
 
   return (await toggleFeatureOnTab(feature.id, tabId)).includes(feature.id);

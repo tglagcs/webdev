@@ -17,6 +17,7 @@ import { toggleStyleSheet } from "@/lib/dom/stylesheets";
 import { getDocuments } from "@/content/report";
 import { formatDimensions, type DimensionsLocale } from "@/lib/dimensions";
 import { displayCount, displayNotification } from "./notify";
+import type { Entry } from "./entries";
 
 export type { DimensionsLocale };
 
@@ -533,3 +534,46 @@ function reloadElementImages(element: Element): void {
     }
   }
 }
+
+/**
+ * The Images menu, as entries the popup can name in the registry.
+ *
+ * Same three shapes as Outline -- a flag from the current state, nothing at
+ * all, or something extra -- plus the one feature that draws text and so needs
+ * its words: Display Image Dimensions is handed the two labels resolved by the
+ * popup, because the page's world has no locales.
+ */
+export const IMAGES_ENTRIES: Record<string, Entry> = {
+  "display-alt-attributes": (payload, documents) =>
+    displayAltAttributes(!payload.enabled, documents),
+  "display-image-paths": (payload, documents) => displayImagePaths(!payload.enabled, documents),
+  "hide-images": (payload, documents) => hideImages(!payload.enabled, documents),
+  "make-images-invisible": (payload, documents) => makeImagesInvisible(!payload.enabled, documents),
+  "outline-background-images": (payload, documents) =>
+    outlineBackgroundImages(!payload.enabled, documents),
+  "outline-images-with-adjusted-dimensions": (payload, documents) =>
+    outlineImagesWithAdjustedDimensions(!payload.enabled, documents),
+  "outline-images-with-oversized-dimensions": (payload, documents) =>
+    outlineImagesWithOversizedDimensions(!payload.enabled, documents),
+  "replace-images-with-alt-attributes": (payload, documents) =>
+    replaceImagesWithAltAttributes(!payload.enabled, documents),
+
+  "hide-background-images": (_payload, documents) => hideBackgroundImages(documents),
+  "outline-all-images": (_payload, documents) => outlineAllImages(documents),
+  "outline-images-with-empty-alt-attributes": (_payload, documents) =>
+    outlineImagesWithEmptyAltAttributes(documents),
+  "outline-images-without-alt-attributes": (_payload, documents) =>
+    outlineImagesWithoutAltAttributes(documents),
+  "outline-images-without-dimensions": (_payload, documents) =>
+    outlineImagesWithoutDimensions(documents),
+
+  "display-image-dimensions": (payload, documents) =>
+    displayImageDimensions(!payload.enabled, documents, {
+      height: String(payload.height),
+      width: String(payload.width),
+    }),
+
+  // No on state: these run once and are done.
+  "make-images-full-size": (_payload, documents) => makeImagesFullSize(documents),
+  "reload-images": (_payload, documents) => reloadImages(documents),
+};

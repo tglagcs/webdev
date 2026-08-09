@@ -57,12 +57,17 @@ export const FEATURE_KINDS: FeatureKind[] = ["toggle", "action", "report", "dial
  * Where a value in an injected feature's payload comes from.
  *
  * Everything the old closures captured, and nothing else: a constant written
- * in the registry, a stored setting, or whether the feature is already on for
- * this tab.
+ * in the registry, a stored setting, a translated string, or whether the
+ * feature is already on for this tab.
+ *
+ * The messages are resolved in the popup rather than in the page because
+ * `WebDeveloper.Locales` is not in the page's isolated world -- see the note
+ * in CLAUDE.md about what took Edit CSS out.
  */
 export type PayloadSource =
   | { from: "value"; value: string | number | boolean }
   | { from: "setting"; key: string }
+  | { from: "message"; key: PlainMessageKey }
   | { from: "enabled" };
 
 /**

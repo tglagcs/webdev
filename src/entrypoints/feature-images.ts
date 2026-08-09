@@ -5,7 +5,11 @@ import "@/legacy/shims/dom";
 import "@/legacy/shims/notify";
 
 import * as images from "@/features/images";
+import { register, run } from "@/features/entries";
 
 WebDeveloper.Images = { ...WebDeveloper.Images, ...images };
+
+register(images.IMAGES_ENTRIES);
+WebDeveloper.run = run;
 
 export default defineUnlistedScript(() => {});

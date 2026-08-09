@@ -5,6 +5,10 @@
  * tools/extract-registry.py -- the ids, columns and message keys are the ones
  * that shipped, and the per-tab state is stored under the id, so none of them
  * may be renamed.
+ *
+ * Sixteen of the nineteen name an entry in the images bundle. What still has a
+ * handler is the two reports, which open a tab, and Disable Images, which is a
+ * content setting rather than anything injected.
  */
 
 import type { Feature } from "../types";
@@ -24,7 +28,10 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.displayAltAttributes",
+    inject: {
+      bundle: "/feature-images.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-image-dimensions",
@@ -32,7 +39,14 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.displayImageDimensions",
+    inject: {
+      bundle: "/feature-images.js",
+      payload: {
+        enabled: { from: "enabled" },
+        height: { from: "message", key: "height" },
+        width: { from: "message", key: "width" },
+      },
+    },
   },
   {
     id: "display-image-paths",
@@ -40,7 +54,10 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.displayImagePaths",
+    inject: {
+      bundle: "/feature-images.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "find-broken-images",
@@ -55,7 +72,9 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.hideBackgroundImages",
+    inject: {
+      bundle: "/feature-images.js",
+    },
   },
   {
     id: "hide-images",
@@ -63,21 +82,29 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.hideImages",
+    inject: {
+      bundle: "/feature-images.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "make-images-full-size",
     labelKey: "makeImagesFullSize",
     column: 2,
     kind: "action",
-    handler: "WebDeveloper.Overlay.Images.makeImagesFullSize",
+    inject: {
+      bundle: "/feature-images.js",
+    },
   },
   {
     id: "make-images-invisible",
     labelKey: "makeImagesInvisible",
     column: 2,
     kind: "action",
-    handler: "WebDeveloper.Overlay.Images.makeImagesInvisible",
+    inject: {
+      bundle: "/feature-images.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "outline-all-images",
@@ -85,7 +112,9 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.outlineAllImages",
+    inject: {
+      bundle: "/feature-images.js",
+    },
   },
   {
     id: "outline-background-images",
@@ -93,7 +122,10 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.outlineBackgroundImages",
+    inject: {
+      bundle: "/feature-images.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "outline-images-with-adjusted-dimensions",
@@ -101,7 +133,10 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.outlineImagesWithAdjustedDimensions",
+    inject: {
+      bundle: "/feature-images.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "outline-images-with-empty-alt-attributes",
@@ -109,7 +144,9 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.outlineImagesWithEmptyAltAttributes",
+    inject: {
+      bundle: "/feature-images.js",
+    },
   },
   {
     id: "outline-images-with-oversized-dimensions",
@@ -117,7 +154,10 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 3,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.outlineImagesWithOversizedDimensions",
+    inject: {
+      bundle: "/feature-images.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "outline-images-without-alt-attributes",
@@ -125,7 +165,9 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 3,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.outlineImagesWithoutAltAttributes",
+    inject: {
+      bundle: "/feature-images.js",
+    },
   },
   {
     id: "outline-images-without-dimensions",
@@ -133,14 +175,18 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 3,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.outlineImagesWithoutDimensions",
+    inject: {
+      bundle: "/feature-images.js",
+    },
   },
   {
     id: "reload-images",
     labelKey: "reloadImages",
     column: 3,
     kind: "action",
-    handler: "WebDeveloper.Overlay.Images.reloadImages",
+    inject: {
+      bundle: "/feature-images.js",
+    },
   },
   {
     id: "replace-images-with-alt-attributes",
@@ -148,7 +194,10 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 3,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.replaceImagesWithAltAttributes",
+    inject: {
+      bundle: "/feature-images.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "view-image-information",

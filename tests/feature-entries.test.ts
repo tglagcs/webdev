@@ -12,10 +12,17 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeBrowser } from "wxt/testing/fake-browser";
 
 import { register, run } from "@/features/entries";
+import { IMAGES_ENTRIES } from "@/features/images";
 import { OUTLINE_ENTRIES } from "@/features/outline";
 import { FEATURES } from "@/features/registry";
 
 const injected = FEATURES.filter((feature) => feature.inject);
+
+/** Every bundle's table, keyed by the path the registry names. */
+const BUNDLES: Record<string, Record<string, unknown>> = {
+  "/feature-outline.js": OUTLINE_ENTRIES,
+  "/feature-images.js": IMAGES_ENTRIES,
+};
 
 beforeEach(() => {
   fakeBrowser.reset();
@@ -27,23 +34,26 @@ describe("the registry against the bundle", () => {
   // The entry is named by the feature id, so this is what stops the two
   // drifting apart when one of them is edited.
   it("has an entry for every injected feature", () => {
-    const missing = injected
-      .filter((feature) => feature.inject!.bundle === "/feature-outline.js")
-      .filter((feature) => !(feature.id in OUTLINE_ENTRIES));
+    const missing = injected.filter((feature) => !(feature.id in BUNDLES[feature.inject!.bundle]!));
 
     expect(missing.map((feature) => feature.id)).toEqual([]);
   });
 
   it("has no entry that no feature names", () => {
     const ids = new Set(injected.map((feature) => feature.id));
+    const orphans = Object.entries(BUNDLES).flatMap(([bundle, entries]) =>
+      Object.keys(entries)
+        .filter((entry) => !ids.has(entry))
+        .map((entry) => `${bundle}#${entry}`),
+    );
 
-    expect(Object.keys(OUTLINE_ENTRIES).filter((entry) => !ids.has(entry))).toEqual([]);
+    expect(orphans).toEqual([]);
   });
 
-  it("gives every injected feature a bundle that exists in the build", () => {
-    const bundles = new Set(injected.map((feature) => feature.inject!.bundle));
+  it("names a bundle that has a table", () => {
+    const unknown = injected.filter((feature) => !BUNDLES[feature.inject!.bundle]);
 
-    expect([...bundles]).toEqual(["/feature-outline.js"]);
+    expect(unknown.map((feature) => feature.id)).toEqual([]);
   });
 
   // A feature whose payload names a value nothing provides would arrive as
@@ -51,7 +61,7 @@ describe("the registry against the bundle", () => {
   it("declares where every payload value comes from", () => {
     for (const feature of injected) {
       for (const source of Object.values(feature.inject!.payload ?? {})) {
-        expect(["value", "setting", "enabled"]).toContain(source.from);
+        expect(["value", "setting", "message", "enabled"]).toContain(source.from);
       }
     }
   });
