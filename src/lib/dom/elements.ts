@@ -77,3 +77,21 @@ export function removeMatchingElements(selector: string, contentDocument: Docume
 export function getExtensionURL(path: string): string {
   return browser.runtime.getURL(path as never);
 }
+
+/**
+ * Escapes text for interpolation into an HTML string.
+ *
+ * The dashboard builds its markup by concatenation and inserts it with
+ * insertAdjacentHTML, and some of what it interpolates -- stylesheet URLs,
+ * element attributes -- comes from the page it is running on. A page that
+ * serves a stylesheet whose href contains a quote could otherwise close the
+ * attribute and write markup into the extension's own UI.
+ */
+export function escapeHTML(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}

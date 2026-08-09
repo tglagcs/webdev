@@ -20,6 +20,7 @@
 
 import { WebDeveloper } from "../globals";
 import { formatCSS } from "@/lib/format-css";
+import { styleSheetLabel, uniqueLabels } from "@/lib/stylesheet-label";
 import {
   getCSSPrimitiveValue,
   getCSSText,
@@ -29,6 +30,7 @@ import {
 } from "@/lib/dom/css-values";
 import {
   addClass,
+  escapeHTML,
   getDocumentHeadElement,
   getExtensionURL,
   hasClass,
@@ -60,7 +62,10 @@ WebDeveloper.Content = WebDeveloper.Content || {};
 
 Object.assign(WebDeveloper.Common, {
   addClass,
+  escapeHTML,
   formatCSS,
+  styleSheetLabel,
+  uniqueLabels,
   getCSSText,
   // Renamed on the way across: it returns any extension URL, and only Chromium
   // ever called the scheme "chrome".

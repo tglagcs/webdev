@@ -6,7 +6,7 @@ WebDeveloper.EditCSS.interval        = null;
 WebDeveloper.EditCSS.updateFrequency = 500;
 
 // Adds a tab
-WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position)
+WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position, tooltip)
 {
   var active    = "";
   var templates = "";
@@ -23,7 +23,7 @@ WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position)
   }
 
   // Get the edit CSS tab templates
-  templates = WebDeveloper.EditCSS.getEditCSSTabTemplates({ active: active, css: css, position: position, title: title });
+  templates = WebDeveloper.EditCSS.getEditCSSTabTemplates({ active: active, css: css, position: position, title: title, tooltip: tooltip || title });
 
   WebDeveloper.Common.appendHTML(templates.panel, panels);
   WebDeveloper.Common.appendHTML(templates.tab, tabs);
@@ -133,7 +133,7 @@ WebDeveloper.EditCSS.getEditCSSTabTemplates = function(parameters)
   var tabTemplates = {};
 
   tabTemplates.panel = '<div id="edit-css-panel-' + parameters.position + '" class="tab-pane ' + parameters.active + '"><textarea class="font-monospace form-control">' + parameters.css + "</textarea></div>";
-  tabTemplates.tab   = '<li id="edit-css-tab-' + parameters.position + '" class="nav-item"><a href="#edit-css-panel-' + parameters.position + '" class="nav-link ' + parameters.active + '" data-bs-target="#edit-css-panel-' + parameters.position + '" data-bs-toggle="tab">' + parameters.title + "</a></li>";
+  tabTemplates.tab   = '<li id="edit-css-tab-' + parameters.position + '" class="nav-item"><a href="#edit-css-panel-' + parameters.position + '" class="nav-link ' + parameters.active + '" data-bs-target="#edit-css-panel-' + parameters.position + '" data-bs-toggle="tab" title="' + globalThis.WebDeveloper.Common.escapeHTML(parameters.tooltip) + '">' + globalThis.WebDeveloper.Common.escapeHTML(parameters.title) + "</a></li>";
 
   return tabTemplates;
 };
@@ -193,12 +193,21 @@ WebDeveloper.EditCSS.retrieveCSS = function(dashboardPanel, editCSSPanel, locale
     var styleSheet        = null;
     var tabs              = dashboardDocument.getElementById("web-developer-edit-css-tabs");
 
+    // The last path segment is only a file name on simple sites; a bundler
+    // puts its whole module list there, which is unreadable as a tab title.
+    // Labels are computed for the whole set at once so repeats can be
+    // numbered, and the full URL stays available as the tab's tooltip.
+    var labels = globalThis.WebDeveloper.Common.uniqueLabels(response.map(function(sheet)
+    {
+      return globalThis.WebDeveloper.Common.styleSheetLabel(sheet.url);
+    }));
+
     // Loop through the style sheets
     for(var i = 0, l = response.length; i < l; i++)
     {
       styleSheet = response[i];
 
-      WebDeveloper.EditCSS.addTab(WebDeveloper.Dashboard.formatURL(styleSheet.url), styleSheet.content, tabs, panels, position);
+      WebDeveloper.EditCSS.addTab(labels[i], styleSheet.content, tabs, panels, position, styleSheet.url);
 
       position++;
     }
