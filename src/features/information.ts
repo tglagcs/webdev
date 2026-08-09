@@ -13,6 +13,7 @@ import { getContentWindow, getDocumentBodyElement } from "@/lib/dom/documents";
 import { insertAsFirstChild, removeMatchingElements } from "@/lib/dom/elements";
 import { toggleStyleSheet } from "@/lib/dom/stylesheets";
 import { getDocuments } from "@/content/report";
+import type { Entry } from "./entries";
 
 export type { DimensionsLocale };
 
@@ -535,3 +536,42 @@ export function updateDivDimensions(contentDocument: Document): void {
 
   state.updating = false;
 }
+
+/**
+ * The Information menu, as entries the popup can name in the registry.
+ *
+ * Fifteen of the twenty-four. Eight of the rest open a report tab, and Display
+ * Element Information builds the in-page dashboard, so none of them is
+ * injected this way. Two entries need words -- Display Div Dimensions the pair
+ * of dimension labels, Display Table Depth the word "depth" -- and get them
+ * resolved by the popup.
+ */
+export const INFORMATION_ENTRIES: Record<string, Entry> = {
+  "display-access-keys": (payload, documents) => displayAccessKeys(!payload.enabled, documents),
+  "display-anchors": (payload, documents) => displayAnchors(!payload.enabled, documents),
+  "display-div-order": (payload, documents) => displayDivOrder(!payload.enabled, documents),
+  "display-id-class-details": (payload, documents) =>
+    displayIdClassDetails(!payload.enabled, documents),
+  "display-object-information": (payload, documents) =>
+    displayObjectInformation(!payload.enabled, documents),
+  "display-stack-levels": (payload, documents) => displayStackLevels(!payload.enabled, documents),
+  "display-tab-index": (payload, documents) => displayTabIndex(!payload.enabled, documents),
+  "display-table-information": (payload, documents) =>
+    displayTableInformation(!payload.enabled, documents),
+  "display-title-attributes": (payload, documents) =>
+    displayTitleAttributes(!payload.enabled, documents),
+
+  "display-abbreviations": (_payload, documents) => displayAbbreviations(documents),
+  "display-aria-roles": (_payload, documents) => displayARIARoles(documents),
+  "display-link-details": (_payload, documents) => displayLinkDetails(documents),
+  "display-topographic-information": (_payload, documents) =>
+    displayTopographicInformation(documents),
+
+  "display-table-depth": (payload, documents) =>
+    displayTableDepth(!payload.enabled, documents, String(payload.depth)),
+  "display-div-dimensions": (payload, documents) =>
+    displayDivDimensions(!payload.enabled, documents, {
+      height: String(payload.height),
+      width: String(payload.width),
+    }),
+};

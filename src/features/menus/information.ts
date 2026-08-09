@@ -5,6 +5,11 @@
  * tools/extract-registry.py -- the ids, columns and message keys are the ones
  * that shipped, and the per-tab state is stored under the id, so none of them
  * may be renamed.
+ *
+ * Fifteen of the twenty-four name an entry in the information bundle. What
+ * still has a handler is the eight reports, which open a tab, and Display
+ * Element Information, which builds the in-page dashboard and goes with the
+ * widgets.
  */
 
 import type { Feature } from "../types";
@@ -16,7 +21,9 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayAbbreviations",
+    inject: {
+      bundle: "/feature-information.js",
+    },
   },
   {
     id: "display-access-keys",
@@ -24,7 +31,10 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayAccessKeys",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-anchors",
@@ -32,7 +42,10 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayAnchors",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-aria-roles",
@@ -40,7 +53,9 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayARIARoles",
+    inject: {
+      bundle: "/feature-information.js",
+    },
   },
   {
     id: "display-div-dimensions",
@@ -48,7 +63,14 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayDivDimensions",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: {
+        enabled: { from: "enabled" },
+        height: { from: "message", key: "height" },
+        width: { from: "message", key: "width" },
+      },
+    },
   },
   {
     id: "display-div-order",
@@ -56,7 +78,10 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayDivOrder",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-element-information",
@@ -72,7 +97,10 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayIdClassDetails",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-link-details",
@@ -80,7 +108,9 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayLinkDetails",
+    inject: {
+      bundle: "/feature-information.js",
+    },
   },
   {
     id: "display-object-information",
@@ -88,7 +118,10 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayObjectInformation",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-stack-levels",
@@ -96,7 +129,10 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayStackLevels",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-tab-index",
@@ -104,7 +140,10 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayTabIndex",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-table-depth",
@@ -112,7 +151,10 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayTableDepth",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: { enabled: { from: "enabled" }, depth: { from: "message", key: "depth" } },
+    },
   },
   {
     id: "display-table-information",
@@ -120,7 +162,10 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayTableInformation",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-title-attributes",
@@ -128,7 +173,10 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayTitleAttributes",
+    inject: {
+      bundle: "/feature-information.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-topographic-information",
@@ -136,7 +184,9 @@ export const INFORMATION_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Information.displayTopographicInformation",
+    inject: {
+      bundle: "/feature-information.js",
+    },
   },
   {
     id: "find-duplicate-ids",

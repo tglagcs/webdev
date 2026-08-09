@@ -5,7 +5,11 @@ import "@/legacy/shims/dom";
 import "@/legacy/shims/notify";
 
 import * as information from "@/features/information";
+import { register, run } from "@/features/entries";
 
 WebDeveloper.Information = { ...WebDeveloper.Information, ...information };
+
+register(information.INFORMATION_ENTRIES);
+WebDeveloper.run = run;
 
 export default defineUnlistedScript(() => {});

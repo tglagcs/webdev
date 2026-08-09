@@ -13,6 +13,7 @@ import { fakeBrowser } from "wxt/testing/fake-browser";
 
 import { register, run } from "@/features/entries";
 import { IMAGES_ENTRIES } from "@/features/images";
+import { INFORMATION_ENTRIES } from "@/features/information";
 import { OUTLINE_ENTRIES } from "@/features/outline";
 import { FEATURES } from "@/features/registry";
 
@@ -22,6 +23,7 @@ const injected = FEATURES.filter((feature) => feature.inject);
 const BUNDLES: Record<string, Record<string, unknown>> = {
   "/feature-outline.js": OUTLINE_ENTRIES,
   "/feature-images.js": IMAGES_ENTRIES,
+  "/feature-information.js": INFORMATION_ENTRIES,
 };
 
 beforeEach(() => {
@@ -100,7 +102,7 @@ describe("run", () => {
   });
 });
 
-describe("the outline entries themselves", () => {
+describe("the entries themselves", () => {
   // Each entry is one call with the arguments its function happens to take --
   // documents first, documents last, or a keyword in front. Getting one wrong
   // outlines the wrong thing, so the marks they leave are asserted.
@@ -124,5 +126,18 @@ describe("the outline entries themselves", () => {
 
     expect(document.querySelector("link#web-developer-outline-headings-before")).toBeNull();
     expect(document.querySelector("link#web-developer-outline-headings")).not.toBeNull();
+  });
+
+  // The two entries that take words. A payload key spelled differently here
+  // and in the registry arrives as "undefined" in the page, printed into the
+  // label -- which is visible but easy to miss in review.
+  it("prints the words the popup resolved", () => {
+    document.body.innerHTML = "<table id='t'><tr><td>x</td></tr></table>";
+
+    register(INFORMATION_ENTRIES);
+    run("display-table-depth", { enabled: false, depth: "Depth" });
+
+    expect(document.body.textContent).toContain("Depth");
+    expect(document.body.textContent).not.toContain("undefined");
   });
 });
