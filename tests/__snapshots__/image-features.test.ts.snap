@@ -1,0 +1,326 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`hideImages > converts image inputs to submit buttons and parks the original type 1`] = `
+{
+  "elements": [
+    {
+      "alt": "One",
+      "height": "80",
+      "id": "img-alt",
+      "src": "/img/one.png",
+      "width": "120",
+    },
+    {
+      "alt": "",
+      "height": "40",
+      "id": "img-empty-alt",
+      "src": "/img/two.png",
+      "width": "40",
+    },
+    {
+      "height": "40",
+      "id": "img-no-alt",
+      "src": "/img/three.png",
+      "width": "40",
+    },
+    {
+      "alt": "Four",
+      "id": "img-no-dimensions",
+      "src": "/img/four.png",
+    },
+    {
+      "alt": "Go",
+      "id": "input-image",
+      "src": "/img/button.png",
+      "type": "submit",
+      "web-developer-hide-images": "true",
+    },
+    {
+      "id": "input-image-no-alt",
+      "src": "/img/button2.png",
+      "type": "submit",
+      "web-developer-hide-images": "true",
+    },
+    {
+      "id": "input-text",
+      "name": "q",
+      "type": "text",
+      "value": "",
+    },
+    {
+      "alt": "Five",
+      "height": "10",
+      "id": "img-titled",
+      "src": "/img/five.png",
+      "title": "A title",
+      "width": "10",
+    },
+  ],
+  "injected": [],
+  "styleSheets": [
+    "web-developer-hide-images",
+  ],
+}
+`;
+
+exports[`labels drawn beside images > shows the alt attribute of every image that has one 1`] = `
+{
+  "elements": [
+    {
+      "alt": "One",
+      "height": "80",
+      "id": "img-alt",
+      "src": "/img/one.png",
+      "width": "120",
+    },
+    {
+      "alt": "",
+      "height": "40",
+      "id": "img-empty-alt",
+      "src": "/img/two.png",
+      "width": "40",
+    },
+    {
+      "height": "40",
+      "id": "img-no-alt",
+      "src": "/img/three.png",
+      "width": "40",
+    },
+    {
+      "alt": "Four",
+      "id": "img-no-dimensions",
+      "src": "/img/four.png",
+    },
+    {
+      "alt": "Go",
+      "id": "input-image",
+      "src": "/img/button.png",
+      "type": "image",
+    },
+    {
+      "id": "input-image-no-alt",
+      "src": "/img/button2.png",
+      "type": "image",
+    },
+    {
+      "id": "input-text",
+      "name": "q",
+      "type": "text",
+      "value": "",
+    },
+    {
+      "alt": "Five",
+      "height": "10",
+      "id": "img-titled",
+      "src": "/img/five.png",
+      "title": "A title",
+      "width": "10",
+    },
+  ],
+  "injected": [
+    {
+      "className": "web-developer-display-alt-attributes",
+      "text": "alt="One"",
+    },
+    {
+      "className": "web-developer-display-alt-attributes",
+      "text": "alt=""",
+    },
+    {
+      "className": "web-developer-display-alt-attributes",
+      "text": "alt="Four"",
+    },
+    {
+      "className": "web-developer-display-alt-attributes",
+      "text": "alt="Go"",
+    },
+    {
+      "className": "web-developer-display-alt-attributes",
+      "text": "alt="Five"",
+    },
+  ],
+  "styleSheets": [
+    "web-developer-display-alt-attributes",
+  ],
+}
+`;
+
+exports[`labels drawn beside images > shows the src of every image as a link 1`] = `
+{
+  "elements": [
+    {
+      "alt": "One",
+      "height": "80",
+      "id": "img-alt",
+      "src": "/img/one.png",
+      "width": "120",
+    },
+    {
+      "alt": "",
+      "height": "40",
+      "id": "img-empty-alt",
+      "src": "/img/two.png",
+      "width": "40",
+    },
+    {
+      "height": "40",
+      "id": "img-no-alt",
+      "src": "/img/three.png",
+      "width": "40",
+    },
+    {
+      "alt": "Four",
+      "id": "img-no-dimensions",
+      "src": "/img/four.png",
+    },
+    {
+      "alt": "Go",
+      "id": "input-image",
+      "src": "/img/button.png",
+      "type": "image",
+    },
+    {
+      "id": "input-image-no-alt",
+      "src": "/img/button2.png",
+      "type": "image",
+    },
+    {
+      "id": "input-text",
+      "name": "q",
+      "type": "text",
+      "value": "",
+    },
+    {
+      "alt": "Five",
+      "height": "10",
+      "id": "img-titled",
+      "src": "/img/five.png",
+      "title": "A title",
+      "width": "10",
+    },
+  ],
+  "injected": [
+    {
+      "className": "web-developer-display-image-paths",
+      "text": "src="https://fixture.test/img/one.png"",
+    },
+    {
+      "className": "web-developer-display-image-paths",
+      "text": "src="https://fixture.test/img/two.png"",
+    },
+    {
+      "className": "web-developer-display-image-paths",
+      "text": "src="https://fixture.test/img/three.png"",
+    },
+    {
+      "className": "web-developer-display-image-paths",
+      "text": "src="https://fixture.test/img/four.png"",
+    },
+    {
+      "className": "web-developer-display-image-paths",
+      "text": "src="https://fixture.test/img/five.png"",
+    },
+  ],
+  "styleSheets": [
+    "web-developer-display-image-paths",
+  ],
+}
+`;
+
+exports[`makeImagesInvisible > swaps every src for the transparent placeholder, parking the original 1`] = `
+{
+  "elements": [
+    {
+      "alt": "One",
+      "height": "80",
+      "id": "img-alt",
+      "src": "chrome-extension://test-extension-id/img/transparent.png",
+      "web-developer-make-images-invisible": "/img/one.png",
+      "width": "120",
+    },
+    {
+      "alt": "",
+      "height": "40",
+      "id": "img-empty-alt",
+      "src": "chrome-extension://test-extension-id/img/transparent.png",
+      "web-developer-make-images-invisible": "/img/two.png",
+      "width": "40",
+    },
+    {
+      "height": "40",
+      "id": "img-no-alt",
+      "src": "chrome-extension://test-extension-id/img/transparent.png",
+      "web-developer-make-images-invisible": "/img/three.png",
+      "width": "40",
+    },
+    {
+      "alt": "Four",
+      "id": "img-no-dimensions",
+      "src": "chrome-extension://test-extension-id/img/transparent.png",
+      "web-developer-make-images-invisible": "/img/four.png",
+    },
+    {
+      "alt": "Go",
+      "id": "input-image",
+      "src": "/img/button.png",
+      "type": "submit",
+      "web-developer-make-images-invisible": "true",
+    },
+    {
+      "id": "input-image-no-alt",
+      "src": "/img/button2.png",
+      "type": "submit",
+      "web-developer-make-images-invisible": "true",
+    },
+    {
+      "id": "input-text",
+      "name": "q",
+      "type": "text",
+      "value": "",
+    },
+    {
+      "alt": "Five",
+      "height": "10",
+      "id": "img-titled",
+      "src": "chrome-extension://test-extension-id/img/transparent.png",
+      "title": "A title",
+      "web-developer-make-images-invisible": "/img/five.png",
+      "width": "10",
+    },
+  ],
+  "injected": [],
+  "styleSheets": [
+    "web-developer-make-images-invisible",
+  ],
+}
+`;
+
+exports[`stylesheet-only image features > hideBackgroundImages toggles its stylesheet on and off 1`] = `
+[
+  "web-developer-hide-background-images",
+]
+`;
+
+exports[`stylesheet-only image features > outlineAllImages toggles its stylesheet on and off 1`] = `
+[
+  "web-developer-outline-all-images",
+]
+`;
+
+exports[`stylesheet-only image features > outlineImagesWithEmptyAltAttributes toggles its stylesheet on and off 1`] = `
+[
+  "web-developer-outline-images-with-empty-alt-attributes",
+]
+`;
+
+exports[`stylesheet-only image features > outlineImagesWithoutAltAttributes toggles its stylesheet on and off 1`] = `
+[
+  "web-developer-outline-images-without-alt-attributes",
+]
+`;
+
+exports[`stylesheet-only image features > outlineImagesWithoutDimensions toggles its stylesheet on and off 1`] = `
+[
+  "web-developer-outline-images-without-dimensions",
+]
+`;

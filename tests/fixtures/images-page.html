@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Images fixture</title>
+</head>
+<body>
+
+<!-- Images covering the attribute combinations the features branch on:
+     alt present, alt empty, alt absent, dimensions present and absent. -->
+<img id="img-alt" src="/img/one.png" alt="One" width="120" height="80">
+<img id="img-empty-alt" src="/img/two.png" alt="" width="40" height="40">
+<img id="img-no-alt" src="/img/three.png" width="40" height="40">
+<img id="img-no-dimensions" src="/img/four.png" alt="Four">
+
+<!-- Image inputs, which several features convert to submit buttons and back.
+     The one without a type must be left alone. -->
+<form>
+  <input id="input-image" type="image" src="/img/button.png" alt="Go">
+  <input id="input-image-no-alt" type="image" src="/img/button2.png">
+  <input id="input-text" type="text" name="q" value="">
+</form>
+
+<!-- An image already carrying an unrelated attribute, so the parking
+     attributes can be told apart from the page's own markup. -->
+<img id="img-titled" src="/img/five.png" alt="Five" title="A title" width="10" height="10">
+
+</body>
+</html>

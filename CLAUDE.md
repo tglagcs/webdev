@@ -246,9 +246,17 @@ those two pages pointed at an id that did not exist and silently did nothing.
 Upstream bug, and adjacent to PR #36 without being it.
 
 Upstream PRs #40 and #37 landed as-is; #39 only half — `hideImages` really is
-`img { display: none }` so "Remove Images" is right, but renaming
-`makeImagesInvisible` to "Hide Images" is wrong: it does not touch `<img>` at
-all, it swaps background images for a transparent PNG.
+`img { display: none }` plus `background-image: none`, so "Remove Images" is
+right and was taken.
+
+The other half was rejected on a **wrong reading**, corrected once the golden
+snapshot showed what the feature does: `makeImagesInvisible` swaps background
+images for a transparent PNG _and_ rewrites every `<img src>` to that PNG,
+having first pinned the natural width and height onto the element. So it does
+touch `<img>` — the difference from Remove Images is that the layout box
+survives, which is the whole point of the feature and what "invisible" says
+that "hidden" would not. The current name stays for that reason, not for the
+reason first recorded.
 
 Phase 3: `content.js` is ported to `src/content` and confirmed in-browser, and
 the Outline bundle is ported to `src/features/outline.ts`. Both were done under
