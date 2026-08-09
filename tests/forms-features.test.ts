@@ -23,13 +23,7 @@ import { resolve } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeBrowser } from "wxt/testing/fake-browser";
 
-import { WebDeveloper } from "@/legacy/globals";
-import "@/legacy/js/common/common.js";
-import "@/legacy/shims/dom";
-import "@/legacy/shims/notify";
-import "@/legacy/js/features/forms.js";
-
-const Forms = WebDeveloper.Forms;
+import * as Forms from "@/features/forms";
 
 const fixture = readFileSync(resolve("tests/fixtures/forms-page.html"), "utf-8");
 
