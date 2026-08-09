@@ -108,7 +108,19 @@ STUB = """
     runtime: {
       getManifest: () => ({ version: "1.0.0" }),
       getURL: (path) => new URL(path, location.origin).href,
-      sendMessage: record("runtime.sendMessage"),
+      // Answers the messages the widgets actually depend on, rather than
+      // resolving undefined: the dashboard reads response.value straight off
+      // the reply, so a bare stub makes every widget look broken.
+      sendMessage: (message, fn) => {
+        window.__SMOKE__.calls.push("runtime.sendMessage:" + (message && message.type));
+        let reply = {};
+        if (message && message.type === "get-storage-item") {
+          reply = { value: message.item in store ? store[message.item] : null };
+        } else if (message && message.type === "get-url-contents") {
+          reply = (message.urls || []).map((url) => ({ url, content: "" }));
+        }
+        return settle(reply)(typeof fn === "function" ? fn : undefined);
+      },
       onMessage: { addListener: noop },
       openOptionsPage: noop,
       lastError: undefined,

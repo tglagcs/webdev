@@ -54,7 +54,7 @@ WebDeveloper.Generated.initialize = function(data, locale)
       // Loop through the embedded containers
       for(var j = 0, m = embeddedContainers.length; j < m; j++)
       {
-        embeddedContainers[j].textContent = contentDocument.embedded;
+        embeddedContainers[j].textContent = WebDeveloper.Common.formatCSS(contentDocument.embedded);
       }
     }
 
@@ -92,7 +92,10 @@ WebDeveloper.Generated.initialize = function(data, locale)
         // Loop through the output containers
         for(var q = 0, r = outputContainers.length; q < r; q++)
         {
-          outputContainers[q].textContent = urlContentRequest.content;
+          // Formatted for the same reason as Edit CSS: most stylesheets on
+          // the web arrive minified, and a whole sheet on one line cannot be
+          // read. The formatter only moves whitespace.
+          outputContainers[q].textContent = WebDeveloper.Common.formatCSS(urlContentRequest.content);
         }
       }
 

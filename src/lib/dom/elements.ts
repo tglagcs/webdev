@@ -96,9 +96,18 @@ export function escapeHTML(text: string): string {
     .replace(/'/g, "&#39;");
 }
 
-/** Inserts a child at the front, whether or not the element already has any. */
-export function insertAsFirstChild(element: Element | null, child: Node): void {
-  if (!element) {
+/**
+ * Inserts a child at the front, whether or not the element already has any.
+ *
+ * Both arguments are guarded, and the child guard is load-bearing: callers in
+ * the Element Information widget pass a node that may not have been built,
+ * and upstream silently did nothing there. Dropping the check turned that into
+ * "parameter 1 is not of type Node", thrown inside a mouseover handler --
+ * which left the hover outline on the page, because the line that marks the
+ * outlined element comes after the throw.
+ */
+export function insertAsFirstChild(element: Element | null, child: Node | null): void {
+  if (!element || !child) {
     return;
   }
 
