@@ -140,6 +140,28 @@ reassigns on every injection, so `removeEventListener` was given a different
 function from the one added and each toggle left another listener behind. The
 handler is anchored on `globalThis` for that reason.
 
+### A second exit route means `setStyleSheet`, not `toggleStyleSheet`
+
+`toggleStyleSheet` inverts whatever it finds. That is correct only while there
+is exactly one way in and one way out — true of the ~25 features where the
+toggle _is_ the feature, and false of every widget since the close button.
+
+The close button did not remove `element-information.css`, which is
+`* { cursor: crosshair !important }`. The page kept a crosshair, and the toggle
+was then out of phase for the rest of the session: the next switch-on removed
+the sheet and the next switch-off put it back — so the symptom read as "the
+cursor stays after turning the feature off".
+
+`setStyleSheet(url, id, doc, insertFirst, enabled)` takes the state the caller
+wants; the widgets use it, and `teardown()` clears the sheet before its own
+"never initialised" guard, since the sheet is what the user sees.
+
+The same button broke `closeDashboardTab`, which recognised its last tab by
+counting `<li>` against a constant — the button was a new item in that list, so
+switching the feature off from the popup left an empty dashboard bar behind.
+Tabs are counted by their `-tab` suffix now. Chrome that shares a container
+with content must not be counted as content.
+
 ### The page's globals are not the popup's
 
 `src/entrypoints/content.ts` puts `WebDeveloper.Common` and `.CSS` into the
@@ -264,11 +286,14 @@ Phase 2 has landed the core: typed storage with ordered migrations, per-tab
 state in `storage.session`, generated message keys, the typed background
 contract, and `background.js`/`storage.js`/`locales.js`/`upgrade.js` deleted in
 favour of `src/lib` plus the two shims. Verified in-browser. Still open in this
-phase: collapsing the numbered settings (v2,
-deferred with the options page) and the spike on whether `chrome.i18n` is
-reachable from an injected script's isolated world — if it is, ~40 call sites
-stop passing pre-resolved strings through `args`. `hasI18n()` in `lib/i18n.ts`
-is there for that check. Verify, do not assume.
+phase: collapsing the numbered settings (v2, deferred with the options page).
+
+The `chrome.i18n` spike is half answered. `chrome.i18n.getMessage` **is**
+reachable from the page-side widgets — `Dashboard.closeLabel()` uses it in
+Chrome, behind a try/catch fallback — but it has not been confirmed on Firefox
+and the ~40 call sites still pass pre-resolved strings through `args`.
+Converting them is a Phase 4 job, once the registry owns the payloads.
+`hasI18n()` in `lib/i18n.ts` is there for that check.
 
 `Generated.addItem` takes the target id now. It used to assume `item-N`, which
 only the reports built through `Generated.output` use — the cookie and form
@@ -311,6 +336,24 @@ would make the popup message itself.
 
 Still legacy: the Forms bundle, and `common.js`/`css.js`/`cookies.js`.
 
+Four things landed ahead of their phase because in-browser testing asked for
+them, and each cost a regression worth remembering — all of them in the seam
+between a new affordance and code that assumed the old shape:
+
+- A close button on the dashboard. Its two regressions are the section above.
+- `popup_in_window`: the popup reopened as a standalone window, so it survives
+  clicking the page. A popup cannot be made to stay open, and an extension
+  cannot make a window always-on-top; the window is as far as this goes and the
+  user accepted that.
+- CSS beautified in Edit CSS and in the CSS report, through
+  `lib/format-css.ts`. The first implementation was O(n²) — it rewrote the
+  accumulated output per character — which only showed on a real minified
+  sheet. It emits into an array behind pending-space/newline flags now and
+  never reads back what it emitted; the 500KB test fails by timeout if that
+  changes.
+- Line wrapping and syntax highlighting in the JavaScript and CSS reports, both
+  defaulted on. Highlighting shipped defaulting to off.
+
 Fixed along the way, all upstream bugs rather than port regressions:
 `Generated.addItem` linked to `#item-N` on pages labelling their entries
 `cookie-N` and `form-N`, so those two reports' sidebars did nothing;
@@ -318,7 +361,18 @@ Fixed along the way, all upstream bugs rather than port regressions:
 so only the first `<object>` on a page was ever labelled; Display Hidden
 Elements had no way back short of a reload and is a toggle now; syntax
 highlighting defaulted to off and the reports had no line wrapping, so a
-minified file was one row behind a horizontal scrollbar.
+minified file was one row behind a horizontal scrollbar; Display Handheld and
+Display Print Styles could not be switched off, because `addScriptToTab` ran
+its callback only on a resolved `executeScript`, and a script returning
+something non-clonable rejects — the callback is what records the state, so the
+menu item stuck on.
+
+Not upstream bugs but mine, both from the same habit and both invisible to
+lint, types and tests: a guard dropped in a port (`insertAsFirstChild` checked
+only its first argument, and the throw took Element Information's whole
+mouseover handler with it), and a toggle used where the state was known (the
+section above). The pattern to distrust is a defensive check that looks
+redundant in isolation.
 
 Then the Svelte popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.
