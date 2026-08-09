@@ -12,7 +12,6 @@
 <script lang="ts">
   import DOMPurify from "dompurify";
 
-  import { HOMEPAGE_URL } from "@/branding";
   import { visibleMenus } from "@/features/registry";
   import { FEATURE_KINDS, type Feature, type FeatureKind, type MenuId } from "@/features/types";
   import { t } from "@/lib/i18n";
@@ -261,24 +260,6 @@
                   </li>
                 {/each}
 
-                <!--
-                  Not a feature: an ordinary link to the documentation, which
-                  the markup carried in the options menu and nothing toggles.
-                -->
-                {#if menu.id === "options" && group.kind === "dialog"}
-                  <li>
-                    <a
-                      href={`${HOMEPAGE_URL}help/`}
-                      target="_blank"
-                      rel="noreferrer"
-                      class="flex items-start gap-1.5 rounded px-1.5 py-1 text-xs text-ink
-                             no-underline hover:bg-surface-raised"
-                    >
-                      <span class="mt-px size-3.5 shrink-0"></span>
-                      {t("help")}
-                    </a>
-                  </li>
-                {/if}
               </ul>
             </section>
           {/each}
