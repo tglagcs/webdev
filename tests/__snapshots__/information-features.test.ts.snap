@@ -1,0 +1,239 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`displayDivOrder > numbers the divs in document order, from the inside 1`] = `
+{
+  "labels": [
+    {
+      "before": "inner",
+      "className": "web-developer-display-div-order",
+      "text": "#outer.one.two 1",
+    },
+    {
+      "before": null,
+      "className": "web-developer-display-div-order",
+      "text": "#web-developer-something.web-developer-marker 2",
+    },
+    {
+      "before": null,
+      "className": "web-developer-display-div-order",
+      "text": " 3",
+    },
+  ],
+  "styleSheets": [
+    "web-developer-display-div-order-before",
+    "web-developer-display-div-order",
+  ],
+}
+`;
+
+exports[`displayIdClassDetails > labels every element carrying an id or a class 1`] = `
+{
+  "labels": [
+    {
+      "before": "with-accesskey",
+      "className": "web-developer-id-class-details",
+      "text": "#with-accesskey",
+    },
+    {
+      "before": "with-tabindex",
+      "className": "web-developer-id-class-details",
+      "text": "#with-tabindex",
+    },
+    {
+      "before": "with-title",
+      "className": "web-developer-id-class-details",
+      "text": "#with-title",
+    },
+    {
+      "before": "named-anchor",
+      "className": "web-developer-id-class-details",
+      "text": "#named-anchor",
+    },
+    {
+      "before": "outer",
+      "className": "web-developer-id-class-details",
+      "text": "#outer.one.two",
+    },
+    {
+      "before": "inner",
+      "className": "web-developer-id-class-details",
+      "text": "#inner.three",
+    },
+    {
+      "before": "p",
+      "className": "web-developer-id-class-details",
+      "text": ".no-id",
+    },
+    {
+      "before": "id-only",
+      "className": "web-developer-id-class-details",
+      "text": "#id-only",
+    },
+    {
+      "before": "outer-table",
+      "className": "web-developer-id-class-details",
+      "text": "#outer-table",
+    },
+    {
+      "before": "outer-cell",
+      "className": "web-developer-id-class-details",
+      "text": "#outer-cell",
+    },
+    {
+      "before": "inner-table",
+      "className": "web-developer-id-class-details",
+      "text": "#inner-table",
+    },
+    {
+      "before": "inner-cell",
+      "className": "web-developer-id-class-details",
+      "text": "#inner-cell",
+    },
+  ],
+  "styleSheets": [
+    "web-developer-display-id-class-details",
+  ],
+}
+`;
+
+exports[`labels inserted before the element they describe > displays access keys 1`] = `
+{
+  "labels": [
+    {
+      "before": "with-accesskey",
+      "className": "web-developer-display-access-keys",
+      "text": "accesskey="a"",
+    },
+  ],
+  "styleSheets": [
+    "web-developer-display-access-keys",
+  ],
+}
+`;
+
+exports[`labels inserted before the element they describe > displays anchors 1`] = `
+{
+  "labels": [
+    {
+      "before": "with-accesskey",
+      "className": "web-developer-display-anchors",
+      "text": "#with-accesskey",
+    },
+    {
+      "before": "with-tabindex",
+      "className": "web-developer-display-anchors",
+      "text": "#with-tabindex",
+    },
+    {
+      "before": "with-title",
+      "className": "web-developer-display-anchors",
+      "text": "#with-title",
+    },
+    {
+      "before": "named-anchor",
+      "className": "web-developer-display-anchors",
+      "text": "#named-anchor",
+    },
+    {
+      "before": "outer",
+      "className": "web-developer-display-anchors",
+      "text": "#outer",
+    },
+    {
+      "before": "inner",
+      "className": "web-developer-display-anchors",
+      "text": "#inner",
+    },
+    {
+      "before": "id-only",
+      "className": "web-developer-display-anchors",
+      "text": "#id-only",
+    },
+    {
+      "before": "web-developer-something",
+      "className": "web-developer-display-anchors",
+      "text": "#web-developer-something",
+    },
+    {
+      "before": "outer-table",
+      "className": "web-developer-display-anchors",
+      "text": "#outer-table",
+    },
+    {
+      "before": "outer-cell",
+      "className": "web-developer-display-anchors",
+      "text": "#outer-cell",
+    },
+    {
+      "before": "inner-table",
+      "className": "web-developer-display-anchors",
+      "text": "#inner-table",
+    },
+    {
+      "before": "inner-cell",
+      "className": "web-developer-display-anchors",
+      "text": "#inner-cell",
+    },
+  ],
+  "styleSheets": [
+    "web-developer-display-anchors",
+  ],
+}
+`;
+
+exports[`labels inserted before the element they describe > displays tab indices 1`] = `
+{
+  "labels": [
+    {
+      "before": "with-tabindex",
+      "className": "web-developer-display-tab-index",
+      "text": "tabindex="3"",
+    },
+  ],
+  "styleSheets": [
+    "web-developer-display-tab-index",
+  ],
+}
+`;
+
+exports[`labels inserted before the element they describe > displays title attributes 1`] = `
+{
+  "labels": [
+    {
+      "before": "with-title",
+      "className": "web-developer-display-title-attributes",
+      "text": "title="A title"",
+    },
+  ],
+  "styleSheets": [
+    "web-developer-display-title-attributes",
+  ],
+}
+`;
+
+exports[`stylesheet-only information features > displayARIARoles toggles its stylesheets on and off 1`] = `
+[
+  "web-developer-display-aria-roles-before",
+  "web-developer-display-aria-roles",
+]
+`;
+
+exports[`stylesheet-only information features > displayAbbreviations toggles its stylesheets on and off 1`] = `
+[
+  "web-developer-display-abbreviations-before",
+  "web-developer-display-abbreviations",
+]
+`;
+
+exports[`stylesheet-only information features > displayLinkDetails toggles its stylesheets on and off 1`] = `
+[
+  "web-developer-display-link-details-before",
+  "web-developer-display-link-details",
+]
+`;
+
+exports[`stylesheet-only information features > displayTopographicInformation toggles its stylesheets on and off 1`] = `
+[
+  "web-developer-display-topographic-information",
+]
+`;

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Information fixture</title>
+</head>
+<body>
+
+<!-- Accessibility attributes the label features look for. -->
+<a id="with-accesskey" href="/a" accesskey="a">Access key</a>
+<button id="with-tabindex" tabindex="3">Tab index</button>
+<span id="with-title" title="A title">Titled</span>
+<a id="named-anchor" name="jump">Named anchor</a>
+
+<!-- Ids and classes, including one of the extension's own elements, which
+     displayIdClassDetails must skip so the features do not label each other. -->
+<div id="outer" class="one two">
+  <p id="inner" class="three">nested</p>
+  <p class="no-id">class only</p>
+  <p id="id-only">id only</p>
+</div>
+<div id="web-developer-something" class="web-developer-marker">extension's own</div>
+<div>no id or class at all</div>
+
+<!-- Nested tables, for getTableDepth. -->
+<table id="outer-table">
+  <caption>Outer</caption>
+  <tr>
+    <td id="outer-cell" headers="h1" abbr="Short">
+      <table id="inner-table">
+        <tr><td id="inner-cell">deep</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
