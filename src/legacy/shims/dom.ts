@@ -19,6 +19,7 @@
  */
 
 import { WebDeveloper } from "../globals";
+import { formatCSS } from "@/lib/format-css";
 import {
   getCSSPrimitiveValue,
   getCSSText,
@@ -59,6 +60,7 @@ WebDeveloper.Content = WebDeveloper.Content || {};
 
 Object.assign(WebDeveloper.Common, {
   addClass,
+  formatCSS,
   getCSSText,
   // Renamed on the way across: it returns any extension URL, and only Chromium
   // ever called the scheme "chrome".

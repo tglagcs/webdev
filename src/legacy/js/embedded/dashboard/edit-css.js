@@ -11,6 +11,11 @@ WebDeveloper.EditCSS.addTab = function(title, css, tabs, panels, position)
   var active    = "";
   var templates = "";
 
+  // Most stylesheets on the web arrive minified, and a whole sheet on one
+  // line cannot be read, let alone edited. The formatter only moves
+  // whitespace, so what is applied back to the page is the same CSS.
+  css = globalThis.WebDeveloper.Common.formatCSS(css);
+
   // If the position is 1
   if(position == 1)
   {

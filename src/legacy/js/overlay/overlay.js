@@ -27,7 +27,7 @@ WebDeveloper.Overlay.addFeatureOnTab = function(featureItem, tab, scriptFiles, s
 // Adds a script to the tab
 WebDeveloper.Overlay.addScriptToTab = function(tab, scriptCode, callback)
 {
-  chrome.scripting.executeScript({ target: { tabId: tab.id }, func: scriptCode }).then(callback);
+  WebDeveloper.Overlay.injected(chrome.scripting.executeScript({ target: { tabId: tab.id }, func: scriptCode }), callback);
 };
 
 // Adds scripts to the tab
@@ -39,9 +39,35 @@ WebDeveloper.Overlay.addScriptsToTab = function(tab, scriptFiles, scriptCode, ar
     scriptFiles = [scriptFiles];
   }
 
-  chrome.scripting.executeScript({ target: { tabId: tab.id }, files: scriptFiles }).then(() =>
-    chrome.scripting.executeScript({ target: { tabId: tab.id }, func: scriptCode, args: args }).then(callback)
-  );
+  WebDeveloper.Overlay.injected(chrome.scripting.executeScript({ target: { tabId: tab.id }, files: scriptFiles }).then(() =>
+    chrome.scripting.executeScript({ target: { tabId: tab.id }, func: scriptCode, args: args })
+  ), callback);
+};
+
+// Runs the callback once an injection has finished, whether or not its result
+// could be handed back.
+//
+// The feature has already run in the page by the time executeScript marshals a
+// return value, and nothing here reads that value. But if it cannot be
+// structured-cloned the promise rejects, and the callback is what updates the
+// menu item and the stored per-tab state -- so the feature applies to the page
+// while the menu goes on showing the opposite, and the item then refuses to
+// toggle. Firefox reports this as "result is non-structured-clonable data".
+//
+// A genuine injection failure is logged rather than swallowed silently.
+WebDeveloper.Overlay.injected = function(injection, callback)
+{
+  injection.catch(function(exception)
+  {
+    WebDeveloper.Common.log("Injected script did not return a usable result.", exception);
+  }).then(function()
+  {
+    // If a callback is set
+    if(callback)
+    {
+      callback();
+    }
+  });
 };
 
 // Handles a tab change
