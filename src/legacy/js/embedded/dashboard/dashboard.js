@@ -221,6 +221,23 @@ WebDeveloper.Dashboard.closeLabel = function()
 // does it, and takes the tab from the sender rather than from the message.
 WebDeveloper.Dashboard.close = function(contentDocument)
 {
+  // Each widget owns listeners on the host page. Removing the iframe does not
+  // remove those, so Element Information went on outlining elements under the
+  // mouse after its dashboard was gone.
+  //
+  // Guarded individually: only the widgets that were injected into this page
+  // exist on the namespace, and Edit CSS also has to put back the stylesheets
+  // it disabled while editing.
+  if(WebDeveloper.ElementInformation && WebDeveloper.ElementInformation.teardown)
+  {
+    WebDeveloper.ElementInformation.teardown(contentDocument);
+  }
+
+  if(WebDeveloper.CSS && WebDeveloper.CSS.toggleAllStyleSheets)
+  {
+    WebDeveloper.CSS.toggleAllStyleSheets(false, contentDocument);
+  }
+
   WebDeveloper.Dashboard.removeDashboard(contentDocument);
 
   chrome.runtime.sendMessage({ features: WebDeveloper.Dashboard.DASHBOARD_FEATURES, type: "feature-closed" });

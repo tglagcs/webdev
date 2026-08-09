@@ -122,6 +122,37 @@ Subscribing to `runtime.onStartup` is what makes the browser wake the worker at
 launch, which is in turn what restores the badge colour. It does not survive a
 restart, so dropping that listener would silently un-colour the badge.
 
+### An injected widget owns listeners the page keeps
+
+`removeMatchingElements("#web-developer-dashboard")` takes the iframe out of
+the page. It does not take out the `mouseover` handler Element Information put
+on the _host_ document, so the hover outline went on following the mouse over
+a page with no dashboard on it.
+
+Anything a widget attaches outside its own iframe has to be undone explicitly,
+and from **both** routes: the popup switching the feature off, and the widget's
+own close button. `ElementInformation.teardown()` exists so the two share one
+implementation, and `Dashboard.close()` calls it.
+
+The same applies to `window` listeners in the injected bundles. Upstream
+referenced its resize handlers through the namespace, which the bundle
+reassigns on every injection, so `removeEventListener` was given a different
+function from the one added and each toggle left another listener behind. The
+handler is anchored on `globalThis` for that reason.
+
+### The page's globals are not the popup's
+
+`src/entrypoints/content.ts` puts `WebDeveloper.Common` and `.CSS` into the
+isolated world and nothing else. `WebDeveloper.Locales` is **not** there, and a
+widget reaching for it throws — which took Edit CSS out entirely, since the
+throw happened while building the dashboard template. Use `chrome.i18n`
+directly in page-side code, or have the popup pass the resolved strings in
+`args`, which is what the existing widgets do.
+
+This is also why the smoke server cannot catch it: its pages are the popup and
+the report pages, where the locales shim _is_ loaded. Widget checks have to
+load only what the content script loads.
+
 ### Feature stylesheets must stay theme-blind
 
 `src/public/features/css/**` is injected into other people's pages. Colours are
@@ -279,6 +310,15 @@ loaded both. `shims/notify.ts` is the injected half — loading it in the popup
 would make the popup message itself.
 
 Still legacy: the Forms bundle, and `common.js`/`css.js`/`cookies.js`.
+
+Fixed along the way, all upstream bugs rather than port regressions:
+`Generated.addItem` linked to `#item-N` on pages labelling their entries
+`cookie-N` and `form-N`, so those two reports' sidebars did nothing;
+`displayObjectInformation` reused the outer loop's counters in its inner one,
+so only the first `<object>` on a page was ever labelled; Display Hidden
+Elements had no way back short of a reload and is a toggle now; syntax
+highlighting defaulted to off and the reports had no line wrapping, so a
+minified file was one row behind a horizontal scrollbar.
 
 Then the Svelte popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.

@@ -819,6 +819,27 @@ WebDeveloper.ElementInformation.getLocaleString = function(name)
 };
 
 // Initializes the display element information dashboard
+// Detaches everything initialize() attached to the page
+//
+// Called both when the feature is switched off from the popup and when the
+// dashboard is closed from its own button -- without the second, the hover
+// outline kept following the mouse over a page with no dashboard on it.
+WebDeveloper.ElementInformation.teardown = function(contentDocument)
+{
+  // Nothing to detach: the feature was never on in this page.
+  if(!window.WebDeveloperEvents || !window.WebDeveloperEvents.ElementInformation)
+  {
+    return;
+  }
+
+  contentDocument.removeEventListener("click", window.WebDeveloperEvents.ElementInformation.click, true);
+  contentDocument.removeEventListener("mouseover", window.WebDeveloperEvents.ElementInformation.mouseOver, false);
+  WebDeveloper.ElementAncestors.removeOutline(contentDocument);
+
+  window.WebDeveloperEvents.ElementInformation = null;
+};
+
+// Initializes the element information
 WebDeveloper.ElementInformation.initialize = function(display, contentDocument, locale)
 {
   // If displaying the element information dashboard
@@ -845,12 +866,7 @@ WebDeveloper.ElementInformation.initialize = function(display, contentDocument, 
   else
   {
     WebDeveloper.Dashboard.closeDashboardTab("element-information", contentDocument);
-
-    contentDocument.removeEventListener("click", window.WebDeveloperEvents.ElementInformation.click, true);
-    contentDocument.removeEventListener("mouseover", window.WebDeveloperEvents.ElementInformation.mouseOver, false);
-    WebDeveloper.ElementAncestors.removeOutline(contentDocument);
-
-    window.WebDeveloperEvents.ElementInformation = null;
+    WebDeveloper.ElementInformation.teardown(contentDocument);
   }
 
   WebDeveloper.Common.toggleStyleSheet("/embedded/css/dashboard/external/element-information.css", "web-developer-element-information-styles", contentDocument, false);

@@ -133,6 +133,8 @@ describe("seedDefaults", () => {
 
     expect(await settings.get("populate_email_address")).toBe("example@example.com");
     expect(await settings.get("overlay_icon")).toBe("color");
+    // Highlighting is on out of the box; upstream shipped it off.
+    expect(await settings.get("syntax_highlight_theme")).toBe("light");
     expect(await settings.get("tool_count")).toBe(DEFAULT_TOOLS.length);
     expect(await settings.get("tool_7_url")).toBe("https://www.nslookup.io/dns-records/");
     expect(await settings.get("resize_count")).toBe(1);

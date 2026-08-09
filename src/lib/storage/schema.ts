@@ -31,7 +31,12 @@ export interface Settings {
   // Advanced
   populate_email_address: string;
 
-  // Colors
+  /**
+   * Which CodeMirror theme the reports highlight with: "light", "dark" or
+   * "none". Upstream defaulted to "none", so View CSS and View JavaScript
+   * shipped as plain text and the dropdown that turns highlighting on is easy
+   * to miss. It follows the extension's own theme once there is one.
+   */
   syntax_highlight_theme: string;
 
   // General
@@ -93,7 +98,7 @@ export const DEFAULTS: Pick<
   | "popup_in_window"
 > = {
   populate_email_address: "example@example.com",
-  syntax_highlight_theme: "none",
+  syntax_highlight_theme: "light",
   display_overlay_with: "icons_text",
   overlay_icon: "color",
   popup_in_window: false,

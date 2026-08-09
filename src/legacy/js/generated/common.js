@@ -343,6 +343,9 @@ WebDeveloper.Generated.initializeSyntaxHighlight = function(color)
         },
         {
           lineNumbers: pre.getAttribute("data-line-numbers"),
+          // Minified sources are one enormous line; without this the report
+          // is a single row with a horizontal scrollbar the width of the file.
+          lineWrapping: true,
           mode: pre.getAttribute("data-type"),
           readOnly: true,
           tabSize: 2,

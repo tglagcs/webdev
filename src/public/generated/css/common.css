@@ -21,3 +21,16 @@ h3 .icon-expand { display: none; }
 /* Syntax highlighting styles */
 
 .CodeMirror { font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.875em; height: auto; }
+
+/* Minified sources arrive as one enormous line. Without wrapping, the report
+   is a single row behind a horizontal scrollbar the width of the file -- both
+   in the plain <pre> and in the highlighter, which gets lineWrapping set in
+   generated/common.js. */
+.web-developer-syntax-highlight {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.CodeMirror {
+  height: auto;
+}
