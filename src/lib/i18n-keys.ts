@@ -46,6 +46,7 @@ export type PlainMessageKey =
   | "clearHistoryResult"
   | "clearRadioButtons"
   | "clearRadioButtonsSingleResult"
+  | "close"
   | "collapseAll"
   | "color"
   | "colorInformation"
@@ -210,6 +211,7 @@ export type PlainMessageKey =
   | "information"
   | "internalBrowserPagesError"
   | "javaScript"
+  | "keepPopupOpen"
   | "keyboard"
   | "label"
   | "layout"
@@ -459,6 +461,7 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "clearRadioButtons",
   "clearRadioButtonsMultipleResult",
   "clearRadioButtonsSingleResult",
+  "close",
   "collapseAll",
   "color",
   "colorInformation",
@@ -643,6 +646,7 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "information",
   "internalBrowserPagesError",
   "javaScript",
+  "keepPopupOpen",
   "keyboard",
   "label",
   "layout",

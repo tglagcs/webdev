@@ -38,6 +38,16 @@ export interface Settings {
   display_overlay_with: DisplayOverlayWith;
   overlay_icon: OverlayIcon;
 
+  /**
+   * Whether the popup stays open after a feature is applied.
+   *
+   * Off by default, matching upstream: the popup closes on anything that
+   * moves focus elsewhere -- opening a report, resizing the window, running a
+   * tool. Turning it on suppresses those closes, so several features can be
+   * applied in one visit.
+   */
+  keep_popup_open: boolean;
+
   // Set by the in-page dashboard as the user drags it.
   dashboard_height: number;
 
@@ -76,12 +86,17 @@ export type RemovedSettingKey = "icon_color";
  */
 export const DEFAULTS: Pick<
   Settings,
-  "populate_email_address" | "syntax_highlight_theme" | "display_overlay_with" | "overlay_icon"
+  | "populate_email_address"
+  | "syntax_highlight_theme"
+  | "display_overlay_with"
+  | "overlay_icon"
+  | "keep_popup_open"
 > = {
   populate_email_address: "example@example.com",
   syntax_highlight_theme: "none",
   display_overlay_with: "icons_text",
   overlay_icon: "color",
+  keep_popup_open: false,
 };
 
 /**

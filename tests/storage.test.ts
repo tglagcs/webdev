@@ -153,6 +153,21 @@ describe("seedDefaults", () => {
     expect(await settings.get("tool_2_url")).toBe("http://validator.w3.org/feed/check.cgi?url=");
   });
 
+  // A boolean the user has turned off is a value, not an absence.
+  it("does not resurrect a default the user has switched off", async () => {
+    await browser.storage.local.set({ keep_popup_open: false });
+
+    await seedDefaults();
+
+    expect(await settings.get("keep_popup_open")).toBe(false);
+  });
+
+  it("seeds a boolean default on a fresh profile", async () => {
+    await seedDefaults();
+
+    expect(await settings.get("keep_popup_open")).toBe(false);
+  });
+
   it("is idempotent", async () => {
     await seedDefaults();
     const first = await browser.storage.local.get(null);
@@ -164,6 +179,20 @@ describe("seedDefaults", () => {
 });
 
 describe("per-tab feature state", () => {
+  // The in-page widgets have their own close button now, and cannot reach
+  // storage.session themselves, so the worker clears their state for them.
+  it("clears only the features a closed widget owned", async () => {
+    await tabState.setFeaturesOnTab(7, ["edit-css", "outline-tables", "display-ruler"]);
+
+    const remaining = (await tabState.getFeaturesOnTab(7)).filter(
+      (feature) => !["edit-css", "display-element-information"].includes(feature),
+    );
+
+    await tabState.setFeaturesOnTab(7, remaining);
+
+    expect(await tabState.getFeaturesOnTab(7)).toEqual(["outline-tables", "display-ruler"]);
+  });
+
   it("reports no features for a tab that has none", async () => {
     expect(await tabState.getFeaturesOnTab(7)).toEqual([]);
     expect(await tabState.isFeatureOnTab("outline-tables", 7)).toBe(false);

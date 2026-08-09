@@ -23,6 +23,9 @@ import { t, type PlainMessageKey } from "../i18n";
 
 type Numbered = Partial<NumberedSettings> & Record<string, string | number>;
 
+/** Seeded values are whatever the schema says; only the lists are numbered. */
+type Seedable = string | number | boolean;
+
 /**
  * The description is stored resolved rather than as a message key, matching
  * upstream. These entries are user-editable, and storing the key would mean
@@ -53,7 +56,7 @@ function seedList(
 }
 
 export async function seedDefaults(): Promise<void> {
-  const wanted: Record<string, string | number> = {
+  const wanted: Record<string, Seedable> = {
     ...DEFAULTS,
     ...seedList("tool", DEFAULT_TOOLS),
     tool_count: DEFAULT_TOOLS.length,
@@ -66,7 +69,15 @@ export async function seedDefaults(): Promise<void> {
   // One read and one write, where upstream did 50 of each and then needed a
   // 100ms timeout to be sure they had landed before the next step ran.
   const existing = await browser.storage.local.get(Object.keys(wanted));
-  const missing = Object.fromEntries(Object.entries(wanted).filter(([key]) => !existing[key]));
+  // Compared against undefined, not for truthiness. setItemIfNotSet treats ""
+  // and 0 as unset, which is upstream's behaviour and fine for the strings it
+  // was written for -- but a boolean the user has deliberately turned off is a
+  // value, and would be reset to its default on every update if this asked
+  // whether it was falsy. (`key in existing` does not work either: the storage
+  // API returns the requested keys with undefined values.)
+  const missing = Object.fromEntries(
+    Object.entries(wanted).filter(([key]) => existing[key] === undefined),
+  );
 
   if (Object.keys(missing).length > 0) {
     await settings.setMany(missing as Partial<Store>);

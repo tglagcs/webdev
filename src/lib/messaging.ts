@@ -39,6 +39,20 @@ export interface BackgroundMessages {
     request: Record<string, never>;
     response: { dataUrl: string; maximumPerSecond: number };
   };
+  /**
+   * An in-page widget was dismissed from its own close button rather than
+   * from the popup.
+   *
+   * The widget cannot clear the per-tab state itself -- storage.session is
+   * not reachable from a content script -- and if nothing cleared it the
+   * popup would go on showing the feature as active and the badge would keep
+   * counting it. The tab is taken from the sender, not the message, so a page
+   * cannot clear state for a tab that is not its own.
+   */
+  "feature-closed": {
+    request: { features: string[] };
+    response: Record<string, never>;
+  };
 }
 
 export type BackgroundMessageType = keyof BackgroundMessages;

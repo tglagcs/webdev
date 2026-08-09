@@ -16,7 +16,12 @@ import { handleBackgroundMessages } from "@/lib/messaging";
 import { seedDefaults } from "@/lib/storage/defaults";
 import { runMigrations } from "@/lib/storage/migrations";
 import * as settings from "@/lib/storage/settings";
-import { clearTab, pruneClosedTabs } from "@/lib/storage/tab-state";
+import {
+  clearTab,
+  getFeaturesOnTab,
+  pruneClosedTabs,
+  setFeaturesOnTab,
+} from "@/lib/storage/tab-state";
 
 /**
  * Announced by the API rather than assumed, because the widget that captures
@@ -52,6 +57,21 @@ handleBackgroundMessages({
 
   "get-url-contents": async ({ urls, errorMessage }) =>
     Promise.all(urls.map((url) => fetchUrl(url, errorMessage))),
+
+  "feature-closed": async ({ features }, sender) => {
+    const tabId = sender.tab?.id;
+
+    if (tabId !== undefined) {
+      const remaining = (await getFeaturesOnTab(tabId)).filter(
+        (feature) => !features.includes(feature),
+      );
+
+      await setFeaturesOnTab(tabId, remaining);
+      await updateBadge(tabId);
+    }
+
+    return {};
+  },
 
   "get-visible-tab": async () => ({
     dataUrl: await browser.tabs.captureVisibleTab(),

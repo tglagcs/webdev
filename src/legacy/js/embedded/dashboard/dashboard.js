@@ -32,6 +32,7 @@ WebDeveloper.Dashboard.convertTitleToId = function(title)
 // Create the dashboard
 WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML)
 {
+  var closeButton = null;
   var dashboard         = contentDocument.createElement("iframe");
   var dashboardDocument = null;
   var resizer           = null;
@@ -56,6 +57,16 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
   WebDeveloper.Common.includeJavaScript("/embedded-dashboard.js", dashboardDocument);
 
   resizer = dashboardDocument.getElementById("web-developer-dashboard-resizer");
+  closeButton = dashboardDocument.getElementById("web-developer-dashboard-close");
+
+  // Closing from here rather than from the popup, which is the point of the
+  // button: the dashboard covers the page and the popup is two clicks away.
+  closeButton.addEventListener("click", function(event)
+  {
+    event.preventDefault();
+
+    WebDeveloper.Dashboard.close(contentDocument);
+  }, false);
 
   contentDocument.addEventListener("mouseup", window.WebDeveloperEvents.Dashboard.mouseUp, false);
   dashboardDocument.addEventListener("mousemove", WebDeveloper.Dashboard.mouseMove, false);
@@ -126,6 +137,7 @@ WebDeveloper.Dashboard.getDashboardTemplate = function(title)
   return `<div id="web-developer-dashboard-resizer" class="bg-body-secondary"></div>
   <ul id="web-developer-dashboard-tabs" class="bg-body-secondary border-bottom nav nav-underline px-2">
   <li class="ms-auto nav-item"><a href="#" class="disabled link-secondary nav-link"><h1 class="small"><img src="` + WebDeveloper.Common.getChromeURL("svg/logos/color/logo.svg") + '" alt="" class="me-1">' + title + `</h1></a></li>
+  <li class="nav-item"><a href="#" id="web-developer-dashboard-close" class="link-secondary nav-link" title="` + WebDeveloper.Locales.getString("close") + `">&times;</a></li>
   </ul>
   <div id="web-developer-dashboard-panels" class="tab-content"></div>`;
 };
@@ -174,6 +186,21 @@ WebDeveloper.Dashboard.openDashboardTab = function(tabId, tabTitle, contentDocum
   WebDeveloper.Common.appendHTML(templates.panel, panels);
 
   return dashboardDocument.getElementById(tabId + "-panel");
+};
+
+WebDeveloper.Dashboard.DASHBOARD_FEATURES = ["edit-css", "display-element-information"];
+
+// Closes the dashboard from its own close button
+//
+// The popup is not involved, so the per-tab state it keeps has to be told --
+// otherwise the menu goes on showing the feature as active and the badge goes
+// on counting it. storage.session is not reachable from here, so the worker
+// does it, and takes the tab from the sender rather than from the message.
+WebDeveloper.Dashboard.close = function(contentDocument)
+{
+  WebDeveloper.Dashboard.removeDashboard(contentDocument);
+
+  chrome.runtime.sendMessage({ features: WebDeveloper.Dashboard.DASHBOARD_FEATURES, type: "feature-closed" });
 };
 
 // Removes the dashboard
