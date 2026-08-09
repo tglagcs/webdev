@@ -5,6 +5,11 @@
  * tools/extract-registry.py -- the ids, columns and message keys are the ones
  * that shipped, and the per-tab state is stored under the id, so none of them
  * may be renamed.
+ *
+ * Only three of the ten are injected. Two clear browsing data through the
+ * extension APIs, two rewrite history to mark links visited or unvisited, and
+ * three open an in-page widget -- none of which is a script run against the
+ * page, so none is an entry in a bundle.
  */
 
 import type { Feature } from "../types";
@@ -38,7 +43,10 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Miscellaneous.displayHiddenElements",
+    inject: {
+      bundle: "/feature-miscellaneous.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-line-guides",
@@ -62,14 +70,18 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Miscellaneous.linearizePage",
+    inject: {
+      bundle: "/feature-miscellaneous.js",
+    },
   },
   {
     id: "make-frames-resizable",
     labelKey: "makeFramesResizable",
     column: 3,
     kind: "action",
-    handler: "WebDeveloper.Overlay.Miscellaneous.makeFramesResizable",
+    inject: {
+      bundle: "/feature-miscellaneous.js",
+    },
   },
   {
     id: "mark-all-links-unvisited",

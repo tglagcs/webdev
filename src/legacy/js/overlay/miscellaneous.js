@@ -3,12 +3,6 @@ import { WebDeveloper } from "../../globals";
 WebDeveloper.Overlay               = WebDeveloper.Overlay || {};
 WebDeveloper.Overlay.Miscellaneous = WebDeveloper.Overlay.Miscellaneous || {};
 
-// Adds a feature on a tab
-WebDeveloper.Overlay.Miscellaneous.addFeatureOnTab = function(featureItem, tab, scriptCode, args)
-{
-  WebDeveloper.Overlay.addFeatureOnTab(featureItem, tab, "/feature-miscellaneous.js", scriptCode, args);
-};
-
 // Adds an href to the history
 WebDeveloper.Overlay.Miscellaneous.addToHistory = function(href)
 {
@@ -68,26 +62,6 @@ WebDeveloper.Overlay.Miscellaneous.displayColorPicker = function()
       WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
       {
         WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/embedded-color-picker.js", function(featureEnabled, featureLocale){ globalThis.WebDeveloper.ColorPicker.displayColorPicker(!featureEnabled, document, featureLocale); }, [enabled, locale], true);
-      });
-    }
-  });
-};
-
-// Displays all hidden elements
-WebDeveloper.Overlay.Miscellaneous.displayHiddenElements = function()
-{
-  var featureItem = this;
-
-  WebDeveloper.Overlay.getSelectedTab(function(tab)
-  {
-    // If the tab is valid
-    if(WebDeveloper.Overlay.isValidTab(tab))
-    {
-      // A toggle rather than a one-shot action: upstream had no way back from
-      // this short of reloading the page.
-      WebDeveloper.Storage.isFeatureOnTab(featureItem.getAttribute("id"), tab, function(enabled)
-      {
-        WebDeveloper.Overlay.Miscellaneous.toggleFeatureOnTab(featureItem, tab, function(featureEnabled){ globalThis.WebDeveloper.Miscellaneous.displayHiddenElements(!featureEnabled, [document]); }, [enabled]);
       });
     }
   });
@@ -160,46 +134,10 @@ WebDeveloper.Overlay.Miscellaneous.initialize = function()
   }
 };
 
-// Linearizes a page
-WebDeveloper.Overlay.Miscellaneous.linearizePage = function()
-{
-  var featureItem = this;
-
-  WebDeveloper.Overlay.getSelectedTab(function(tab)
-  {
-    // If the tab is valid
-    if(WebDeveloper.Overlay.isValidTab(tab))
-    {
-      WebDeveloper.Overlay.Miscellaneous.toggleFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Miscellaneous.linearizePage([document]); });
-    }
-  });
-};
-
-// Makes all frames resizable
-WebDeveloper.Overlay.Miscellaneous.makeFramesResizable = function()
-{
-  var featureItem = this;
-
-  WebDeveloper.Overlay.getSelectedTab(function(tab)
-  {
-    // If the tab is valid
-    if(WebDeveloper.Overlay.isValidTab(tab))
-    {
-      WebDeveloper.Overlay.Miscellaneous.addFeatureOnTab(featureItem, tab, function(){ globalThis.WebDeveloper.Miscellaneous.makeFramesResizable([document]); });
-    }
-  });
-};
-
 // Removes an href from the history
 WebDeveloper.Overlay.Miscellaneous.removeFromHistory = function(href)
 {
   chrome.history.deleteUrl({ url: href });
-};
-
-// Toggles a feature on a tab
-WebDeveloper.Overlay.Miscellaneous.toggleFeatureOnTab = function(featureItem, tab, scriptCode, args)
-{
-  WebDeveloper.Overlay.toggleFeatureOnTab(featureItem, tab, "/feature-miscellaneous.js", scriptCode, args);
 };
 
 // Toggles all links on the page between visited and unvisited

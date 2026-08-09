@@ -13,6 +13,8 @@ import { fakeBrowser } from "wxt/testing/fake-browser";
 
 import { register, run } from "@/features/entries";
 import { CSS_ENTRIES } from "@/features/css";
+import { FORMS_ENTRIES } from "@/features/forms";
+import { MISCELLANEOUS_ENTRIES } from "@/features/miscellaneous";
 import { IMAGES_ENTRIES } from "@/features/images";
 import { INFORMATION_ENTRIES } from "@/features/information";
 import { OUTLINE_ENTRIES } from "@/features/outline";
@@ -26,6 +28,8 @@ const BUNDLES: Record<string, Record<string, unknown>> = {
   "/feature-images.js": IMAGES_ENTRIES,
   "/feature-information.js": INFORMATION_ENTRIES,
   "/feature-css.js": CSS_ENTRIES,
+  "/feature-forms.js": FORMS_ENTRIES,
+  "/feature-miscellaneous.js": MISCELLANEOUS_ENTRIES,
 };
 
 beforeEach(() => {
@@ -158,6 +162,19 @@ describe("the entries themselves", () => {
   // The two entries that take words. A payload key spelled differently here
   // and in the registry arrives as "undefined" in the page, printed into the
   // label -- which is visible but easy to miss in review.
+  // Populate Form Fields is the only entry taking a value the user typed into
+  // the options page, and it types it into every field of a real form.
+  it("fills in the address the settings gave it", () => {
+    document.body.innerHTML =
+      "<form><input id='e' type='email' name='email'><input id='t' type='text' name='street'></form>";
+
+    register(FORMS_ENTRIES);
+    run("populate-form-fields", { emailAddress: "someone@example.com", password: "Password" });
+
+    expect(document.querySelector<HTMLInputElement>("#e")!.value).toBe("someone@example.com");
+    expect(document.querySelector<HTMLInputElement>("#t")!.value).toBe("street");
+  });
+
   it("prints the words the popup resolved", () => {
     document.body.innerHTML = "<table id='t'><tr><td>x</td></tr></table>";
 

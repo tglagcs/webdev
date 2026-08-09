@@ -6,6 +6,7 @@ import { getCSSText, getPropertyCSSValue } from "@/lib/dom/css-values";
 import { getDocumentBodyElement } from "@/lib/dom/documents";
 import { toggleStyleSheet } from "@/lib/dom/stylesheets";
 import { displayCount } from "./notify";
+import type { Entry } from "./entries";
 
 /**
  * The extension's own injected markup, which every walk must skip.
@@ -209,3 +210,17 @@ export function makeFramesResizable(documents: Document[]): void {
 
   displayCount(resizable, "makeFramesResizableSingleResult", "makeFramesResizableMultipleResult");
 }
+
+/**
+ * The three Miscellaneous features that are injected.
+ *
+ * The rest of that menu is not: two clear browsing data through the extension
+ * APIs, two rewrite history to mark links visited, and three open an in-page
+ * widget. They keep their handlers until those parts are ported.
+ */
+export const MISCELLANEOUS_ENTRIES: Record<string, Entry> = {
+  "display-hidden-elements": (payload, documents) =>
+    displayHiddenElements(!payload.enabled, documents),
+  "linearize-page": (_payload, documents) => linearizePage(documents),
+  "make-frames-resizable": (_payload, documents) => makeFramesResizable(documents),
+};

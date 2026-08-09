@@ -5,7 +5,11 @@ import "@/legacy/shims/dom";
 import "@/legacy/shims/notify";
 
 import * as miscellaneous from "@/features/miscellaneous";
+import { register, run } from "@/features/entries";
 
 WebDeveloper.Miscellaneous = { ...WebDeveloper.Miscellaneous, ...miscellaneous };
+
+register(miscellaneous.MISCELLANEOUS_ENTRIES);
+WebDeveloper.run = run;
 
 export default defineUnlistedScript(() => {});

@@ -15,6 +15,7 @@ import { NAME, BADGE_COLOUR } from "@/branding";
 import { addClass, removeClass, removeMatchingElements } from "@/lib/dom/elements";
 import { toggleStyleSheet } from "@/lib/dom/stylesheets";
 import { displayCount, displayNotification } from "./notify";
+import type { Entry } from "./entries";
 
 const CSS = "/features/css/forms";
 const BEFORE = "/features/css/before.css";
@@ -747,3 +748,48 @@ export function toggleCheckboxes(check: boolean, documents: Document[]): void {
     );
   }
 }
+
+/**
+ * The Forms menu, as entries the popup can name in the registry.
+ *
+ * Eighteen of the nineteen; the last opens a report. Only two have an on
+ * state -- the rest change the page once and are done, which is why upstream
+ * ran them through `addFeatureOnTab` rather than `toggleFeatureOnTab`.
+ *
+ * Populate Form Fields is the one that needs both kinds of outside value: the
+ * address from the options page, and the word "password" as the password it
+ * types, lowercased here because that is the feature's business rather than
+ * the locale's.
+ */
+export const FORMS_ENTRIES: Record<string, Entry> = {
+  "check-all-checkboxes": (_payload, documents) => toggleCheckboxes(true, documents),
+  "uncheck-all-checkboxes": (_payload, documents) => toggleCheckboxes(false, documents),
+
+  "clear-form-fields": (_payload, documents) => clearFormFields(documents),
+  "clear-radio-buttons": (_payload, documents) => clearRadioButtons(documents),
+  "convert-select-elements-to-text-inputs": (_payload, documents) =>
+    convertSelectElementsToTextInputs(documents),
+  "convert-text-inputs-to-textareas": (_payload, documents) =>
+    convertTextInputsToTextareas(documents),
+  "display-passwords": (_payload, documents) => displayPasswords(documents),
+  "enable-auto-completion": (_payload, documents) => enableAutoCompletion(documents),
+  "enable-form-fields": (_payload, documents) => enableFormFields(documents),
+  "expand-select-elements": (_payload, documents) => expandSelectElements(documents),
+  "make-form-fields-writable": (_payload, documents) => makeFormFieldsWritable(documents),
+  "remove-form-validation": (_payload, documents) => removeFormValidation(documents),
+  "remove-maximum-lengths": (_payload, documents) => removeMaximumLengths(documents),
+
+  "convert-form-gets-to-posts": (_payload, documents) => convertFormMethods("post", documents),
+  "convert-form-posts-to-gets": (_payload, documents) => convertFormMethods("get", documents),
+
+  "populate-form-fields": (payload, documents) =>
+    populateFormFields(
+      documents,
+      String(payload.emailAddress),
+      String(payload.password).toLowerCase(),
+    ),
+
+  "display-form-details": (payload, documents) => displayFormDetails(!payload.enabled, documents),
+  "outline-form-fields-without-labels": (payload, documents) =>
+    outlineFormFieldsWithoutLabels(!payload.enabled, documents),
+};

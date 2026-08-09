@@ -93,6 +93,10 @@ describe("handlers", () => {
     expect(new Set(actions).size).toBe(actions.length);
   });
 
+  // Two features sharing a handler is how upstream expressed "same code,
+  // different argument". Only the visited-links pair is left; the form-method
+  // pair became two entries when Forms was ported, and the rest go the same
+  // way.
   it("passes an argument only where two features share a handler", () => {
     const shared = FEATURES.filter(
       (feature) =>
@@ -100,8 +104,6 @@ describe("handlers", () => {
     );
 
     expect(shared.map((feature) => feature.id).sort()).toEqual([
-      "convert-form-gets-to-posts",
-      "convert-form-posts-to-gets",
       "mark-all-links-unvisited",
       "mark-all-links-visited",
     ]);

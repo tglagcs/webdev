@@ -65,7 +65,10 @@ async function resolvePayload(
     } else if (source.from === "message") {
       payload[name] = t(source.key);
     } else {
-      payload[name] = !!(await get(source.key as AnySettingKey));
+      // The stored value as it is, not coerced: Populate Form Fields wants the
+      // email address, not whether one is set. Missing becomes false, which is
+      // what the boolean settings mean by absent.
+      payload[name] = ((await get(source.key as AnySettingKey)) as Payload[string]) ?? false;
     }
   }
 
