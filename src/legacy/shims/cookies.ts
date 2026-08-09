@@ -10,6 +10,7 @@ import { WebDeveloper } from "../globals";
 import {
   addCookie,
   canEditLocalCookie,
+  cookiesByFrame,
   deleteCookie,
   getDateTomorrow,
   sanitizeHost,
@@ -20,6 +21,7 @@ WebDeveloper.Cookies = WebDeveloper.Cookies || {};
 Object.assign(WebDeveloper.Cookies, {
   addCookie,
   canEditLocalCookie,
+  cookiesByFrame,
   deleteCookie,
   getDateTomorrow,
   sanitizeHost,

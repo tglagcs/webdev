@@ -101,56 +101,6 @@ exports[`cookie filtering > keeps only cookies matching the host and path, sorte
 ]
 `;
 
-exports[`cookie filtering > wraps the document's cookies with its title and URL 1`] = `
-{
-  "documents": [
-    {
-      "cookies": [
-        {
-          "host": ".fixture.test",
-          "name": "c-dotted",
-          "path": "/",
-          "value": "3",
-        },
-        {
-          "host": "fixture.test",
-          "name": "a-exact",
-          "path": "/",
-          "value": "1",
-        },
-        {
-          "host": "fixture.test",
-          "name": "b-exact",
-          "path": "/",
-          "value": "2",
-        },
-        {
-          "host": "fixture.test",
-          "name": "e-deep-path",
-          "path": "/deep",
-          "value": "5",
-        },
-        {
-          "host": "fixture.test",
-          "name": "f-page-path",
-          "path": "/host-page.html",
-          "value": "6",
-        },
-        {
-          "host": "test",
-          "name": "d-parent-domain",
-          "path": "/",
-          "value": "4",
-        },
-      ],
-      "url": "https://fixture.test/host-page.html",
-    },
-  ],
-  "pageTitle": "Host page fixture",
-  "pageURL": "https://fixture.test/host-page.html",
-}
-`;
-
 exports[`document and window details > reports the document title and URL 1`] = `
 {
   "pageTitle": "Host page fixture",

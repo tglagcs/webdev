@@ -13,7 +13,7 @@
  */
 
 import { getColors } from "./colors";
-import { getCookies, getDomainCookies, getPathCookies, type Cookie } from "./cookies";
+import { getDomainCookies, getPathCookies, type Cookie } from "./cookies";
 import { getForms } from "./forms";
 import {
   getDocumentDetails,
@@ -33,7 +33,6 @@ const HANDLERS = {
   "get-anchors": getAnchors,
   "get-broken-images": getBrokenImages,
   "get-colors": getColors,
-  "get-cookies": (message: { allCookies: Cookie[] }) => getCookies(message.allCookies),
   "get-css": getCSS,
   "get-document-details": getDocumentDetails,
   "get-document-outline": getDocumentOutline,

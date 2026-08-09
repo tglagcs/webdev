@@ -9,7 +9,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeBrowser } from "wxt/testing/fake-browser";
 
-import { addCookie, deleteCookie, getDateTomorrow, sanitizeHost } from "@/lib/cookies";
+import {
+  addCookie,
+  cookiesByFrame,
+  deleteCookie,
+  getDateTomorrow,
+  sanitizeHost,
+} from "@/lib/cookies";
 
 const set = vi.fn();
 const remove = vi.fn();
@@ -105,6 +111,54 @@ describe("deleteCookie", () => {
     deleteCookie({ host: ".example.com", name: "a", path: "/", value: "1" });
 
     expect(remove).toHaveBeenCalledWith({ name: "a", url: "http://.example.com/" });
+  });
+});
+
+describe("cookiesByFrame", () => {
+  const cookies = [
+    { host: "www.example.com", name: "top", path: "/", value: "1" },
+    { host: ".example.com", name: "shared", path: "/", value: "2" },
+    { host: "accounts.example.com", name: "signin", path: "/", value: "3" },
+    { host: "widget.other.test", name: "third-party", path: "/", value: "4" },
+    { host: "nowhere.test", name: "unrelated", path: "/", value: "5" },
+  ];
+
+  // The whole point of the change: a third-party frame is where the cookies
+  // are interesting, and it is exactly what the content script cannot see.
+  it("reports a section per frame origin, cookies and all", () => {
+    const sections = cookiesByFrame(
+      [
+        "https://www.example.com/search?q=x",
+        "https://accounts.example.com/signin",
+        "https://widget.other.test/embed",
+      ],
+      cookies,
+    );
+
+    expect(
+      sections.map((section) => [section.url, section.cookies.map((cookie) => cookie.name)]),
+    ).toEqual([
+      ["https://www.example.com/search?q=x", ["shared", "top"]],
+      ["https://accounts.example.com/signin", ["shared", "signin"]],
+      ["https://widget.other.test/embed", ["third-party"]],
+    ]);
+  });
+
+  it("collapses several frames of one origin into one section", () => {
+    const sections = cookiesByFrame(
+      ["https://www.example.com/", "https://www.example.com/frame", "https://www.example.com/two"],
+      cookies,
+    );
+
+    expect(sections).toHaveLength(1);
+    expect(sections[0]!.url).toBe("https://www.example.com/");
+  });
+
+  // about:blank and srcdoc frames are common and have no host to match on.
+  it("skips frames with no host, and frames that failed to report one", () => {
+    expect(
+      cookiesByFrame(["about:blank", "", null, undefined, "data:text/html,x"], cookies),
+    ).toEqual([]);
   });
 });
 

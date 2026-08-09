@@ -18,7 +18,8 @@ import { resolve } from "node:path";
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { filterCookies, getCookies, getDomainCookies, getPathCookies } from "@/content/cookies";
+import { getDomainCookies, getPathCookies } from "@/content/cookies";
+import { filterCookies } from "@/lib/cookies";
 import { formatColor, getColors, tidyColors } from "@/content/colors";
 import { getForms } from "@/content/forms";
 import {
@@ -126,14 +127,10 @@ describe("cookie filtering", () => {
     expect(filterCookies(cookies, "fixture.test", "/", true)).toMatchSnapshot();
   });
 
-  // The three report-level entry points differ only in which path they filter
-  // on and whether they wrap the result per document. Pinning all three is
-  // what stops the port collapsing them into one and quietly changing which
-  // cookies a report shows.
-  it("wraps the document's cookies with its title and URL", () => {
-    expect(getCookies(cookies)).toMatchSnapshot();
-  });
-
+  // The two delete features differ only in which path they filter on. Pinning
+  // both is what stops a change collapsing them into one and quietly altering
+  // which cookies get deleted. The report itself is assembled in the popup
+  // now, and is covered in cookies.test.ts.
   it("collects domain cookies across documents, unsorted and unwrapped", () => {
     expect(getDomainCookies(cookies)).toMatchSnapshot();
   });

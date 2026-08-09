@@ -24,6 +24,108 @@ export interface EditableCookie {
 }
 
 /**
+ * A cookie as the reports hold it.
+ *
+ * `host` rather than `domain`: the popup renames the field on the way in, and
+ * everything downstream reads the renamed one.
+ */
+export interface Cookie {
+  host?: string;
+  name?: string;
+  path?: string;
+  value?: string;
+  [key: string]: unknown;
+}
+
+/** By host, then by name. */
+export function sortCookies(one: Cookie, two: Cookie): number {
+  if (one.host === two.host && one.name === two.name) {
+    return 0;
+  }
+
+  const earlier = one.host! < two.host! || (one.host === two.host && one.name! < two.name!);
+
+  return earlier ? -1 : 1;
+}
+
+/**
+ * The cookies a document would send.
+ *
+ * Host matching accepts an exact match or a parent domain, which is why a
+ * leading dot is stripped first: ".example.com" and "example.com" mean the
+ * same thing in a cookie jar. Path matching is a prefix test on the *cookie's*
+ * path, so a cookie scoped to /deep is returned when filtering on /.
+ */
+export function filterCookies(
+  allCookies: Cookie[] | null,
+  host: string | null,
+  path: string,
+  sort: boolean,
+): Cookie[] {
+  if (!allCookies || !host) {
+    return [];
+  }
+
+  const filtered = allCookies.filter((cookie) => {
+    if (!cookie.host || !cookie.path) {
+      return false;
+    }
+
+    const cookieHost = sanitizeHost(cookie.host);
+    const hostMatches = host === cookieHost || host.endsWith(`.${cookieHost}`);
+
+    return hostMatches && (path === cookie.path || cookie.path.startsWith(path));
+  });
+
+  return sort ? filtered.sort(sortCookies) : filtered;
+}
+
+/**
+ * One report section per origin the page loaded, in frame order.
+ *
+ * The cookie report used to ask the content script, which meant it saw the top
+ * document and whatever same-origin frames it could reach into -- so a page
+ * whose frames are third-party (an embedded sign-in, a widget) reported only
+ * the top document's cookies, while devtools listed all of them. The frame
+ * URLs come from `scripting.executeScript({ allFrames: true })` instead, which
+ * crosses origins and needs no permission the extension does not already have.
+ *
+ * Frames are collapsed by host: several frames of one origin send the same
+ * cookies, and a section each would be noise.
+ */
+export function cookiesByFrame(
+  frameURLs: (string | null | undefined)[],
+  allCookies: Cookie[],
+): { url: string; cookies: Cookie[] }[] {
+  const seen = new Set<string>();
+  const sections: { url: string; cookies: Cookie[] }[] = [];
+
+  for (const frameURL of frameURLs) {
+    if (!frameURL) {
+      continue;
+    }
+
+    let host: string;
+
+    try {
+      // about:blank, data: and srcdoc frames have no host to match on.
+      host = new URL(frameURL).hostname;
+    } catch {
+      continue;
+    }
+
+    if (!host || seen.has(host)) {
+      continue;
+    }
+
+    seen.add(host);
+    sections.push({ url: frameURL, cookies: filterCookies(allCookies, host, "/", true) });
+  }
+
+  return sections;
+}
+
+/**
  * Drops the leading dot of a domain cookie's host.
  *
  * `.example.com` is how a cookie says "and every subdomain"; it is not a host

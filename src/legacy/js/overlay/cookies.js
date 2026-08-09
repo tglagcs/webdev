@@ -416,8 +416,20 @@ WebDeveloper.Overlay.Cookies.viewCookieInformation = function()
     {
       chrome.cookies.getAll({}, function(allCookies)
       {
-        chrome.tabs.sendMessage(tab.id, { allCookies: WebDeveloper.Overlay.Cookies.convertCookies(allCookies), type: "get-cookies" }, function(data)
+        // Asked of every frame rather than of the content script, which only
+        // sees the frames it can reach into -- a third-party frame is exactly
+        // the case where the cookies are interesting and the content script
+        // is blind. Needs no permission the extension does not already have.
+        chrome.scripting.executeScript({ target: { allFrames: true, tabId: tab.id }, func: function() { return location.href; } }).then(function(results)
         {
+          var cookies = WebDeveloper.Overlay.Cookies.convertCookies(allCookies);
+          var data    =
+          {
+            documents: globalThis.WebDeveloper.Cookies.cookiesByFrame(results.map(function(frame) { return frame.result; }), cookies),
+            pageTitle: tab.title,
+            pageURL:   tab.url
+          };
+
           WebDeveloper.Overlay.openGeneratedTab(chrome.runtime.getURL("/view-cookie-information.html"), tab.index, data, WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale());
         });
       });

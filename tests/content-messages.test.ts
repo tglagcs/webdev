@@ -20,7 +20,9 @@ const MESSAGE_TYPES = [
   "get-anchors",
   "get-broken-images",
   "get-colors",
-  "get-cookies",
+  // No "get-cookies": the cookie report is assembled in the popup, from the
+  // frame URLs executeScript returns, because the content script cannot see a
+  // cross-origin frame.
   "get-css",
   "get-document-details",
   "get-document-outline",
