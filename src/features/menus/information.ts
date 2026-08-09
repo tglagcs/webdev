@@ -1,0 +1,173 @@
+/**
+ * The information menu.
+ *
+ * Transcribed from popup/index.html and overlay/information.js by
+ * tools/extract-registry.py -- the ids, columns and message keys are the ones
+ * that shipped, and the per-tab state is stored under the id, so none of them
+ * may be renamed.
+ */
+
+import type { Feature } from "../types";
+
+export const INFORMATION_FEATURES: Feature[] = [
+  {
+    id: "display-abbreviations",
+    labelKey: "displayAbbreviations",
+    column: 1,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayAbbreviations",
+  },
+  {
+    id: "display-access-keys",
+    labelKey: "displayAccessKeys",
+    column: 1,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayAccessKeys",
+  },
+  {
+    id: "display-anchors",
+    labelKey: "displayAnchors",
+    column: 1,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayAnchors",
+  },
+  {
+    id: "display-aria-roles",
+    labelKey: "displayARIARoles",
+    column: 1,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayARIARoles",
+  },
+  {
+    id: "display-div-dimensions",
+    labelKey: "displayDivDimensions",
+    column: 1,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayDivDimensions",
+  },
+  {
+    id: "display-div-order",
+    labelKey: "displayDivOrder",
+    column: 1,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayDivOrder",
+  },
+  {
+    id: "display-element-information",
+    labelKey: "displayElementInformation",
+    column: 1,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayElementInformation",
+  },
+  {
+    id: "display-id-class-details",
+    labelKey: "displayIdClassDetails",
+    column: 1,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayIdClassDetails",
+  },
+  {
+    id: "display-link-details",
+    labelKey: "displayLinkDetails",
+    column: 2,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayLinkDetails",
+  },
+  {
+    id: "display-object-information",
+    labelKey: "displayObjectInformation",
+    column: 2,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayObjectInformation",
+  },
+  {
+    id: "display-stack-levels",
+    labelKey: "displayStackLevels",
+    column: 2,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayStackLevels",
+  },
+  {
+    id: "display-tab-index",
+    labelKey: "displayTabIndex",
+    column: 2,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayTabIndex",
+  },
+  {
+    id: "display-table-depth",
+    labelKey: "displayTableDepth",
+    column: 2,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayTableDepth",
+  },
+  {
+    id: "display-table-information",
+    labelKey: "displayTableInformation",
+    column: 2,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayTableInformation",
+  },
+  {
+    id: "display-title-attributes",
+    labelKey: "displayTitleAttributes",
+    column: 2,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayTitleAttributes",
+  },
+  {
+    id: "display-topographic-information",
+    labelKey: "displayTopographicInformation",
+    column: 2,
+    stateful: true,
+    handler: "WebDeveloper.Overlay.Information.displayTopographicInformation",
+  },
+  {
+    id: "find-duplicate-ids",
+    labelKey: "findDuplicateIds",
+    column: 3,
+    handler: "WebDeveloper.Overlay.Information.findDuplicateIds",
+  },
+  {
+    id: "view-anchor-information",
+    labelKey: "viewAnchorInformation",
+    column: 3,
+    handler: "WebDeveloper.Overlay.Information.viewAnchorInformation",
+  },
+  {
+    id: "view-color-information",
+    labelKey: "viewColorInformation",
+    column: 3,
+    handler: "WebDeveloper.Overlay.Information.viewColorInformation",
+  },
+  {
+    id: "view-document-outline",
+    labelKey: "viewDocumentOutline",
+    column: 3,
+    handler: "WebDeveloper.Overlay.Information.viewDocumentOutline",
+  },
+  {
+    id: "view-javascript",
+    labelKey: "viewJavaScript",
+    column: 3,
+    handler: "WebDeveloper.Overlay.Information.viewJavaScript",
+  },
+  {
+    id: "view-link-information",
+    labelKey: "viewLinkInformation",
+    column: 3,
+    handler: "WebDeveloper.Overlay.Information.viewLinkInformation",
+  },
+  {
+    id: "view-meta-tag-information",
+    labelKey: "viewMetaTagInformation",
+    column: 3,
+    handler: "WebDeveloper.Overlay.Information.viewMetaTagInformation",
+  },
+  {
+    id: "view-response-headers",
+    labelKey: "viewResponseHeaders",
+    column: 3,
+    handler: "WebDeveloper.Overlay.Information.viewResponseHeaders",
+  },
+];

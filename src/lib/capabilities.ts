@@ -20,6 +20,9 @@ export const capabilities = {
   browsingData: "browsingData" in api,
 } as const;
 
+/** So the registry can say what a feature needs without importing the values. */
+export type Capabilities = typeof capabilities;
+
 /**
  * Marks the document with the capabilities it has, so stylesheets can hide
  * what is unavailable without a per-browser CSS file.

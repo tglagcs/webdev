@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`layout > groups a menu into its columns in order 1`] = `
+[
+  [
+    "disable-all-styles",
+    "disable-browser-default-styles",
+    "disable-embedded-styles",
+    "disable-inline-styles",
+  ],
+  [
+    "disable-linked-style-sheets",
+    "disable-print-styles",
+    "display-handheld-styles",
+    "display-print-styles",
+  ],
+  [
+    "edit-css",
+    "reload-linked-style-sheets",
+    "use-border-box-model",
+    "view-css",
+  ],
+]
+`;
