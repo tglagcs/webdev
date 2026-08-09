@@ -14,12 +14,14 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     id: "clear-cache",
     labelKey: "clearCache",
     column: 1,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Miscellaneous.confirmClearCache",
   },
   {
     id: "clear-history",
     labelKey: "clearHistory",
     column: 1,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Miscellaneous.confirmClearHistory",
   },
   {
@@ -27,6 +29,7 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     labelKey: "displayColorPicker",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Miscellaneous.displayColorPicker",
   },
   {
@@ -34,6 +37,7 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     labelKey: "displayHiddenElements",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Miscellaneous.displayHiddenElements",
   },
   {
@@ -41,6 +45,7 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     labelKey: "displayLineGuides",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Miscellaneous.displayLineGuides",
   },
   {
@@ -48,6 +53,7 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     labelKey: "displayRuler",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Miscellaneous.displayRuler",
   },
   {
@@ -55,18 +61,21 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     labelKey: "linearizePage",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Miscellaneous.linearizePage",
   },
   {
     id: "make-frames-resizable",
     labelKey: "makeFramesResizable",
     column: 3,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Miscellaneous.makeFramesResizable",
   },
   {
     id: "mark-all-links-unvisited",
     labelKey: "markAllLinksUnvisited",
     column: 3,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Miscellaneous.toggleVisitedLinks",
     argument: false,
   },
@@ -74,6 +83,7 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     id: "mark-all-links-visited",
     labelKey: "markAllLinksVisited",
     column: 3,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Miscellaneous.toggleVisitedLinks",
     argument: true,
   },

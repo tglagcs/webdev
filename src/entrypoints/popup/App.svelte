@@ -14,7 +14,7 @@
 
   import { HOMEPAGE_URL } from "@/branding";
   import { visibleMenus } from "@/features/registry";
-  import type { Feature, MenuId } from "@/features/types";
+  import { FEATURE_KINDS, type Feature, type FeatureKind, type MenuId } from "@/features/types";
   import { t } from "@/lib/i18n";
   import { runFeature } from "./bridge";
   import { ui } from "./ui.svelte";
@@ -47,9 +47,45 @@
     return t(menu);
   }
 
-  // Two menus grow a list of the user's own entries -- saved window sizes and
-  // custom tools -- which resize.js and tools.js still render into these
-  // elements by id.
+  /**
+   * A menu split into its groups, in a fixed order and skipping the empty
+   * ones.
+   *
+   * The order is deliberate: what is switched on now, then what happens once,
+   * then what opens a tab, then what asks a question first. That runs from
+   * "state I am in" to "thing I am going far away to do".
+   */
+  function groups(features: Feature[]): { kind: FeatureKind; features: Feature[] }[] {
+    return FEATURE_KINDS.map((kind) => ({
+      kind,
+      features: features.filter((feature) => feature.kind === kind),
+    })).filter((group) => group.features.length > 0);
+  }
+
+  const GROUP_LABELS = {
+    toggle: "groupToggles",
+    action: "groupActions",
+    report: "groupReports",
+    dialog: "groupDialogs",
+  } as const;
+
+  /**
+   * Columns enough to keep a group short.
+   *
+   * Six rows is about where a block stops reading as a block. Information has
+   * sixteen toggles, which is three columns of six; four would not fit the
+   * label lengths at this width.
+   */
+  function columnsFor(count: number): number {
+    return Math.min(3, Math.ceil(count / 6));
+  }
+
+  /**
+   * Two menus grow a list of the user's own entries: saved window sizes and
+   * custom tools. resize.js and tools.js still render those, and they find the
+   * list by id and insert relative to the "Edit ..." item inside it -- which
+   * is a dialog, so the id belongs on that group's list and nowhere else.
+   */
   function listId(menu: MenuId): string | undefined {
     if (menu === "resize") {
       return "custom-resize-options";
@@ -148,64 +184,83 @@
           and tools.js still fill their lists in at startup and find the
           container by id, whichever menu is open.
         -->
-        <ul
-          class="gap-x-6 {menu.features.length > 8 ? 'columns-3' : 'columns-2'}"
-          id={listId(menu.id)}
-          hidden={menu.id !== current.id}
-        >
-          {#each menu.features as feature (feature.id)}
-            <li class="break-inside-avoid">
-              <a
-                href="#{feature.id}"
-                id={feature.id}
-                class="group flex items-start gap-1.5 rounded px-1.5 py-1 text-xs text-ink
-                       no-underline hover:bg-surface-raised"
-                class:font-medium={ui.isActive(feature.id)}
-                onclick={(event) => click(feature, event)}
+        <div hidden={menu.id !== current.id} class="space-y-2.5">
+          {#each groups(menu.features) as group (group.kind)}
+            <section>
+              <h2
+                class="mb-1 flex items-center gap-1.5 px-1.5 text-[0.65rem] font-medium
+                       tracking-wide text-ink-muted uppercase"
               >
-                <!--
-                  Nothing is drawn for a toggle that is off: a marker on every
-                  one of them is noise, and upstream hid them for the same
-                  reason. A tick means on, and hovering it shows the cross that
-                  says clicking will switch it off.
-                -->
-                {#if feature.stateful && ui.isActive(feature.id)}
-                  <svg class="mt-px size-3.5 shrink-0 text-on group-hover:hidden" aria-hidden="true">
-                    <use href="/svg/icons/icons.svg#i-check"></use>
-                  </svg>
-                  <svg
-                    class="mt-px hidden size-3.5 shrink-0 text-off group-hover:block"
-                    aria-hidden="true"
-                  >
-                    <use href="/svg/icons/icons.svg#s-remove"></use>
-                  </svg>
-                {:else}
-                  <span class="mt-px size-3.5 shrink-0"></span>
-                {/if}
-                {label(feature)}
-              </a>
-            </li>
-          {/each}
+                <svg class="size-3.5 shrink-0" aria-hidden="true">
+                  <use href="/svg/overlay/menus.svg#kind-{group.kind}"></use>
+                </svg>
+                {t(GROUP_LABELS[group.kind])}
+              </h2>
 
-          <!--
-            Not a feature: an ordinary link to the documentation, which the
-            markup carried in the options menu and nothing toggles.
-          -->
-          {#if menu.id === "options"}
-            <li class="break-inside-avoid">
-              <a
-                href={`${HOMEPAGE_URL}help/`}
-                target="_blank"
-                rel="noreferrer"
-                class="flex items-start gap-1.5 rounded px-1.5 py-1 text-xs text-ink no-underline
-                       hover:bg-surface-raised"
+              <ul
+                class="gap-x-6"
+                style="columns: {columnsFor(group.features.length)}"
+                id={group.kind === "dialog" ? listId(menu.id) : undefined}
               >
-                <span class="size-3.5 shrink-0"></span>
-                {t("help")}
-              </a>
-            </li>
-          {/if}
-        </ul>
+                {#each group.features as feature (feature.id)}
+                  <li class="break-inside-avoid">
+                    <a
+                      href="#{feature.id}"
+                      id={feature.id}
+                      class="group flex items-start gap-1.5 rounded px-1.5 py-1 text-xs text-ink
+                             no-underline hover:bg-surface-raised"
+                      class:font-medium={ui.isActive(feature.id)}
+                      onclick={(event) => click(feature, event)}
+                    >
+                      <!--
+                        A toggle that is off draws nothing: a marker on every
+                        item is noise, and the group already says what kind of
+                        item this is. A tick means on, and hovering it shows
+                        the cross that says clicking will switch it off.
+                      -->
+                      {#if feature.stateful && ui.isActive(feature.id)}
+                        <svg
+                          class="mt-px size-3.5 shrink-0 text-on group-hover:hidden"
+                          aria-hidden="true"
+                        >
+                          <use href="/svg/icons/icons.svg#i-check"></use>
+                        </svg>
+                        <svg
+                          class="mt-px hidden size-3.5 shrink-0 text-off group-hover:block"
+                          aria-hidden="true"
+                        >
+                          <use href="/svg/icons/icons.svg#s-remove"></use>
+                        </svg>
+                      {:else}
+                        <span class="mt-px size-3.5 shrink-0"></span>
+                      {/if}
+                      {label(feature)}
+                    </a>
+                  </li>
+                {/each}
+
+                <!--
+                  Not a feature: an ordinary link to the documentation, which
+                  the markup carried in the options menu and nothing toggles.
+                -->
+                {#if menu.id === "options" && group.kind === "dialog"}
+                  <li class="break-inside-avoid">
+                    <a
+                      href={`${HOMEPAGE_URL}help/`}
+                      target="_blank"
+                      rel="noreferrer"
+                      class="flex items-start gap-1.5 rounded px-1.5 py-1 text-xs text-ink
+                             no-underline hover:bg-surface-raised"
+                    >
+                      <span class="mt-px size-3.5 shrink-0"></span>
+                      {t("help")}
+                    </a>
+                  </li>
+                {/if}
+              </ul>
+            </section>
+          {/each}
+        </div>
       {/each}
     </div>
 

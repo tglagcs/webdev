@@ -8,8 +8,10 @@ one-shot, and which handler runs it. All four already exist -- spread across
 read from there rather than retyped, which is the part of this phase most
 likely to go wrong by hand.
 
-Run once, check the output, commit it. This is not a build step: the generated
-files are edited afterwards, as the handlers are ported one at a time.
+Run once, check the output, commit it. This is not a build step, and it can no
+longer be re-run: `popup/index.html` was replaced by the Svelte app it made
+possible, so the registry is the source of truth now and this file is the
+record of where it came from.
 
     python tools/extract-registry.py            # print a summary
     python tools/extract-registry.py --write    # write src/features/menus/*.ts
@@ -22,10 +24,13 @@ import pathlib
 import re
 import sys
 
+import json
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 POPUP = ROOT / "src/entrypoints/popup/index.html"
 OVERLAY = ROOT / "src/legacy/js/overlay"
 OUTPUT = ROOT / "src/features/menus"
+MESSAGES = ROOT / "src/public/_locales/en_US/messages.json"
 
 # <div id="css-menu" ...> ... </div> for each tab pane, in document order.
 MENU_PANE = re.compile(r'<div id="([a-z-]+)-menu"[^>]*class="[^"]*tab-pane[^"]*"[^>]*>')
@@ -49,6 +54,29 @@ HANDLER = re.compile(
     r'(WebDeveloper\.Overlay\.[\w.]+)'
     r'(?:\((("[^"]*"|true|false)?)\))?'
 )
+
+
+# Verbs that open a report tab rather than change the page.
+REPORT_VERBS = {"View", "Find", "Validate"}
+
+
+def classify(label: str, stateful: bool) -> str:
+    """What kind of thing the item is, from what it says it does.
+
+    Four kinds, and the popup groups each menu by them -- the long menus were
+    a flat list of up to 24 items with nothing to tell a switch from a report.
+
+    Read from the English label because that is where the distinction is
+    already written: a name ending in an ellipsis opens something the user
+    then fills in, and the three report verbs are a closed set.
+    """
+    if stateful:
+        return "toggle"
+
+    if label.endswith("..."):
+        return "dialog"
+
+    return "report" if label.split()[0] in REPORT_VERBS else "action"
 
 
 def parse_popup() -> list[dict]:
@@ -118,6 +146,8 @@ def menu_module(menu: str, items: list[dict]) -> str:
         if item["stateful"]:
             fields.append("    stateful: true,")
 
+        fields.append(f'    kind: "{item["kind"]}",')
+
         fields.append(f'    handler: "{item["handler"]}",')
 
         # Four items share a handler and differ only in what it is passed.
@@ -151,11 +181,18 @@ def main() -> None:
 
     items = parse_popup()
     labels, handlers = parse_overlay()
+    messages = json.loads(MESSAGES.read_text(encoding="utf-8"))
     missing: list[str] = []
 
     for item in items:
         item["labelKey"] = labels.get(item["id"], "")
         item["handler"], item["argument"] = handlers.get(item["id"], ("", ""))
+
+        item["kind"] = (
+            classify(messages[item["labelKey"]]["message"], item["stateful"])
+            if item["labelKey"] in messages
+            else ""
+        )
 
         if not item["labelKey"] or not item["handler"]:
             missing.append(

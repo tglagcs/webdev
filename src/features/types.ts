@@ -35,6 +35,24 @@ export const MENUS = [
 
 export type MenuId = (typeof MENUS)[number];
 
+/**
+ * What kind of thing a menu item is.
+ *
+ * The popup groups each menu by this, because a flat list of up to
+ * twenty-four items gave the user nothing to tell a switch from a report --
+ * which is a real difference: a toggle stays on and counts on the badge, an
+ * action happens once, a report opens a tab, a dialog asks for something
+ * first.
+ *
+ * Derived from the English label when the registry was written: a name ending
+ * in an ellipsis opens something to fill in, and View/Find/Validate is the
+ * closed set of report verbs.
+ */
+export type FeatureKind = "toggle" | "action" | "report" | "dialog";
+
+/** In the order the popup stacks the groups. */
+export const FEATURE_KINDS: FeatureKind[] = ["toggle", "action", "report", "dialog"];
+
 export interface Feature {
   /** Must match the legacy DOM id: it is the key of the per-tab state. */
   id: string;
@@ -52,6 +70,8 @@ export interface Feature {
    * is what the popup meant by "active".
    */
   stateful?: boolean;
+
+  kind: FeatureKind;
 
   /**
    * The legacy handler that runs it, as a path under `WebDeveloper.Overlay`.

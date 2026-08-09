@@ -1,5 +1,76 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`kinds > groups each menu the way the popup shows it 1`] = `
+{
+  "cookies": [
+    "toggle:1",
+    "action:3",
+    "report:1",
+    "dialog:1",
+  ],
+  "css": [
+    "toggle:10",
+    "action:1",
+    "report:1",
+    "dialog:0",
+  ],
+  "disable": [
+    "toggle:3",
+    "action:1",
+    "report:0",
+    "dialog:0",
+  ],
+  "forms": [
+    "toggle:2",
+    "action:16",
+    "report:1",
+    "dialog:0",
+  ],
+  "images": [
+    "toggle:14",
+    "action:3",
+    "report:2",
+    "dialog:0",
+  ],
+  "information": [
+    "toggle:16",
+    "action:0",
+    "report:8",
+    "dialog:0",
+  ],
+  "miscellaneous": [
+    "toggle:5",
+    "action:5",
+    "report:0",
+    "dialog:0",
+  ],
+  "options": [
+    "toggle:0",
+    "action:1",
+    "report:0",
+    "dialog:2",
+  ],
+  "outline": [
+    "toggle:14",
+    "action:0",
+    "report:0",
+    "dialog:0",
+  ],
+  "resize": [
+    "toggle:0",
+    "action:1",
+    "report:1",
+    "dialog:2",
+  ],
+  "tools": [
+    "toggle:0",
+    "action:0",
+    "report:3",
+    "dialog:1",
+  ],
+}
+`;
+
 exports[`layout > groups a menu into its columns in order 1`] = `
 [
   [

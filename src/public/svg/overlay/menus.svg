@@ -189,4 +189,66 @@
       d="M12 6V3.5M12 18v2.5M18 12h2.5M6 12H3.5M16.2 7.8l1.8-1.8M6 18l1.8-1.8M16.2 16.2l1.8 1.8M6 6l1.8 1.8"
     />
   </symbol>
+
+  <!--
+    The four group markers. Same grid and stroke as the menu icons, drawn
+    smaller in the popup: they head a block of items rather than a tab.
+  -->
+
+  <!-- Toggle: a switch. -->
+  <symbol
+    id="kind-toggle"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <rect x="2.5" y="7" width="19" height="10" rx="5" />
+    <circle cx="16.5" cy="12" r="2.6" fill="currentColor" stroke="none" />
+  </symbol>
+
+  <!-- Action: something that happens once. -->
+  <symbol
+    id="kind-action"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M13 2.5L5 13.5h6l-1 8 8-11h-6z" />
+  </symbol>
+
+  <!-- Report: a page of findings. -->
+  <symbol
+    id="kind-report"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M6 3h8l4.5 4.5V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" />
+    <path d="M13.5 3v5h5" />
+    <path d="M8.5 13h7M8.5 16.5h4.5" />
+  </symbol>
+
+  <!-- Dialog: something that asks first. -->
+  <symbol
+    id="kind-dialog"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <rect x="3" y="4.5" width="18" height="15" rx="2.5" />
+    <path d="M3 9h18" />
+    <path d="M8 14h8" />
+  </symbol>
 </svg>

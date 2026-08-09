@@ -15,6 +15,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineAbsolutePositionedElements",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineAbsolutePositionedElements",
   },
   {
@@ -22,6 +23,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineBlockLevelElements",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineBlockLevelElements",
   },
   {
@@ -29,6 +31,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineDeprecatedElements",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineDeprecatedElements",
   },
   {
@@ -36,6 +39,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineExternalLinks",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineExternalLinks",
   },
   {
@@ -43,6 +47,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineFixedPositionedElements",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineFixedPositionedElements",
   },
   {
@@ -50,6 +55,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineFloatedElements",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineFloatedElements",
   },
   {
@@ -57,6 +63,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineFrames",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineFrames",
   },
   {
@@ -64,6 +71,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineHeadings",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineHeadings",
   },
   {
@@ -71,6 +79,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineNonSecureElements",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineNonSecureElements",
   },
   {
@@ -78,6 +87,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineRelativePositionedElements",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineRelativePositionedElements",
   },
   {
@@ -85,6 +95,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineTableCaptions",
     column: 3,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineTableCaptions",
   },
   {
@@ -92,6 +103,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineTableCells",
     column: 3,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineTableCells",
   },
   {
@@ -99,6 +111,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "outlineTables",
     column: 3,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.outlineTables",
   },
   {
@@ -106,6 +119,7 @@ export const OUTLINE_FEATURES: Feature[] = [
     labelKey: "showElementTagNames",
     column: 3,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Outline.toggleShowElementTagNames",
   },
 ];

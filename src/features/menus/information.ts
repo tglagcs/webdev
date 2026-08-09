@@ -15,6 +15,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayAbbreviations",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayAbbreviations",
   },
   {
@@ -22,6 +23,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayAccessKeys",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayAccessKeys",
   },
   {
@@ -29,6 +31,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayAnchors",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayAnchors",
   },
   {
@@ -36,6 +39,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayARIARoles",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayARIARoles",
   },
   {
@@ -43,6 +47,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayDivDimensions",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayDivDimensions",
   },
   {
@@ -50,6 +55,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayDivOrder",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayDivOrder",
   },
   {
@@ -57,6 +63,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayElementInformation",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayElementInformation",
   },
   {
@@ -64,6 +71,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayIdClassDetails",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayIdClassDetails",
   },
   {
@@ -71,6 +79,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayLinkDetails",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayLinkDetails",
   },
   {
@@ -78,6 +87,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayObjectInformation",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayObjectInformation",
   },
   {
@@ -85,6 +95,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayStackLevels",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayStackLevels",
   },
   {
@@ -92,6 +103,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayTabIndex",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayTabIndex",
   },
   {
@@ -99,6 +111,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayTableDepth",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayTableDepth",
   },
   {
@@ -106,6 +119,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayTableInformation",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayTableInformation",
   },
   {
@@ -113,6 +127,7 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayTitleAttributes",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayTitleAttributes",
   },
   {
@@ -120,54 +135,63 @@ export const INFORMATION_FEATURES: Feature[] = [
     labelKey: "displayTopographicInformation",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Information.displayTopographicInformation",
   },
   {
     id: "find-duplicate-ids",
     labelKey: "findDuplicateIds",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Information.findDuplicateIds",
   },
   {
     id: "view-anchor-information",
     labelKey: "viewAnchorInformation",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Information.viewAnchorInformation",
   },
   {
     id: "view-color-information",
     labelKey: "viewColorInformation",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Information.viewColorInformation",
   },
   {
     id: "view-document-outline",
     labelKey: "viewDocumentOutline",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Information.viewDocumentOutline",
   },
   {
     id: "view-javascript",
     labelKey: "viewJavaScript",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Information.viewJavaScript",
   },
   {
     id: "view-link-information",
     labelKey: "viewLinkInformation",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Information.viewLinkInformation",
   },
   {
     id: "view-meta-tag-information",
     labelKey: "viewMetaTagInformation",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Information.viewMetaTagInformation",
   },
   {
     id: "view-response-headers",
     labelKey: "viewResponseHeaders",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Information.viewResponseHeaders",
   },
 ];

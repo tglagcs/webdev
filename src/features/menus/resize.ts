@@ -14,24 +14,28 @@ export const RESIZE_FEATURES: Feature[] = [
     id: "display-window-size",
     labelKey: "displayWindowSize",
     column: 1,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Resize.displayWindowSize",
   },
   {
     id: "resize-window",
     labelKey: "resizeWindowMenu",
     column: 1,
+    kind: "dialog",
     handler: "WebDeveloper.Overlay.Resize.displayResizeDialog",
   },
   {
     id: "edit-resize-dimensions",
     labelKey: "editResizeDimensions",
     column: 2,
+    kind: "dialog",
     handler: "WebDeveloper.Overlay.Resize.editResizeDimensions",
   },
   {
     id: "view-responsive-layouts",
     labelKey: "viewResponsiveLayouts",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Resize.viewResponsiveLayouts",
   },
 ];

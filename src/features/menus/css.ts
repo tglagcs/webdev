@@ -15,6 +15,7 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "disableAllStyles",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.CSS.disableAllStyles",
   },
   {
@@ -22,6 +23,7 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "disableBrowserDefaultStyles",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.CSS.disableBrowserDefaultStyles",
   },
   {
@@ -29,6 +31,7 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "disableEmbeddedStyles",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.CSS.disableEmbeddedStyles",
   },
   {
@@ -36,6 +39,7 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "disableInlineStyles",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.CSS.disableInlineStyles",
   },
   {
@@ -43,6 +47,7 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "disableLinkedStyleSheets",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.CSS.disableLinkedStyleSheets",
   },
   {
@@ -50,6 +55,7 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "disablePrintStyles",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.CSS.disablePrintStyles",
   },
   {
@@ -57,6 +63,7 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "displayHandheldStyles",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.CSS.displayHandheldStyles",
   },
   {
@@ -64,6 +71,7 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "displayPrintStyles",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.CSS.displayPrintStyles",
   },
   {
@@ -71,12 +79,14 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "editCSS",
     column: 3,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.CSS.editCSS",
   },
   {
     id: "reload-linked-style-sheets",
     labelKey: "reloadLinkedStyleSheets",
     column: 3,
+    kind: "action",
     handler: "WebDeveloper.Overlay.CSS.reloadLinkedStyleSheets",
   },
   {
@@ -84,12 +94,14 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "useBorderBoxModel",
     column: 3,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.CSS.useBorderBoxModel",
   },
   {
     id: "view-css",
     labelKey: "viewCSS",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.CSS.viewCSS",
   },
 ];

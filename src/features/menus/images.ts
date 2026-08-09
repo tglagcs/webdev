@@ -15,6 +15,7 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "disableImages",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.toggleImages",
   },
   {
@@ -22,6 +23,7 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "displayAltAttributes",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.displayAltAttributes",
   },
   {
@@ -29,6 +31,7 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "displayImageDimensions",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.displayImageDimensions",
   },
   {
@@ -36,12 +39,14 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "displayImagePaths",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.displayImagePaths",
   },
   {
     id: "find-broken-images",
     labelKey: "findBrokenImages",
     column: 1,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Images.findBrokenImages",
   },
   {
@@ -49,6 +54,7 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "hideBackgroundImages",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.hideBackgroundImages",
   },
   {
@@ -56,18 +62,21 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "hideImages",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.hideImages",
   },
   {
     id: "make-images-full-size",
     labelKey: "makeImagesFullSize",
     column: 2,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Images.makeImagesFullSize",
   },
   {
     id: "make-images-invisible",
     labelKey: "makeImagesInvisible",
     column: 2,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Images.makeImagesInvisible",
   },
   {
@@ -75,6 +84,7 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "outlineAllImages",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.outlineAllImages",
   },
   {
@@ -82,6 +92,7 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "outlineBackgroundImages",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.outlineBackgroundImages",
   },
   {
@@ -89,6 +100,7 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "outlineImagesWithAdjustedDimensions",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.outlineImagesWithAdjustedDimensions",
   },
   {
@@ -96,6 +108,7 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "outlineImagesWithEmptyAltAttributes",
     column: 2,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.outlineImagesWithEmptyAltAttributes",
   },
   {
@@ -103,6 +116,7 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "outlineImagesWithOversizedDimensions",
     column: 3,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.outlineImagesWithOversizedDimensions",
   },
   {
@@ -110,6 +124,7 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "outlineImagesWithoutAltAttributes",
     column: 3,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.outlineImagesWithoutAltAttributes",
   },
   {
@@ -117,12 +132,14 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "outlineImagesWithoutDimensions",
     column: 3,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.outlineImagesWithoutDimensions",
   },
   {
     id: "reload-images",
     labelKey: "reloadImages",
     column: 3,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Images.reloadImages",
   },
   {
@@ -130,12 +147,14 @@ export const IMAGES_FEATURES: Feature[] = [
     labelKey: "replaceImagesWithAltAttributes",
     column: 3,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Images.replaceImagesWithAltAttributes",
   },
   {
     id: "view-image-information",
     labelKey: "viewImageInformation",
     column: 3,
+    kind: "report",
     handler: "WebDeveloper.Overlay.Images.viewImageInformation",
   },
 ];

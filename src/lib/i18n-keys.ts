@@ -188,6 +188,10 @@ export type PlainMessageKey =
   | "from"
   | "general"
   | "gray"
+  | "groupActions"
+  | "groupDialogs"
+  | "groupReports"
+  | "groupToggles"
   | "heading"
   | "headings"
   | "height"
@@ -623,6 +627,10 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "from",
   "general",
   "gray",
+  "groupActions",
+  "groupDialogs",
+  "groupReports",
+  "groupToggles",
   "heading",
   "headings",
   "height",

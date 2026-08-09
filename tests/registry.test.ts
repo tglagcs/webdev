@@ -18,7 +18,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { FEATURES, columns, visibleMenus } from "@/features/registry";
-import { MENUS } from "@/features/types";
+import { FEATURE_KINDS, MENUS } from "@/features/types";
 import { MESSAGE_KEYS } from "@/lib/i18n-keys";
 
 /**
@@ -92,6 +92,48 @@ describe("handlers", () => {
       "mark-all-links-visited",
     ]);
     expect(shared.every((feature) => feature.argument !== undefined)).toBe(true);
+  });
+});
+
+describe("kinds", () => {
+  it("gives every feature one of the four", () => {
+    const wrong = FEATURES.filter((feature) => !FEATURE_KINDS.includes(feature.kind));
+
+    expect(wrong.map((feature) => `${feature.id} -> ${feature.kind}`)).toEqual([]);
+  });
+
+  // The two say the same thing from different directions -- one is what the
+  // markup drew, the other is how the popup groups it -- so they have to
+  // agree, or an item with an on state ends up in a group that has none.
+  it("calls a feature a toggle exactly when it has an on state", () => {
+    for (const feature of FEATURES) {
+      expect(feature.kind === "toggle").toBe(!!feature.stateful);
+    }
+  });
+
+  it("puts every menu's features into groups without losing any", () => {
+    for (const menu of visibleMenus()) {
+      const grouped = FEATURE_KINDS.flatMap((kind) =>
+        menu.features.filter((feature) => feature.kind === kind),
+      );
+
+      expect(grouped.map((feature) => feature.id).sort()).toEqual(
+        menu.features.map((feature) => feature.id).sort(),
+      );
+    }
+  });
+
+  it("groups each menu the way the popup shows it", () => {
+    expect(
+      Object.fromEntries(
+        visibleMenus().map((menu) => [
+          menu.id,
+          FEATURE_KINDS.map(
+            (kind) => `${kind}:${menu.features.filter((feature) => feature.kind === kind).length}`,
+          ),
+        ]),
+      ),
+    ).toMatchSnapshot();
   });
 });
 

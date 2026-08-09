@@ -14,18 +14,21 @@ export const OPTIONS_FEATURES: Feature[] = [
     id: "reset-page",
     labelKey: "resetPage",
     column: 1,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Options.resetPage",
   },
   {
     id: "options",
     labelKey: "optionsMenu",
     column: 2,
+    kind: "dialog",
     handler: "WebDeveloper.Overlay.Options.options",
   },
   {
     id: "about",
     labelKey: "aboutMenu",
     column: 3,
+    kind: "dialog",
     handler: "WebDeveloper.Overlay.Options.about",
   },
 ];

@@ -15,6 +15,7 @@ export const DISABLE_FEATURES: Feature[] = [
     labelKey: "disableJavaScript",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Disable.toggleJavaScript",
   },
   {
@@ -22,6 +23,7 @@ export const DISABLE_FEATURES: Feature[] = [
     labelKey: "disableNotifications",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Disable.toggleNotifications",
   },
   {
@@ -29,12 +31,14 @@ export const DISABLE_FEATURES: Feature[] = [
     labelKey: "disablePopups",
     column: 1,
     stateful: true,
+    kind: "toggle",
     handler: "WebDeveloper.Overlay.Disable.togglePopups",
   },
   {
     id: "reset-disable-features",
     labelKey: "resetDisableFeatures",
     column: 2,
+    kind: "action",
     handler: "WebDeveloper.Overlay.Disable.resetFeatures",
   },
 ];
