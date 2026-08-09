@@ -15,7 +15,6 @@
   import { visibleMenus } from "@/features/registry";
   import { FEATURE_KINDS, type Feature, type FeatureKind, type MenuId } from "@/features/types";
   import { t } from "@/lib/i18n";
-  import { runFeature } from "./bridge";
   import { ui } from "./ui.svelte";
   import AddCookieDialog from "./AddCookieDialog.svelte";
   import ResizeDialog from "./ResizeDialog.svelte";
@@ -30,7 +29,7 @@
   function click(feature: Feature, event: MouseEvent): void {
     event.preventDefault();
 
-    runFeature(feature, ui);
+    void ui.run(feature);
   }
 
   // A sprite reference rather than an <img>: an external SVG in an <img> is

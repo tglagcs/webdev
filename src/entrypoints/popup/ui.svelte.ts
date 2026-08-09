@@ -11,8 +11,11 @@ import { SvelteSet } from "svelte/reactivity";
 
 import { getFeaturesOnTab } from "@/lib/storage/tab-state";
 import * as settings from "@/lib/storage/settings";
-import type { MenuId } from "@/features/types";
-import type { DisplayOverlayWith } from "@/lib/storage/schema";
+import type { Feature, MenuId } from "@/features/types";
+import { runInjected, refusalFor } from "./run-feature";
+import { runFeature } from "./bridge";
+import { t } from "@/lib/i18n";
+import type { DisplayOverlayWith, SettingKey } from "@/lib/storage/schema";
 
 export type NotificationType = "success" | "info" | "warning" | "danger";
 
@@ -71,10 +74,68 @@ class PopupState {
     await settings.set("menu", menu);
   }
 
+  /** The tab the popup was opened over, which is what every feature acts on. */
+  tab = $state<{ id?: number; url?: string } | null>(null);
+
+  /**
+   * Runs a feature, by whichever route it declares.
+   *
+   * The two are the phase boundary: `inject` is a feature the popup owns, and
+   * `handler` is one still living in overlay/*.js behind the bridge. A menu
+   * moves from one to the other as it is ported.
+   */
+  async run(feature: Feature): Promise<void> {
+    if (feature.setting) {
+      const next = !this.isActive(feature.id);
+
+      this.setActive(feature.id, next);
+
+      await settings.set(feature.setting as SettingKey, next);
+
+      return;
+    }
+
+    if (!feature.inject) {
+      runFeature(feature, this);
+
+      return;
+    }
+
+    const tabId = this.tab?.id;
+
+    if (tabId === undefined) {
+      return;
+    }
+
+    const refusal = refusalFor(this.tab?.url);
+
+    if (refusal) {
+      this.notify(`${t("extensionName")} ${t(refusal)}`, "danger");
+
+      return;
+    }
+
+    this.setActive(feature.id, await runInjected(feature, tabId));
+  }
+
   /** What is already switched on for the tab the popup was opened over. */
   async restoreFeatures(tabId: number): Promise<void> {
     for (const id of await getFeaturesOnTab(tabId)) {
       this.active.add(id);
+    }
+  }
+
+  /**
+   * The preference-backed items, which are not per tab.
+   *
+   * Read from settings rather than from the tab, so Show Element Tag Names
+   * comes back on wherever the user opens the popup next.
+   */
+  async restoreSettings(features: Feature[]): Promise<void> {
+    for (const feature of features.filter((candidate) => candidate.setting)) {
+      if (await settings.get(feature.setting as SettingKey)) {
+        this.active.add(feature.id);
+      }
     }
   }
 }

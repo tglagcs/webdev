@@ -69,10 +69,10 @@ function featureItem(id: string, state: FeatureState): unknown {
  * just does nothing when clicked.
  */
 export function runFeature(feature: Feature, state: FeatureState): void {
-  const handler = resolveHandler(feature.handler);
+  const handler = feature.handler ? resolveHandler(feature.handler) : undefined;
 
   if (!handler) {
-    console.warn(`WEBDEV LOG: no handler ${feature.handler} for ${feature.id}`);
+    console.warn(`WEBDEV LOG: no handler ${feature.handler ?? "?"} for ${feature.id}`);
 
     return;
   }

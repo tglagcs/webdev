@@ -1,0 +1,122 @@
+/**
+ * Running a feature the popup owns.
+ *
+ * The whole of what one of the old handlers did: find the tab, refuse the
+ * pages an extension cannot touch, resolve the values the feature needs,
+ * inject its bundle, call one entry in it, and record the new state.
+ *
+ * There is exactly one injected closure here, and it is the reason the
+ * registry can be data. It must reference `globalThis` and nothing else --
+ * `executeScript` serialises it to source, so a module binding the bundler
+ * renamed would arrive in the page as an undefined variable. See the closure
+ * section of CLAUDE.md.
+ */
+
+import type { Feature, PayloadSource } from "@/features/types";
+import type { Payload } from "@/features/entries";
+import { get } from "@/lib/storage/settings";
+import type { AnySettingKey } from "@/lib/storage/schema";
+import { getFeaturesOnTab, toggleFeatureOnTab } from "@/lib/storage/tab-state";
+import { log } from "@/lib/log";
+
+/** The pages where an extension cannot inject, and what to say about them. */
+const REFUSED: {
+  prefixes: string[];
+  message: "internalBrowserPagesError" | "extensionGalleryError";
+}[] = [
+  {
+    prefixes: ["chrome://", "chrome-extension://", "moz-extension://", "about:"],
+    message: "internalBrowserPagesError",
+  },
+  {
+    prefixes: [
+      "https://addons.mozilla.org/",
+      "https://chrome.google.com/extensions/",
+      "https://chrome.google.com/webstore/",
+      "https://chromewebstore.google.com/",
+    ],
+    message: "extensionGalleryError",
+  },
+];
+
+export function refusalFor(url: string | undefined): (typeof REFUSED)[number]["message"] | null {
+  if (!url) {
+    return null;
+  }
+
+  return (
+    REFUSED.find((entry) => entry.prefixes.some((prefix) => url.startsWith(prefix)))?.message ??
+    null
+  );
+}
+
+async function resolvePayload(
+  sources: Record<string, PayloadSource> | undefined,
+  enabled: boolean,
+): Promise<Payload> {
+  const payload: Payload = {};
+
+  for (const [name, source] of Object.entries(sources ?? {})) {
+    if (source.from === "value") {
+      payload[name] = source.value;
+    } else if (source.from === "enabled") {
+      payload[name] = enabled;
+    } else {
+      payload[name] = !!(await get(source.key as AnySettingKey));
+    }
+  }
+
+  return payload;
+}
+
+export interface Injection {
+  tabId: number;
+  feature: Feature;
+}
+
+/**
+ * Injects the bundle, then calls the entry named after the feature.
+ *
+ * Two calls, as upstream: the bundle is a file so it can be a real module
+ * graph, and the entry call is a closure because that is the only way to pass
+ * arguments. The second is what actually runs the feature.
+ */
+export async function inject({ tabId, feature }: Injection): Promise<void> {
+  const enabled = (await getFeaturesOnTab(tabId)).includes(feature.id);
+  const payload = await resolvePayload(feature.inject!.payload, enabled);
+
+  await browser.scripting.executeScript({
+    target: { tabId },
+    // WXT types this as the set of paths it built. The registry holds a
+    // string, and the entries test is what proves it is one of them.
+    files: [feature.inject!.bundle as never],
+  });
+
+  await browser.scripting.executeScript({
+    target: { tabId },
+    func: (entry: string, args: Payload) => {
+      (
+        globalThis as unknown as { WebDeveloper: { run(entry: string, args: Payload): void } }
+      ).WebDeveloper.run(entry, args);
+    },
+    args: [feature.id, payload],
+  });
+}
+
+/**
+ * The result of a click on an injected feature.
+ *
+ * The state is recorded only after the injection resolves, and a failure to
+ * marshal the script's return value counts as success -- the feature has
+ * already run in the page by then, and treating it as a failure is what left
+ * Display Handheld Styles stuck on. See the note in CLAUDE.md.
+ */
+export async function runInjected(feature: Feature, tabId: number): Promise<boolean> {
+  try {
+    await inject({ tabId, feature });
+  } catch (exception) {
+    log("Injected script did not return a usable result.", exception);
+  }
+
+  return (await toggleFeatureOnTab(feature.id, tabId)).includes(feature.id);
+}

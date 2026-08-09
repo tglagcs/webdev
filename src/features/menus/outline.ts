@@ -5,6 +5,11 @@
  * tools/extract-registry.py -- the ids, columns and message keys are the ones
  * that shipped, and the per-tab state is stored under the id, so none of them
  * may be renamed.
+ *
+ * The first menu whose handlers are gone: thirteen of the fourteen name an
+ * entry in the outline bundle and the popup runs them itself. The fourteenth
+ * is not a feature of the page at all -- it is the stored preference the other
+ * four read, so it only flips a setting.
  */
 
 import type { Feature } from "../types";
@@ -16,7 +21,10 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineAbsolutePositionedElements",
+    inject: {
+      bundle: "/feature-outline.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "outline-block-level-elements",
@@ -24,7 +32,10 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineBlockLevelElements",
+    inject: {
+      bundle: "/feature-outline.js",
+      payload: { showElementTagNames: { from: "setting", key: "outline.show.element.tag.names" } },
+    },
   },
   {
     id: "outline-deprecated-elements",
@@ -32,7 +43,10 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineDeprecatedElements",
+    inject: {
+      bundle: "/feature-outline.js",
+      payload: { showElementTagNames: { from: "setting", key: "outline.show.element.tag.names" } },
+    },
   },
   {
     id: "outline-external-links",
@@ -40,7 +54,10 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineExternalLinks",
+    inject: {
+      bundle: "/feature-outline.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "outline-fixed-positioned-elements",
@@ -48,7 +65,10 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineFixedPositionedElements",
+    inject: {
+      bundle: "/feature-outline.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "outline-floated-elements",
@@ -56,7 +76,10 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineFloatedElements",
+    inject: {
+      bundle: "/feature-outline.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "outline-frames",
@@ -64,7 +87,9 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineFrames",
+    inject: {
+      bundle: "/feature-outline.js",
+    },
   },
   {
     id: "outline-headings",
@@ -72,7 +97,10 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineHeadings",
+    inject: {
+      bundle: "/feature-outline.js",
+      payload: { showElementTagNames: { from: "setting", key: "outline.show.element.tag.names" } },
+    },
   },
   {
     id: "outline-non-secure-elements",
@@ -80,7 +108,9 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineNonSecureElements",
+    inject: {
+      bundle: "/feature-outline.js",
+    },
   },
   {
     id: "outline-relative-positioned-elements",
@@ -88,7 +118,10 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineRelativePositionedElements",
+    inject: {
+      bundle: "/feature-outline.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "outline-table-captions",
@@ -96,7 +129,9 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 3,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineTableCaptions",
+    inject: {
+      bundle: "/feature-outline.js",
+    },
   },
   {
     id: "outline-table-cells",
@@ -104,7 +139,10 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 3,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineTableCells",
+    inject: {
+      bundle: "/feature-outline.js",
+      payload: { showElementTagNames: { from: "setting", key: "outline.show.element.tag.names" } },
+    },
   },
   {
     id: "outline-tables",
@@ -112,7 +150,9 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 3,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.outlineTables",
+    inject: {
+      bundle: "/feature-outline.js",
+    },
   },
   {
     id: "show-element-tag-names",
@@ -120,6 +160,6 @@ export const OUTLINE_FEATURES: Feature[] = [
     column: 3,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Outline.toggleShowElementTagNames",
+    setting: "outline.show.element.tag.names",
   },
 ];

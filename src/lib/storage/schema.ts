@@ -47,6 +47,15 @@ export interface Settings {
   /** Which menu the popup was last on, so it reopens where the user left it. */
   menu: MenuId;
 
+  /**
+   * Whether the outline features also label each element with its tag name.
+   *
+   * A preference rather than a per-tab feature, and the dots in the key are
+   * how it has always been stored -- renaming it would lose the setting of
+   * everyone who has one.
+   */
+  "outline.show.element.tag.names": boolean;
+
   // General
   /**
    * The extension's own UI theme: "system", "light" or "dark". Only the

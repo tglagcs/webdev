@@ -22,7 +22,6 @@ import "@/legacy/js/overlay/images.js";
 import "@/legacy/js/overlay/information.js";
 import "@/legacy/js/overlay/miscellaneous.js";
 import "@/legacy/js/overlay/options.js";
-import "@/legacy/js/overlay/outline.js";
 import "@/legacy/js/overlay/overlay.js";
 import "@/legacy/js/overlay/resize.js";
 import "@/legacy/js/overlay/tools.js";
@@ -33,7 +32,7 @@ import "@/app.css";
 import { WebDeveloper } from "@/legacy/globals";
 import { capabilities } from "@/lib/capabilities";
 import { initTheme } from "@/lib/theme";
-import { visibleMenus } from "@/features/registry";
+import { FEATURES, visibleMenus } from "@/features/registry";
 import App from "./App.svelte";
 import { ui, type NotificationType } from "./ui.svelte";
 
@@ -82,11 +81,14 @@ mount(App, { target: document.getElementById("app")! });
 flushDomReady();
 
 await ui.restoreLabels();
+await ui.restoreSettings(FEATURES);
 await ui.restoreMenu(visibleMenus().map((menu) => menu.id));
 
 // What the popup shows as switched on is per tab, and the popup is opened over
 // one specific tab.
 const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+
+ui.tab = tab ?? null;
 
 if (tab?.id !== undefined) {
   await ui.restoreFeatures(tab.id);

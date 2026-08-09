@@ -53,6 +53,30 @@ export type FeatureKind = "toggle" | "action" | "report" | "dialog";
 /** In the order the popup stacks the groups. */
 export const FEATURE_KINDS: FeatureKind[] = ["toggle", "action", "report", "dialog"];
 
+/**
+ * Where a value in an injected feature's payload comes from.
+ *
+ * Everything the old closures captured, and nothing else: a constant written
+ * in the registry, a stored setting, or whether the feature is already on for
+ * this tab.
+ */
+export type PayloadSource =
+  | { from: "value"; value: string | number | boolean }
+  | { from: "setting"; key: string }
+  | { from: "enabled" };
+
+/**
+ * A feature the popup runs by injecting a bundle and naming an entry in it.
+ *
+ * Replaces one hand-written closure per feature. The entry name is the
+ * feature id, so the registry and the bundle cannot drift apart silently
+ * without the entries test noticing.
+ */
+export interface Injected {
+  bundle: string;
+  payload?: Record<string, PayloadSource>;
+}
+
 export interface Feature {
   /** Must match the legacy DOM id: it is the key of the per-tab state. */
   id: string;
@@ -77,10 +101,22 @@ export interface Feature {
    * The legacy handler that runs it, as a path under `WebDeveloper.Overlay`.
    *
    * A string rather than a function so the registry stays data -- the popup
-   * resolves it at click time. Each one is replaced by a typed implementation
-   * as its menu is ported; until then the behaviour is the code that shipped.
+   * resolves it at click time. Absent once the feature has an `inject`
+   * instead; until then the behaviour is the code that shipped.
    */
-  handler: string;
+  handler?: string;
+
+  /** Set instead of `handler` for a feature the popup runs itself. */
+  inject?: Injected;
+
+  /**
+   * Set instead of both for an item that only flips a stored preference.
+   *
+   * Show Element Tag Names is the one: it changes what the other outline
+   * features draw, touches no page, and so is remembered across tabs rather
+   * than per tab like everything else with an on state.
+   */
+  setting?: string;
 
   /**
    * What the handler is given, where two features share one.

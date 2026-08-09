@@ -62,9 +62,20 @@ describe("labels", () => {
 });
 
 describe("handlers", () => {
-  it("names a handler under the legacy overlay namespace", () => {
+  // Three routes, and every feature takes exactly one: an entry in a bundle
+  // the popup injects, a stored preference, or -- until its menu is ported --
+  // the handler that shipped.
+  it("gives every feature exactly one way to run", () => {
+    for (const feature of FEATURES) {
+      const routes = [feature.inject, feature.setting, feature.handler].filter(Boolean);
+
+      expect({ id: feature.id, routes: routes.length }).toEqual({ id: feature.id, routes: 1 });
+    }
+  });
+
+  it("names a legacy handler under the overlay namespace", () => {
     const wrong = FEATURES.filter(
-      (feature) => !feature.handler.startsWith("WebDeveloper.Overlay."),
+      (feature) => feature.handler && !feature.handler.startsWith("WebDeveloper.Overlay."),
     );
 
     expect(wrong.map((feature) => feature.id)).toEqual([]);
@@ -75,14 +86,17 @@ describe("handlers", () => {
   // the only allowed collision, so the pair has to be distinct even where the
   // handler is not.
   it("resolves to a distinct action per feature", () => {
-    const actions = FEATURES.map((feature) => `${feature.handler}(${feature.argument ?? ""})`);
+    const actions = FEATURES.filter((feature) => feature.handler).map(
+      (feature) => `${feature.handler}(${feature.argument ?? ""})`,
+    );
 
     expect(new Set(actions).size).toBe(actions.length);
   });
 
   it("passes an argument only where two features share a handler", () => {
     const shared = FEATURES.filter(
-      (feature) => FEATURES.filter((other) => other.handler === feature.handler).length > 1,
+      (feature) =>
+        feature.handler && FEATURES.filter((other) => other.handler === feature.handler).length > 1,
     );
 
     expect(shared.map((feature) => feature.id).sort()).toEqual([

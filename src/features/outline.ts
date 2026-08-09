@@ -17,6 +17,7 @@ import {
   removeMatchingElements,
 } from "@/lib/dom/elements";
 import { toggleStyleSheet } from "@/lib/dom/stylesheets";
+import type { Entry } from "./entries";
 
 const CSS = "features/css/outline";
 
@@ -221,3 +222,44 @@ export function outlineExternalLinks(outline: boolean, documents: Document[]): v
     getDocumentHeadElement(contentDocument).appendChild(styleElement);
   }
 }
+
+/**
+ * The Outline menu, as entries the popup can name in the registry.
+ *
+ * One line per feature, and each is the whole of what its old popup handler
+ * did: read a value, call one function. The three shapes are the argument
+ * lists the functions happen to have -- `documents` first, `documents` last,
+ * or a positioning keyword in front -- which is exactly the reason a single
+ * generic dispatcher could not call them and this table can.
+ *
+ * `enabled` in a payload is the feature's state *before* the click, so the
+ * ones that take an `outline` flag are handed its opposite, as upstream's
+ * closures were.
+ */
+export const OUTLINE_ENTRIES: Record<string, Entry> = {
+  "outline-block-level-elements": (payload, documents) =>
+    outlineBlockLevelElements(documents, !!payload.showElementTagNames),
+  "outline-deprecated-elements": (payload, documents) =>
+    outlineDeprecatedElements(documents, !!payload.showElementTagNames),
+  "outline-headings": (payload, documents) =>
+    outlineHeadings(documents, !!payload.showElementTagNames),
+  "outline-table-cells": (payload, documents) =>
+    outlineTableCells(documents, !!payload.showElementTagNames),
+
+  "outline-frames": (_payload, documents) => outlineFrames(documents),
+  "outline-non-secure-elements": (_payload, documents) => outlineNonSecureElements(documents),
+  "outline-table-captions": (_payload, documents) => outlineTableCaptions(documents),
+  "outline-tables": (_payload, documents) => outlineTables(documents),
+
+  "outline-external-links": (payload, documents) =>
+    outlineExternalLinks(!payload.enabled, documents),
+  "outline-floated-elements": (payload, documents) =>
+    outlineFloatedElements(!payload.enabled, documents),
+
+  "outline-absolute-positioned-elements": (payload, documents) =>
+    outlinePositionedElements("absolute", !payload.enabled, documents),
+  "outline-fixed-positioned-elements": (payload, documents) =>
+    outlinePositionedElements("fixed", !payload.enabled, documents),
+  "outline-relative-positioned-elements": (payload, documents) =>
+    outlinePositionedElements("relative", !payload.enabled, documents),
+};
