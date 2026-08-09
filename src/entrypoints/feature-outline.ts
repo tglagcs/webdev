@@ -12,7 +12,7 @@ import { WebDeveloper } from "@/legacy/globals";
 import "@/legacy/js/common/common.js";
 import "@/legacy/js/common/css.js";
 import "@/legacy/shims/dom";
-import "@/legacy/js/features/common.js";
+import "@/legacy/shims/notify";
 
 import * as outline from "@/features/outline";
 

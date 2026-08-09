@@ -6,7 +6,7 @@
 import "@/legacy/globals";
 import "@/legacy/js/common/common.js";
 import "@/legacy/shims/dom";
-import "@/legacy/js/features/common.js";
+import "@/legacy/shims/notify";
 import "@/legacy/js/features/information.js";
 
 export default defineUnlistedScript(() => {});

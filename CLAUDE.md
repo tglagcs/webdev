@@ -48,7 +48,7 @@ src/
     shims/               Storage / Locales / dom over the typed core
     js/                  47 files / ~12,400 lines of upstream ES5, being ported
   content/               the extractors feeding all 16 reports, + dispatch
-  features/              the injected bundles' logic (Outline done)
+  features/              the injected bundles (Outline, CSS, Miscellaneous)
   lib/
     dom/                 documents, css-values, elements, stylesheets
     i18n.ts              t(); i18n-keys.ts is generated from en_US
@@ -264,8 +264,14 @@ closure bug had, so it is the one worth pinning. The built bundle was also
 loaded in a browser and driven directly, since it is the built artifact that
 shipped broken last time.
 
-Still legacy: the CSS, Forms, Images, Information and Miscellaneous bundles,
-and `common.js`/`css.js`/`cookies.js`.
+`WebDeveloper.Common.displayNotification` means two different things by
+context and always has: in the popup it renders a notification, in an injected
+script it sends one to the popup to render. Upstream defined it twice and never
+loaded both. `shims/notify.ts` is the injected half — loading it in the popup
+would make the popup message itself.
+
+Still legacy: the Forms, Images and Information bundles, and
+`common.js`/`css.js`/`cookies.js`.
 
 Then the Svelte popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.

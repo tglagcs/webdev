@@ -1,0 +1,93 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`displayHiddenElements > reports how many it displayed 1`] = `
+[
+  {
+    "message": "displayHiddenElementsMultipleResult",
+    "parameters": [
+      6,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`displayHiddenElements > reveals elements hidden by CSS, by inline style and by input type 1`] = `
+[
+  {
+    "id": "inline-outer",
+    "noresize": false,
+    "saved": null,
+    "style": "color: red",
+    "type": null,
+  },
+  {
+    "id": "inline-inner",
+    "noresize": false,
+    "saved": null,
+    "style": "color: blue",
+    "type": null,
+  },
+  {
+    "id": "hidden-inline",
+    "noresize": false,
+    "saved": null,
+    "style": "display: revert !important;",
+    "type": null,
+  },
+  {
+    "id": "web-developer-something",
+    "noresize": false,
+    "saved": null,
+    "style": "display: none",
+    "type": null,
+  },
+  {
+    "id": "frame-locked",
+    "noresize": true,
+    "saved": null,
+    "style": null,
+    "type": null,
+  },
+]
+`;
+
+exports[`inline styles > parks every inline style under a holding attribute 1`] = `
+[
+  {
+    "id": "inline-outer",
+    "noresize": false,
+    "saved": "color: red",
+    "style": null,
+    "type": null,
+  },
+  {
+    "id": "inline-inner",
+    "noresize": false,
+    "saved": "color: blue",
+    "style": null,
+    "type": null,
+  },
+  {
+    "id": "hidden-inline",
+    "noresize": false,
+    "saved": "display: none",
+    "style": null,
+    "type": null,
+  },
+  {
+    "id": "web-developer-something",
+    "noresize": false,
+    "saved": "display: none",
+    "style": null,
+    "type": null,
+  },
+  {
+    "id": "frame-locked",
+    "noresize": true,
+    "saved": null,
+    "style": null,
+    "type": null,
+  },
+]
+`;
