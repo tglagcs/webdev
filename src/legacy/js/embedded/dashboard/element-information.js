@@ -614,7 +614,7 @@ WebDeveloper.ElementInformation.generateDOMInformation = function(element, conte
   domContent += ">";
 
   // If this is not a self-closing tag
-  if(!WebDeveloper.Common.inArray(tagName, WebDeveloper.ElementInformation.selfClosingTags))
+  if(!WebDeveloper.ElementInformation.selfClosingTags.includes(tagName))
   {
     domContent += "\n...\n";
     domContent += "</" + tagName + ">";

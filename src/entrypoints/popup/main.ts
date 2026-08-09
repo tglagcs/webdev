@@ -4,7 +4,6 @@ import "@/legacy/globals";
 // Must precede the legacy imports: it makes them defer their
 // initialisers instead of running each one on import.
 import { flushDomReady } from "@/legacy/dom-ready";
-import "@/legacy/js/common/common.js";
 import "@/legacy/shims/dom";
 import "@/legacy/js/common/cookies.js";
 import "@/legacy/shims/cookies";

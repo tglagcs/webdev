@@ -31,15 +31,25 @@ import {
 } from "@/lib/dom/css-values";
 import {
   addClass,
+  appendHTML,
+  empty,
   escapeHTML,
   getDocumentHeadElement,
   getExtensionURL,
+  getNextSiblings,
+  getPreviousSiblings,
   hasClass,
+  includeJavaScript,
   insertAsFirstChild,
+  isAncestor,
   removeClass,
   removeMatchingElements,
   toggleClass,
 } from "@/lib/dom/elements";
+import { getElementPositionX, getElementPositionY } from "@/lib/dom/position";
+import { getURLContents } from "@/lib/url-contents";
+import { log } from "@/lib/log";
+import { removeSubstring } from "@/lib/strings";
 import {
   getContentDocument,
   getContentWindow,
@@ -66,6 +76,8 @@ WebDeveloper.Content = WebDeveloper.Content || {};
 
 Object.assign(WebDeveloper.Common, {
   addClass,
+  appendHTML,
+  empty,
   escapeHTML,
   formatCSS,
   formatDimensions,
@@ -81,15 +93,24 @@ Object.assign(WebDeveloper.Common, {
   getCSSURI,
   getDocumentBodyElement,
   getDocumentImages,
+  getElementPositionX,
+  getElementPositionY,
   getElementText,
+  getNextSiblings,
+  getPreviousSiblings,
+  getURLContents,
   getPropertyCSSValue,
   getDocumentHeadElement,
   hasClass,
+  includeJavaScript,
   insertAsFirstChild,
+  isAncestor,
   isCSSURI,
+  log,
   removeClass,
   removeMatchingElements,
   removeReloadParameterFromURL,
+  removeSubstring,
   setStyleSheet,
   toggleClass,
   toggleStyleSheet,

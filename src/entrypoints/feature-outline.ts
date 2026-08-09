@@ -5,11 +5,10 @@
 // even though the implementation is a module now -- see the closure note in
 // CLAUDE.md for why that spelling is not optional.
 //
-// common.js is still here because the outline features share the page with
-// the embedded widgets, which have not been ported and expect the rest of
-// WebDeveloper.Common to exist.
+// The shim is still here because the outline features share the page with the
+// embedded widgets, which have not been ported and reach the DOM helpers
+// through WebDeveloper.Common.
 import { WebDeveloper } from "@/legacy/globals";
-import "@/legacy/js/common/common.js";
 import "@/legacy/shims/dom";
 import "@/legacy/shims/notify";
 

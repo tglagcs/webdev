@@ -33,7 +33,7 @@ WebDeveloper.LineGuides.addHorizontalLineGuide = function()
   while(spacing < documentHeight)
   {
     // If there is already a line guide at this position
-    if(WebDeveloper.Common.contains(lineGuidePositions, spacing + "px"))
+    if(lineGuidePositions.includes(spacing + "px"))
     {
       spacing += WebDeveloper.LineGuides.spacing + WebDeveloper.LineGuides.padding;
     }
@@ -74,7 +74,7 @@ WebDeveloper.LineGuides.addVerticalLineGuide = function()
   while(spacing < documentWidth)
   {
     // If there is already a line guide at this position
-    if(WebDeveloper.Common.contains(lineGuidePositions, spacing + "px"))
+    if(lineGuidePositions.includes(spacing + "px"))
     {
       spacing += WebDeveloper.LineGuides.spacing + WebDeveloper.LineGuides.padding;
     }

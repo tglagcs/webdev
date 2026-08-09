@@ -5,11 +5,10 @@
 // even though the implementation is a module now -- see the closure note in
 // CLAUDE.md for why that spelling is not optional.
 //
-// The legacy imports stay because the other bundles and the embedded widgets
-// share the page and expect the rest of WebDeveloper.Common and .CSS to exist;
-// they go when those are ported.
+// The shim imports stay because the embedded widgets share the page and reach
+// WebDeveloper.Common and .CSS for helpers that now live in src/lib; they go
+// when those widgets are ported.
 import { WebDeveloper } from "@/legacy/globals";
-import "@/legacy/js/common/common.js";
 import "@/legacy/shims/dom";
 import "@/legacy/shims/notify";
 

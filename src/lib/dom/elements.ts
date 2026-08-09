@@ -8,6 +8,8 @@
  * `<svg>` is an object rather than a string.
  */
 
+import { getDocumentBodyElement } from "./documents";
+
 export function hasClass(element: Element | null, className: string): boolean {
   return classNames(element).includes(className);
 }
@@ -106,6 +108,106 @@ export function escapeHTML(text: string): string {
  * which left the hover outline on the page, because the line that marks the
  * outlined element comes after the throw.
  */
+export function appendHTML(html: string, element: Element | null): void {
+  if (!html || !element) {
+    return;
+  }
+
+  element.insertAdjacentHTML("beforeend", html);
+}
+
+/** Removes every child, leaving the element itself in place. */
+export function empty(element: Element | null): void {
+  if (!element) {
+    return;
+  }
+
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+/** Whether the element is inside the ancestor, at any depth. */
+export function isAncestor(element: Node | null, ancestorElement: Node | null): boolean {
+  if (!element || !ancestorElement) {
+    return false;
+  }
+
+  let parent = element.parentNode;
+
+  while (parent) {
+    if (parent === ancestorElement) {
+      return true;
+    }
+
+    parent = parent.parentNode;
+  }
+
+  return false;
+}
+
+/**
+ * The element siblings on one side of an element, optionally filtered.
+ *
+ * Returns `null` rather than an empty array when there are none. That is
+ * upstream's contract and the callers test for it, so it is kept -- the
+ * ancestors panel of Element Information branches on the null.
+ */
+function siblings(element: Element | null, match: string, previous: boolean): Element[] | null {
+  const parent = element?.parentNode;
+
+  if (!element || !parent) {
+    return null;
+  }
+
+  const all = Array.from(parent.childNodes);
+  const index = all.indexOf(element);
+  const side = previous ? all.slice(0, index) : all.slice(index + 1);
+
+  const found = side.filter(
+    (node): node is Element =>
+      node.nodeType === Node.ELEMENT_NODE && (!match || (node as Element).matches(match)),
+  );
+
+  return found.length === 0 ? null : found;
+}
+
+export function getNextSiblings(element: Element | null, match = ""): Element[] | null {
+  return siblings(element, match, false);
+}
+
+export function getPreviousSiblings(element: Element | null, match = ""): Element[] | null {
+  return siblings(element, match, true);
+}
+
+/**
+ * Loads one of the extension's scripts into a document.
+ *
+ * Used to put Bootstrap and the dashboard's own bundle inside the widget
+ * iframe, which is why the URL is resolved against the extension rather than
+ * the page.
+ */
+export function includeJavaScript(
+  url: string,
+  contentDocument: Document,
+  callback?: () => void,
+): void {
+  const scriptElement = contentDocument.createElement("script");
+
+  if (callback) {
+    scriptElement.addEventListener(
+      "load",
+      () => {
+        callback();
+      },
+      { capture: true, once: true },
+    );
+  }
+
+  scriptElement.setAttribute("src", getExtensionURL(url));
+  getDocumentBodyElement(contentDocument).appendChild(scriptElement);
+}
+
 export function insertAsFirstChild(element: Element | null, child: Node | null): void {
   if (!element || !child) {
     return;
