@@ -53,6 +53,7 @@ import {
   isAlternateStyleSheet,
   isMediaStyleSheet,
   isValidStyleSheet,
+  setStyleSheet,
   toggleStyleSheet,
 } from "@/lib/dom/stylesheets";
 import { getDocuments } from "@/content/report";
@@ -88,6 +89,7 @@ Object.assign(WebDeveloper.Common, {
   removeClass,
   removeMatchingElements,
   removeReloadParameterFromURL,
+  setStyleSheet,
   toggleClass,
   toggleStyleSheet,
 });

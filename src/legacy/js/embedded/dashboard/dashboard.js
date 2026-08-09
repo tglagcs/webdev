@@ -12,12 +12,27 @@ WebDeveloper.Dashboard.adjustBodyBottomMargin = function(contentDocument, height
 // Closes a dashboard tab
 WebDeveloper.Dashboard.closeDashboardTab = function(tabId, contentDocument)
 {
-  var dashboardDocument = WebDeveloper.Dashboard.getDashboard(contentDocument).contentDocument;
+  var dashboard = WebDeveloper.Dashboard.getDashboard(contentDocument);
+
+  // The close button may have taken the dashboard already. Nothing to close,
+  // and throwing here would abort the teardown that follows this call.
+  if(!dashboard)
+  {
+    return;
+  }
+
+  var dashboardDocument = dashboard.contentDocument;
 
   WebDeveloper.Common.removeMatchingElements("#" + tabId + "-panel, #" + tabId + "-tab", dashboardDocument);
 
   // If the last tab on the dashboard was closed
-  if(dashboardDocument.querySelectorAll("#web-developer-dashboard-tabs > li").length === 1)
+  //
+  // Counted by the "-tab" suffix rather than by how many list items are left:
+  // the title and the close button share the list, so a count of everything
+  // means the answer changes whenever the chrome does. It already did -- the
+  // close button was the second non-tab item, and the dashboard stopped
+  // recognising its own last tab, leaving an empty bar on the page.
+  if(dashboardDocument.querySelectorAll("#web-developer-dashboard-tabs > li[id$='-tab']").length === 0)
   {
     WebDeveloper.Dashboard.removeDashboard(contentDocument);
   }
@@ -47,9 +62,9 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
   window.WebDeveloperEvents.Dashboard         = window.WebDeveloperEvents.Dashboard || {};
   window.WebDeveloperEvents.Dashboard.mouseUp = WebDeveloper.Dashboard.mouseUp;
 
-  WebDeveloper.Common.toggleStyleSheet("/embedded/css/dashboard/external/dashboard.css", "web-developer-dashboard-styles", contentDocument, false);
-  WebDeveloper.Common.toggleStyleSheet("/lib/bootstrap/bootstrap.css", "web-developer-dashboard-bootstrap", dashboardDocument, false);
-  WebDeveloper.Common.toggleStyleSheet("/embedded/css/dashboard/internal/dashboard.css", "web-developer-dashboard-styles", dashboardDocument, false);
+  WebDeveloper.Common.setStyleSheet("/embedded/css/dashboard/external/dashboard.css", "web-developer-dashboard-styles", contentDocument, false, true);
+  WebDeveloper.Common.setStyleSheet("/lib/bootstrap/bootstrap.css", "web-developer-dashboard-bootstrap", dashboardDocument, false, true);
+  WebDeveloper.Common.setStyleSheet("/embedded/css/dashboard/internal/dashboard.css", "web-developer-dashboard-styles", dashboardDocument, false, true);
 
   WebDeveloper.Common.getDocumentBodyElement(dashboardDocument).insertAdjacentHTML("beforeend", dashboardHTML);
 
@@ -247,7 +262,7 @@ WebDeveloper.Dashboard.close = function(contentDocument)
 WebDeveloper.Dashboard.removeDashboard = function(contentDocument)
 {
   WebDeveloper.Common.removeMatchingElements("#web-developer-dashboard", contentDocument);
-  WebDeveloper.Common.toggleStyleSheet("/embedded/css/dashboard/external/dashboard.css", "web-developer-dashboard-styles", contentDocument, false);
+  WebDeveloper.Common.setStyleSheet("/embedded/css/dashboard/external/dashboard.css", "web-developer-dashboard-styles", contentDocument, false, false);
 
   contentDocument.removeEventListener("mouseup", window.WebDeveloperEvents.Dashboard.mouseUp, false);
 

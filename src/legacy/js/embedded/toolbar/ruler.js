@@ -126,8 +126,8 @@ WebDeveloper.Ruler.createToolbar = function(contentDocument, locale)
 WebDeveloper.Ruler.displayRuler = function(display, contentDocument, locale)
 {
   // Run first so that the size calculations are accurate on setup
-  WebDeveloper.Common.toggleStyleSheet("/embedded/css/toolbar/external/ruler.css", "web-developer-ruler-styles", contentDocument, false);
-  WebDeveloper.Common.toggleStyleSheet("/embedded/css/toolbar/external/toolbar.css", "web-developer-ruler-toolbar-styles", contentDocument, false);
+  WebDeveloper.Common.setStyleSheet("/embedded/css/toolbar/external/ruler.css", "web-developer-ruler-styles", contentDocument, false, display);
+  WebDeveloper.Common.setStyleSheet("/embedded/css/toolbar/external/toolbar.css", "web-developer-ruler-toolbar-styles", contentDocument, false, display);
 
   // If displaying the ruler
   if(display)

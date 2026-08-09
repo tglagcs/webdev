@@ -125,9 +125,41 @@ export function toggleStyleSheet(
   contentDocument: Document,
   insertFirst: boolean,
 ): void {
-  if (contentDocument.getElementById(id)) {
-    removeMatchingElements(`#${id}`, contentDocument);
+  setStyleSheet(url, id, contentDocument, insertFirst, !contentDocument.getElementById(id));
+}
 
+/**
+ * The same, for a caller that knows which state it wants.
+ *
+ * A toggle is only correct while every route in and out of the feature goes
+ * through it. The dashboard has two ways out -- the popup switching it off and
+ * the widget's own close button -- and the second one used to leave the
+ * Element Information stylesheet behind. That stylesheet is
+ * `* { cursor: crosshair !important }`, so the page kept a crosshair over it,
+ * and the toggle was then out of phase: the next switch-on removed the sheet
+ * and the next switch-off put it back.
+ *
+ * Anything a widget can leave by more than one route sets the state it wants
+ * rather than inverting whatever it finds.
+ */
+export function setStyleSheet(
+  url: string,
+  id: string,
+  contentDocument: Document,
+  insertFirst: boolean,
+  enabled: boolean,
+): void {
+  const existing = contentDocument.getElementById(id);
+
+  if (!enabled) {
+    if (existing) {
+      removeMatchingElements(`#${id}`, contentDocument);
+    }
+
+    return;
+  }
+
+  if (existing) {
     return;
   }
 

@@ -167,8 +167,8 @@ WebDeveloper.LineGuides.displayLineGuides = function(display, contentDocument, l
     WebDeveloper.LineGuides.removeToolbar(contentDocument);
   }
 
-  WebDeveloper.Common.toggleStyleSheet("/embedded/css/toolbar/external/line-guides.css", "web-developer-line-guides-styles", contentDocument, false);
-  WebDeveloper.Common.toggleStyleSheet("/embedded/css/toolbar/external/toolbar.css", "web-developer-line-guides-toolbar-styles", contentDocument, false);
+  WebDeveloper.Common.setStyleSheet("/embedded/css/toolbar/external/line-guides.css", "web-developer-line-guides-styles", contentDocument, false, display);
+  WebDeveloper.Common.setStyleSheet("/embedded/css/toolbar/external/toolbar.css", "web-developer-line-guides-toolbar-styles", contentDocument, false, display);
 };
 
 // Returns the line guides color

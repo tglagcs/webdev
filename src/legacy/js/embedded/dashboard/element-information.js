@@ -826,6 +826,11 @@ WebDeveloper.ElementInformation.getLocaleString = function(name)
 // outline kept following the mouse over a page with no dashboard on it.
 WebDeveloper.ElementInformation.teardown = function(contentDocument)
 {
+  // Before the guard: the crosshair stylesheet is what the user sees, and it
+  // has to go whichever route brought us here, including a page where the
+  // listeners were already detached.
+  WebDeveloper.Common.setStyleSheet("/embedded/css/dashboard/external/element-information.css", "web-developer-element-information-styles", contentDocument, false, false);
+
   // Nothing to detach: the feature was never on in this page.
   if(!window.WebDeveloperEvents || !window.WebDeveloperEvents.ElementInformation)
   {
@@ -862,14 +867,14 @@ WebDeveloper.ElementInformation.initialize = function(display, contentDocument, 
 
     contentDocument.addEventListener("click", window.WebDeveloperEvents.ElementInformation.click, true);
     contentDocument.addEventListener("mouseover", window.WebDeveloperEvents.ElementInformation.mouseOver, false);
+
+    WebDeveloper.Common.setStyleSheet("/embedded/css/dashboard/external/element-information.css", "web-developer-element-information-styles", contentDocument, false, true);
   }
   else
   {
     WebDeveloper.Dashboard.closeDashboardTab("element-information", contentDocument);
     WebDeveloper.ElementInformation.teardown(contentDocument);
   }
-
-  WebDeveloper.Common.toggleStyleSheet("/embedded/css/dashboard/external/element-information.css", "web-developer-element-information-styles", contentDocument, false);
 };
 
 // Resizes the element information elements

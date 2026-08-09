@@ -76,8 +76,8 @@ WebDeveloper.ColorPicker.displayColorPicker = function(display, contentDocument,
     WebDeveloper.ColorPicker.removeColorPicker(contentDocument);
   }
 
-  WebDeveloper.Common.toggleStyleSheet("/embedded/css/toolbar/external/color-picker.css", "web-developer-color-picker-styles", contentDocument, false);
-  WebDeveloper.Common.toggleStyleSheet("/embedded/css/toolbar/external/toolbar.css", "web-developer-color-picker-toolbar-styles", contentDocument, false);
+  WebDeveloper.Common.setStyleSheet("/embedded/css/toolbar/external/color-picker.css", "web-developer-color-picker-styles", contentDocument, false, display);
+  WebDeveloper.Common.setStyleSheet("/embedded/css/toolbar/external/toolbar.css", "web-developer-color-picker-toolbar-styles", contentDocument, false, display);
 };
 
 // Converts an RGB color into a hex color
