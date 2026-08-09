@@ -1,0 +1,3334 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`clearing > checks every checkbox 1`] = `
+[
+  [
+    "checkbox-off",
+    true,
+  ],
+  [
+    "checkbox-on",
+    true,
+  ],
+]
+`;
+
+exports[`clearing > checks every checkbox 2`] = `
+[
+  {
+    "message": "checkAllCheckboxesMultipleResult",
+    "parameters": [
+      2,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`clearing > clears every field a form owns, by type 1`] = `
+[
+  {
+    "attributes": {
+      "action": "/submit",
+      "id": "form-no-method",
+    },
+    "checked": null,
+    "disabled": <input
+      disabled=""
+      id="disabled"
+      name="disabled-field"
+      type="text"
+    />,
+    "selectedIndex": null,
+    "tag": "form",
+    "value": null,
+  },
+  {
+    "attributes": {
+      "id": "text-named",
+      "name": "username",
+      "type": "text",
+      "value": "taken",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-empty",
+      "name": "street",
+      "type": "text",
+      "value": "",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-no-name",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-email-by-name",
+      "name": "contactEmail",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-zip-by-name",
+      "name": "zipCode",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-phone-by-name",
+      "name": "phoneNumber",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-maxlength",
+      "maxlength": "4",
+      "name": "a-very-long-field-name",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "email",
+      "name": "email",
+      "type": "email",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "password",
+      "name": "password",
+      "type": "password",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "search",
+      "name": "search",
+      "type": "search",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "url",
+      "name": "homepage",
+      "type": "url",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "tel",
+      "name": "tel",
+      "type": "tel",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "colour",
+      "name": "colour",
+      "type": "color",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "#000000",
+  },
+  {
+    "attributes": {
+      "id": "date",
+      "name": "date",
+      "type": "date",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "datetime-local",
+      "name": "when",
+      "type": "datetime-local",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "month",
+      "name": "month",
+      "type": "month",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "time",
+      "name": "time",
+      "type": "time",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "week",
+      "name": "week",
+      "type": "week",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "number-bounded",
+      "max": "20",
+      "min": "10",
+      "name": "quantity",
+      "type": "number",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "number-unbounded",
+      "name": "count",
+      "type": "number",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "hidden",
+      "name": "csrf",
+      "type": "hidden",
+      "value": "secret",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "secret",
+  },
+  {
+    "attributes": {
+      "id": "checkbox-off",
+      "name": "terms",
+      "type": "checkbox",
+      "value": "yes",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "yes",
+  },
+  {
+    "attributes": {
+      "checked": "",
+      "id": "checkbox-on",
+      "name": "news",
+      "type": "checkbox",
+      "value": "yes",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "yes",
+  },
+  {
+    "attributes": {
+      "checked": "",
+      "id": "radio-a",
+      "name": "plan",
+      "type": "radio",
+      "value": "a",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "a",
+  },
+  {
+    "attributes": {
+      "id": "radio-b",
+      "name": "plan",
+      "type": "radio",
+      "value": "b",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "b",
+  },
+  {
+    "attributes": {
+      "id": "submit",
+      "type": "submit",
+      "value": "Send",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Send",
+  },
+  {
+    "attributes": {
+      "id": "reset",
+      "type": "reset",
+      "value": "Reset",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Reset",
+  },
+  {
+    "attributes": {
+      "alt": "Send",
+      "disabled": "",
+      "id": "image",
+      "src": "/button.png",
+      "type": "image",
+      "value": "",
+    },
+    "checked": false,
+    "disabled": true,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "file",
+      "name": "upload",
+      "type": "file",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "button",
+      "type": "button",
+      "value": "",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "disabled": "",
+      "id": "disabled",
+      "name": "disabled-field",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": true,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "readonly",
+      "name": "readonly-field",
+      "readonly": "",
+      "type": "text",
+      "value": "fixed",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "autocomplete": "off",
+      "id": "autocomplete",
+      "name": "card",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "required",
+      "name": "required-field",
+      "pattern": "[a-z]+",
+      "required": "",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "ranged",
+      "max": "9",
+      "min": "1",
+      "name": "ranged",
+      "type": "range",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "5",
+  },
+  {
+    "attributes": {
+      "id": "select-blank-first",
+      "name": "country",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": -1,
+    "tag": "select",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-single",
+      "name": "single",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": -1,
+    "tag": "select",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-sized",
+      "name": "sized",
+      "size": "2",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": -1,
+    "tag": "select",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "disabled": "",
+      "id": "select-disabled",
+      "name": "disabled-select",
+    },
+    "checked": null,
+    "disabled": true,
+    "selectedIndex": -1,
+    "tag": "select",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea",
+      "name": "comments",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea-maxlength",
+      "maxlength": "6",
+      "name": "a-long-textarea-name",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea-filled",
+      "name": "filled",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "button-element",
+      "name": "action",
+      "value": "save",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "button",
+    "value": "save",
+  },
+  {
+    "attributes": {
+      "action": "/search",
+      "id": "form-get",
+      "method": "GET",
+    },
+    "checked": null,
+    "disabled": null,
+    "selectedIndex": null,
+    "tag": "form",
+    "value": null,
+  },
+  {
+    "attributes": {
+      "id": "wrapped-in-label",
+      "name": "wrapped",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "labelled-by-for",
+      "name": "labelled",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "unlabelled",
+      "name": "unlabelled",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "name": "no-id-no-label",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-outside-form",
+      "name": "loose",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": 0,
+    "tag": "select",
+    "value": "loose",
+  },
+  {
+    "attributes": {
+      "id": "input-outside-form",
+      "name": "loose-input",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea-outside-form",
+      "name": "loose-textarea",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+]
+`;
+
+exports[`clearing > clears every field a form owns, by type 2`] = `
+[
+  {
+    "message": "clearFormFieldsMultipleResult",
+    "parameters": [
+      2,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`clearing > clears radio buttons wherever they are 1`] = `
+[
+  {
+    "message": "clearRadioButtonsMultipleResult",
+    "parameters": [
+      2,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`clearing > unchecks every checkbox 1`] = `
+[
+  [
+    "checkbox-off",
+    false,
+  ],
+  [
+    "checkbox-on",
+    false,
+  ],
+]
+`;
+
+exports[`clearing > unchecks every checkbox 2`] = `
+[
+  {
+    "message": "uncheckAllCheckboxesMultipleResult",
+    "parameters": [
+      2,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`converting > converts every form to get 1`] = `
+[
+  [
+    "form-no-method",
+    null,
+  ],
+  [
+    "form-get",
+    "GET",
+  ],
+]
+`;
+
+exports[`converting > converts every form to get 2`] = `
+[
+  {
+    "message": "convertFormMethodsMultipleResult",
+    "parameters": [
+      0,
+      "get",
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`converting > converts every form to post 1`] = `
+[
+  [
+    "form-no-method",
+    "post",
+  ],
+  [
+    "form-get",
+    "post",
+  ],
+]
+`;
+
+exports[`converting > converts every form to post 2`] = `
+[
+  {
+    "message": "convertFormMethodsMultipleResult",
+    "parameters": [
+      2,
+      "post",
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`converting > converts select elements to text inputs, keeping id, name and value 1`] = `
+[
+  {
+    "attributes": {
+      "action": "/submit",
+      "id": "form-no-method",
+    },
+    "checked": null,
+    "disabled": <input
+      disabled=""
+      id="disabled"
+      name="disabled-field"
+      type="text"
+    />,
+    "selectedIndex": null,
+    "tag": "form",
+    "value": null,
+  },
+  {
+    "attributes": {
+      "id": "text-named",
+      "name": "username",
+      "type": "text",
+      "value": "taken",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "taken",
+  },
+  {
+    "attributes": {
+      "id": "text-empty",
+      "name": "street",
+      "type": "text",
+      "value": "",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-no-name",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-email-by-name",
+      "name": "contactEmail",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-zip-by-name",
+      "name": "zipCode",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-phone-by-name",
+      "name": "phoneNumber",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-maxlength",
+      "maxlength": "4",
+      "name": "a-very-long-field-name",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "email",
+      "name": "email",
+      "type": "email",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "password",
+      "name": "password",
+      "type": "password",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "search",
+      "name": "search",
+      "type": "search",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "url",
+      "name": "homepage",
+      "type": "url",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "tel",
+      "name": "tel",
+      "type": "tel",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "colour",
+      "name": "colour",
+      "type": "color",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "date",
+      "name": "date",
+      "type": "date",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "datetime-local",
+      "name": "when",
+      "type": "datetime-local",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "month",
+      "name": "month",
+      "type": "month",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "time",
+      "name": "time",
+      "type": "time",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "week",
+      "name": "week",
+      "type": "week",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "number-bounded",
+      "max": "20",
+      "min": "10",
+      "name": "quantity",
+      "type": "number",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "number-unbounded",
+      "name": "count",
+      "type": "number",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "hidden",
+      "name": "csrf",
+      "type": "hidden",
+      "value": "secret",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "secret",
+  },
+  {
+    "attributes": {
+      "id": "checkbox-off",
+      "name": "terms",
+      "type": "checkbox",
+      "value": "yes",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "yes",
+  },
+  {
+    "attributes": {
+      "checked": "",
+      "id": "checkbox-on",
+      "name": "news",
+      "type": "checkbox",
+      "value": "yes",
+    },
+    "checked": true,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "yes",
+  },
+  {
+    "attributes": {
+      "checked": "",
+      "id": "radio-a",
+      "name": "plan",
+      "type": "radio",
+      "value": "a",
+    },
+    "checked": true,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "a",
+  },
+  {
+    "attributes": {
+      "id": "radio-b",
+      "name": "plan",
+      "type": "radio",
+      "value": "b",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "b",
+  },
+  {
+    "attributes": {
+      "id": "submit",
+      "type": "submit",
+      "value": "Send",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Send",
+  },
+  {
+    "attributes": {
+      "id": "reset",
+      "type": "reset",
+      "value": "Reset",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Reset",
+  },
+  {
+    "attributes": {
+      "alt": "Send",
+      "disabled": "",
+      "id": "image",
+      "src": "/button.png",
+      "type": "image",
+    },
+    "checked": false,
+    "disabled": true,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "file",
+      "name": "upload",
+      "type": "file",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "button",
+      "type": "button",
+      "value": "Press",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Press",
+  },
+  {
+    "attributes": {
+      "disabled": "",
+      "id": "disabled",
+      "name": "disabled-field",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": true,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "readonly",
+      "name": "readonly-field",
+      "readonly": "",
+      "type": "text",
+      "value": "fixed",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "fixed",
+  },
+  {
+    "attributes": {
+      "autocomplete": "off",
+      "id": "autocomplete",
+      "name": "card",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "required",
+      "name": "required-field",
+      "pattern": "[a-z]+",
+      "required": "",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "ranged",
+      "max": "9",
+      "min": "1",
+      "name": "ranged",
+      "type": "range",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-blank-first",
+      "name": "country",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-single",
+      "name": "single",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "only",
+  },
+  {
+    "attributes": {
+      "id": "select-sized",
+      "name": "sized",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-disabled",
+      "name": "disabled-select",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea",
+      "name": "comments",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea-maxlength",
+      "maxlength": "6",
+      "name": "a-long-textarea-name",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea-filled",
+      "name": "filled",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "already here",
+  },
+  {
+    "attributes": {
+      "id": "button-element",
+      "name": "action",
+      "value": "save",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "button",
+    "value": "save",
+  },
+  {
+    "attributes": {
+      "action": "/search",
+      "id": "form-get",
+      "method": "GET",
+    },
+    "checked": null,
+    "disabled": null,
+    "selectedIndex": null,
+    "tag": "form",
+    "value": null,
+  },
+  {
+    "attributes": {
+      "id": "wrapped-in-label",
+      "name": "wrapped",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "labelled-by-for",
+      "name": "labelled",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "unlabelled",
+      "name": "unlabelled",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "name": "no-id-no-label",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-outside-form",
+      "name": "loose",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "loose",
+  },
+  {
+    "attributes": {
+      "id": "input-outside-form",
+      "name": "loose-input",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea-outside-form",
+      "name": "loose-textarea",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+]
+`;
+
+exports[`converting > converts select elements to text inputs, keeping id, name and value 2`] = `
+[
+  {
+    "message": "convertSelectElementsToTextInputsMultipleResult",
+    "parameters": [
+      5,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`converting > converts text inputs to textareas, leaving the button-like types 1`] = `
+[
+  [
+    "hidden",
+    "hidden",
+  ],
+  [
+    "checkbox-off",
+    "checkbox",
+  ],
+  [
+    "checkbox-on",
+    "checkbox",
+  ],
+  [
+    "radio-a",
+    "radio",
+  ],
+  [
+    "radio-b",
+    "radio",
+  ],
+  [
+    "submit",
+    "submit",
+  ],
+  [
+    "reset",
+    "reset",
+  ],
+  [
+    "image",
+    "image",
+  ],
+  [
+    "file",
+    "file",
+  ],
+  [
+    "button",
+    "button",
+  ],
+]
+`;
+
+exports[`converting > converts text inputs to textareas, leaving the button-like types 2`] = `
+[
+  {
+    "attributes": {
+      "action": "/submit",
+      "id": "form-no-method",
+    },
+    "checked": null,
+    "disabled": <textarea
+      id="disabled"
+      name="disabled-field"
+    />,
+    "selectedIndex": null,
+    "tag": "form",
+    "value": null,
+  },
+  {
+    "attributes": {
+      "id": "text-named",
+      "name": "username",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "taken",
+  },
+  {
+    "attributes": {
+      "id": "text-empty",
+      "name": "street",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-no-name",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-email-by-name",
+      "name": "contactEmail",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-zip-by-name",
+      "name": "zipCode",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-phone-by-name",
+      "name": "phoneNumber",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "text-maxlength",
+      "name": "a-very-long-field-name",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "email",
+      "name": "email",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "password",
+      "name": "password",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "search",
+      "name": "search",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "url",
+      "name": "homepage",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "tel",
+      "name": "tel",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "colour",
+      "name": "colour",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "date",
+      "name": "date",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "datetime-local",
+      "name": "when",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "month",
+      "name": "month",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "time",
+      "name": "time",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "week",
+      "name": "week",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "number-bounded",
+      "name": "quantity",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "number-unbounded",
+      "name": "count",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "hidden",
+      "name": "csrf",
+      "type": "hidden",
+      "value": "secret",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "secret",
+  },
+  {
+    "attributes": {
+      "id": "checkbox-off",
+      "name": "terms",
+      "type": "checkbox",
+      "value": "yes",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "yes",
+  },
+  {
+    "attributes": {
+      "checked": "",
+      "id": "checkbox-on",
+      "name": "news",
+      "type": "checkbox",
+      "value": "yes",
+    },
+    "checked": true,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "yes",
+  },
+  {
+    "attributes": {
+      "checked": "",
+      "id": "radio-a",
+      "name": "plan",
+      "type": "radio",
+      "value": "a",
+    },
+    "checked": true,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "a",
+  },
+  {
+    "attributes": {
+      "id": "radio-b",
+      "name": "plan",
+      "type": "radio",
+      "value": "b",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "b",
+  },
+  {
+    "attributes": {
+      "id": "submit",
+      "type": "submit",
+      "value": "Send",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Send",
+  },
+  {
+    "attributes": {
+      "id": "reset",
+      "type": "reset",
+      "value": "Reset",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Reset",
+  },
+  {
+    "attributes": {
+      "alt": "Send",
+      "disabled": "",
+      "id": "image",
+      "src": "/button.png",
+      "type": "image",
+    },
+    "checked": false,
+    "disabled": true,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "file",
+      "name": "upload",
+      "type": "file",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "button",
+      "type": "button",
+      "value": "Press",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Press",
+  },
+  {
+    "attributes": {
+      "id": "disabled",
+      "name": "disabled-field",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "readonly",
+      "name": "readonly-field",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "fixed",
+  },
+  {
+    "attributes": {
+      "id": "autocomplete",
+      "name": "card",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "required",
+      "name": "required-field",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "ranged",
+      "name": "ranged",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-blank-first",
+      "name": "country",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": 0,
+    "tag": "select",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-single",
+      "name": "single",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": 0,
+    "tag": "select",
+    "value": "only",
+  },
+  {
+    "attributes": {
+      "id": "select-sized",
+      "name": "sized",
+      "size": "2",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": -1,
+    "tag": "select",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "disabled": "",
+      "id": "select-disabled",
+      "name": "disabled-select",
+    },
+    "checked": null,
+    "disabled": true,
+    "selectedIndex": 0,
+    "tag": "select",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea",
+      "name": "comments",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea-maxlength",
+      "maxlength": "6",
+      "name": "a-long-textarea-name",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea-filled",
+      "name": "filled",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "already here",
+  },
+  {
+    "attributes": {
+      "id": "button-element",
+      "name": "action",
+      "value": "save",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "button",
+    "value": "save",
+  },
+  {
+    "attributes": {
+      "action": "/search",
+      "id": "form-get",
+      "method": "GET",
+    },
+    "checked": null,
+    "disabled": null,
+    "selectedIndex": null,
+    "tag": "form",
+    "value": null,
+  },
+  {
+    "attributes": {
+      "id": "wrapped-in-label",
+      "name": "wrapped",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "labelled-by-for",
+      "name": "labelled",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "unlabelled",
+      "name": "unlabelled",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "name": "no-id-no-label",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-outside-form",
+      "name": "loose",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": 0,
+    "tag": "select",
+    "value": "loose",
+  },
+  {
+    "attributes": {
+      "id": "input-outside-form",
+      "name": "loose-input",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea-outside-form",
+      "name": "loose-textarea",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "",
+  },
+]
+`;
+
+exports[`converting > converts text inputs to textareas, leaving the button-like types 3`] = `
+[
+  {
+    "message": "convertTextInputsToTextareasMultipleResult",
+    "parameters": [
+      30,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`displayFormDetails > labels every control and unhides the hidden ones 1`] = `
+{
+  "labels": [
+    {
+      "before": "text-named",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="text-named" name="username" type="text">",
+    },
+    {
+      "before": "text-empty",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="text-empty" name="street" type="text">",
+    },
+    {
+      "before": "text-no-name",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="text-no-name" type="text">",
+    },
+    {
+      "before": "text-email-by-name",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="text-email-by-name" name="contactEmail" type="text">",
+    },
+    {
+      "before": "text-zip-by-name",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="text-zip-by-name" name="zipCode" type="text">",
+    },
+    {
+      "before": "text-phone-by-name",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="text-phone-by-name" name="phoneNumber" type="text">",
+    },
+    {
+      "before": "text-maxlength",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="text-maxlength" maxlength="4" name="a-very-long-field-name" type="text">",
+    },
+    {
+      "before": "email",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="email" name="email" type="email">",
+    },
+    {
+      "before": "password",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="password" name="password" type="password">",
+    },
+    {
+      "before": "search",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="search" name="search" type="search">",
+    },
+    {
+      "before": "url",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="url" name="homepage" type="url">",
+    },
+    {
+      "before": "tel",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="tel" name="tel" type="tel">",
+    },
+    {
+      "before": "colour",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="colour" name="colour" type="color">",
+    },
+    {
+      "before": "date",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="date" name="date" type="date">",
+    },
+    {
+      "before": "datetime-local",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="datetime-local" name="when" type="datetime-local">",
+    },
+    {
+      "before": "month",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="month" name="month" type="month">",
+    },
+    {
+      "before": "time",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="time" name="time" type="time">",
+    },
+    {
+      "before": "week",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="week" name="week" type="week">",
+    },
+    {
+      "before": "number-bounded",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="number-bounded" name="quantity" type="number">",
+    },
+    {
+      "before": "number-unbounded",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="number-unbounded" name="count" type="number">",
+    },
+    {
+      "before": "hidden",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="hidden" name="csrf">",
+    },
+    {
+      "before": "checkbox-off",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="checkbox-off" name="terms" type="checkbox" value="yes">",
+    },
+    {
+      "before": "checkbox-on",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="checkbox-on" name="news" type="checkbox" value="yes">",
+    },
+    {
+      "before": "radio-a",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="radio-a" name="plan" type="radio" value="a">",
+    },
+    {
+      "before": "radio-b",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="radio-b" name="plan" type="radio" value="b">",
+    },
+    {
+      "before": "submit",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="submit" type="submit">",
+    },
+    {
+      "before": "reset",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="reset" type="reset">",
+    },
+    {
+      "before": "image",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="image" type="image">",
+    },
+    {
+      "before": "file",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="file" name="upload" type="file">",
+    },
+    {
+      "before": "button",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="button" type="button">",
+    },
+    {
+      "before": "disabled",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="disabled" name="disabled-field" type="text">",
+    },
+    {
+      "before": "readonly",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="readonly" name="readonly-field" type="text">",
+    },
+    {
+      "before": "autocomplete",
+      "className": "web-developer-display-form-details",
+      "text": "<input autocomplete="off" id="autocomplete" name="card" type="text">",
+    },
+    {
+      "before": "required",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="required" name="required-field" type="text">",
+    },
+    {
+      "before": "ranged",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="ranged" name="ranged" type="range">",
+    },
+    {
+      "before": "select-blank-first",
+      "className": "web-developer-display-form-details",
+      "text": "<select id="select-blank-first" name="country">",
+    },
+    {
+      "before": "select-single",
+      "className": "web-developer-display-form-details",
+      "text": "<select id="select-single" name="single" value="only">",
+    },
+    {
+      "before": "select-sized",
+      "className": "web-developer-display-form-details",
+      "text": "<select id="select-sized" name="sized">",
+    },
+    {
+      "before": "select-disabled",
+      "className": "web-developer-display-form-details",
+      "text": "<select id="select-disabled" name="disabled-select">",
+    },
+    {
+      "before": "textarea",
+      "className": "web-developer-display-form-details",
+      "text": "<textarea id="textarea" name="comments">",
+    },
+    {
+      "before": "textarea-maxlength",
+      "className": "web-developer-display-form-details",
+      "text": "<textarea id="textarea-maxlength" maxlength="6" name="a-long-textarea-name">",
+    },
+    {
+      "before": "textarea-filled",
+      "className": "web-developer-display-form-details",
+      "text": "<textarea id="textarea-filled" name="filled">",
+    },
+    {
+      "before": "button-element",
+      "className": "web-developer-display-form-details",
+      "text": "<button id="button-element" name="action" value="save">",
+    },
+    {
+      "before": "wrapped-in-label",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="wrapped-in-label" name="wrapped" type="text">",
+    },
+    {
+      "before": "labelled-by-for",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="labelled-by-for" name="labelled" type="text">",
+    },
+    {
+      "before": "unlabelled",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="unlabelled" name="unlabelled" type="text">",
+    },
+    {
+      "before": "input",
+      "className": "web-developer-display-form-details",
+      "text": "<input name="no-id-no-label" type="text">",
+    },
+    {
+      "before": "select-outside-form",
+      "className": "web-developer-display-form-details",
+      "text": "<select id="select-outside-form" name="loose" value="loose">",
+    },
+    {
+      "before": "input-outside-form",
+      "className": "web-developer-display-form-details",
+      "text": "<input id="input-outside-form" name="loose-input" type="text">",
+    },
+    {
+      "before": "textarea-outside-form",
+      "className": "web-developer-display-form-details",
+      "text": "<textarea id="textarea-outside-form" name="loose-textarea">",
+    },
+  ],
+  "outlined": [],
+  "styleSheets": [
+    "web-developer-display-form-details-before",
+    "web-developer-display-form-details",
+  ],
+}
+`;
+
+exports[`outlineFormFieldsWithoutLabels > outlines only the fields with neither a wrapping label nor one pointing at them 1`] = `
+{
+  "labels": [],
+  "outlined": [
+    "text-empty",
+    "text-no-name",
+    "text-email-by-name",
+    "text-zip-by-name",
+    "text-phone-by-name",
+    "text-maxlength",
+    "email",
+    "password",
+    "search",
+    "url",
+    "tel",
+    "colour",
+    "date",
+    "datetime-local",
+    "month",
+    "time",
+    "week",
+    "number-bounded",
+    "number-unbounded",
+    "hidden",
+    "checkbox-off",
+    "checkbox-on",
+    "radio-a",
+    "radio-b",
+    "submit",
+    "reset",
+    "image",
+    "file",
+    "button",
+    "disabled",
+    "readonly",
+    "autocomplete",
+    "required",
+    "ranged",
+    "select-blank-first",
+    "select-single",
+    "select-sized",
+    "select-disabled",
+    "textarea",
+    "textarea-maxlength",
+    "textarea-filled",
+    "button-element",
+    "unlabelled",
+  ],
+  "styleSheets": [
+    "web-developer-outline-form-fields-without-labels",
+  ],
+}
+`;
+
+exports[`populateFormFields > fills every empty field it recognises 1`] = `
+[
+  {
+    "attributes": {
+      "action": "/submit",
+      "id": "form-no-method",
+    },
+    "checked": null,
+    "disabled": <input
+      disabled=""
+      id="disabled"
+      name="disabled-field"
+      type="text"
+    />,
+    "selectedIndex": null,
+    "tag": "form",
+    "value": null,
+  },
+  {
+    "attributes": {
+      "id": "text-named",
+      "name": "username",
+      "type": "text",
+      "value": "taken",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "taken",
+  },
+  {
+    "attributes": {
+      "id": "text-empty",
+      "name": "street",
+      "type": "text",
+      "value": "",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "street",
+  },
+  {
+    "attributes": {
+      "id": "text-no-name",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "WebDev",
+  },
+  {
+    "attributes": {
+      "id": "text-email-by-name",
+      "name": "contactEmail",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "someone@example.com",
+  },
+  {
+    "attributes": {
+      "id": "text-zip-by-name",
+      "name": "zipCode",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "90210",
+  },
+  {
+    "attributes": {
+      "id": "text-phone-by-name",
+      "name": "phoneNumber",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "1234567890",
+  },
+  {
+    "attributes": {
+      "id": "text-maxlength",
+      "maxlength": "4",
+      "name": "a-very-long-field-name",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "a-ve",
+  },
+  {
+    "attributes": {
+      "id": "email",
+      "name": "email",
+      "type": "email",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "someone@example.com",
+  },
+  {
+    "attributes": {
+      "id": "password",
+      "name": "password",
+      "type": "password",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "hunter2",
+  },
+  {
+    "attributes": {
+      "id": "search",
+      "name": "search",
+      "type": "search",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "search",
+  },
+  {
+    "attributes": {
+      "id": "url",
+      "name": "homepage",
+      "type": "url",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "http://localhost/",
+  },
+  {
+    "attributes": {
+      "id": "tel",
+      "name": "tel",
+      "type": "tel",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "1234567890",
+  },
+  {
+    "attributes": {
+      "id": "colour",
+      "name": "colour",
+      "type": "color",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "#dc3545",
+  },
+  {
+    "attributes": {
+      "id": "date",
+      "name": "date",
+      "type": "date",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "2026-03-09",
+  },
+  {
+    "attributes": {
+      "id": "datetime-local",
+      "name": "when",
+      "type": "datetime-local",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "2026-03-09T14:07",
+  },
+  {
+    "attributes": {
+      "id": "month",
+      "name": "month",
+      "type": "month",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "2026-03",
+  },
+  {
+    "attributes": {
+      "id": "time",
+      "name": "time",
+      "type": "time",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "14:07",
+  },
+  {
+    "attributes": {
+      "id": "week",
+      "name": "week",
+      "type": "week",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "2026-W11",
+  },
+  {
+    "attributes": {
+      "id": "number-bounded",
+      "max": "20",
+      "min": "10",
+      "name": "quantity",
+      "type": "number",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "5",
+  },
+  {
+    "attributes": {
+      "id": "number-unbounded",
+      "name": "count",
+      "type": "number",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "1",
+  },
+  {
+    "attributes": {
+      "id": "hidden",
+      "name": "csrf",
+      "type": "hidden",
+      "value": "secret",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "secret",
+  },
+  {
+    "attributes": {
+      "id": "checkbox-off",
+      "name": "terms",
+      "type": "checkbox",
+      "value": "yes",
+    },
+    "checked": true,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "yes",
+  },
+  {
+    "attributes": {
+      "checked": "",
+      "id": "checkbox-on",
+      "name": "news",
+      "type": "checkbox",
+      "value": "yes",
+    },
+    "checked": true,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "yes",
+  },
+  {
+    "attributes": {
+      "checked": "",
+      "id": "radio-a",
+      "name": "plan",
+      "type": "radio",
+      "value": "a",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "a",
+  },
+  {
+    "attributes": {
+      "id": "radio-b",
+      "name": "plan",
+      "type": "radio",
+      "value": "b",
+    },
+    "checked": true,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "b",
+  },
+  {
+    "attributes": {
+      "id": "submit",
+      "type": "submit",
+      "value": "Send",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Send",
+  },
+  {
+    "attributes": {
+      "id": "reset",
+      "type": "reset",
+      "value": "Reset",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Reset",
+  },
+  {
+    "attributes": {
+      "alt": "Send",
+      "disabled": "",
+      "id": "image",
+      "src": "/button.png",
+      "type": "image",
+    },
+    "checked": false,
+    "disabled": true,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "file",
+      "name": "upload",
+      "type": "file",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "button",
+      "type": "button",
+      "value": "Press",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "Press",
+  },
+  {
+    "attributes": {
+      "disabled": "",
+      "id": "disabled",
+      "name": "disabled-field",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": true,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "readonly",
+      "name": "readonly-field",
+      "readonly": "",
+      "type": "text",
+      "value": "fixed",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "fixed",
+  },
+  {
+    "attributes": {
+      "autocomplete": "off",
+      "id": "autocomplete",
+      "name": "card",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "card",
+  },
+  {
+    "attributes": {
+      "id": "required",
+      "name": "required-field",
+      "pattern": "[a-z]+",
+      "required": "",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "required-field",
+  },
+  {
+    "attributes": {
+      "id": "ranged",
+      "max": "9",
+      "min": "1",
+      "name": "ranged",
+      "type": "range",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "select-blank-first",
+      "name": "country",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": 1,
+    "tag": "select",
+    "value": "uk",
+  },
+  {
+    "attributes": {
+      "id": "select-single",
+      "name": "single",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": 0,
+    "tag": "select",
+    "value": "only",
+  },
+  {
+    "attributes": {
+      "id": "select-sized",
+      "name": "sized",
+      "size": "2",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": 0,
+    "tag": "select",
+    "value": "1",
+  },
+  {
+    "attributes": {
+      "disabled": "",
+      "id": "select-disabled",
+      "name": "disabled-select",
+    },
+    "checked": null,
+    "disabled": true,
+    "selectedIndex": 0,
+    "tag": "select",
+    "value": "",
+  },
+  {
+    "attributes": {
+      "id": "textarea",
+      "name": "comments",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "comments",
+  },
+  {
+    "attributes": {
+      "id": "textarea-maxlength",
+      "maxlength": "6",
+      "name": "a-long-textarea-name",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "a-long",
+  },
+  {
+    "attributes": {
+      "id": "textarea-filled",
+      "name": "filled",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "already here",
+  },
+  {
+    "attributes": {
+      "id": "button-element",
+      "name": "action",
+      "value": "save",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "button",
+    "value": "save",
+  },
+  {
+    "attributes": {
+      "action": "/search",
+      "id": "form-get",
+      "method": "GET",
+    },
+    "checked": null,
+    "disabled": null,
+    "selectedIndex": null,
+    "tag": "form",
+    "value": null,
+  },
+  {
+    "attributes": {
+      "id": "wrapped-in-label",
+      "name": "wrapped",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "wrapped",
+  },
+  {
+    "attributes": {
+      "id": "labelled-by-for",
+      "name": "labelled",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "labelled",
+  },
+  {
+    "attributes": {
+      "id": "unlabelled",
+      "name": "unlabelled",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "unlabelled",
+  },
+  {
+    "attributes": {
+      "name": "no-id-no-label",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "no-id-no-label",
+  },
+  {
+    "attributes": {
+      "id": "select-outside-form",
+      "name": "loose",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": 0,
+    "tag": "select",
+    "value": "loose",
+  },
+  {
+    "attributes": {
+      "id": "input-outside-form",
+      "name": "loose-input",
+      "type": "text",
+    },
+    "checked": false,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "input",
+    "value": "loose-input",
+  },
+  {
+    "attributes": {
+      "id": "textarea-outside-form",
+      "name": "loose-textarea",
+    },
+    "checked": null,
+    "disabled": false,
+    "selectedIndex": null,
+    "tag": "textarea",
+    "value": "loose-textarea",
+  },
+]
+`;
+
+exports[`populateFormFields > fills every empty field it recognises 2`] = `
+[
+  {
+    "message": "populateFormFieldsMultipleResult",
+    "parameters": [
+      35,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`revealing > enables disabled fields, including image inputs outside a form's elements 1`] = `
+[
+  {
+    "message": "enableFormFieldsMultipleResult",
+    "parameters": [
+      3,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`revealing > expands select elements to the size of their option list 1`] = `
+[
+  [
+    "select-blank-first",
+    "3",
+  ],
+  [
+    "select-single",
+    "1",
+  ],
+  [
+    "select-sized",
+    "3",
+  ],
+  [
+    "select-disabled",
+    "2",
+  ],
+  [
+    "select-outside-form",
+    "1",
+  ],
+]
+`;
+
+exports[`revealing > expands select elements to the size of their option list 2`] = `
+[
+  {
+    "message": "expandSelectElementsMultipleResult",
+    "parameters": [
+      5,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`revealing > makes read-only fields writable 1`] = `
+[
+  {
+    "message": "makeFormFieldsWritableSingleResult",
+    "parameters": undefined,
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`revealing > removes every autocomplete attribute 1`] = `
+[
+  {
+    "message": "enableAutoCompletionSingleResult",
+    "parameters": undefined,
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`revealing > removes maximum lengths 1`] = `
+[
+  {
+    "message": "removeMaximumLengthsMultipleResult",
+    "parameters": [
+      2,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`revealing > removes validation attributes and the types that validate 1`] = `
+[
+  [
+    "text-named",
+    "text",
+  ],
+  [
+    "text-empty",
+    "text",
+  ],
+  [
+    "text-no-name",
+    "text",
+  ],
+  [
+    "text-email-by-name",
+    "text",
+  ],
+  [
+    "text-zip-by-name",
+    "text",
+  ],
+  [
+    "text-phone-by-name",
+    "text",
+  ],
+  [
+    "text-maxlength",
+    "text",
+  ],
+  [
+    "email",
+    "text",
+  ],
+  [
+    "password",
+    "password",
+  ],
+  [
+    "search",
+    "search",
+  ],
+  [
+    "url",
+    "text",
+  ],
+  [
+    "tel",
+    "tel",
+  ],
+  [
+    "colour",
+    "color",
+  ],
+  [
+    "date",
+    "date",
+  ],
+  [
+    "datetime-local",
+    "datetime-local",
+  ],
+  [
+    "month",
+    "month",
+  ],
+  [
+    "time",
+    "time",
+  ],
+  [
+    "week",
+    "week",
+  ],
+  [
+    "number-bounded",
+    "text",
+  ],
+  [
+    "number-unbounded",
+    "text",
+  ],
+  [
+    "hidden",
+    "hidden",
+  ],
+  [
+    "checkbox-off",
+    "checkbox",
+  ],
+  [
+    "checkbox-on",
+    "checkbox",
+  ],
+  [
+    "radio-a",
+    "radio",
+  ],
+  [
+    "radio-b",
+    "radio",
+  ],
+  [
+    "submit",
+    "submit",
+  ],
+  [
+    "reset",
+    "reset",
+  ],
+  [
+    "image",
+    "image",
+  ],
+  [
+    "file",
+    "file",
+  ],
+  [
+    "button",
+    "button",
+  ],
+  [
+    "disabled",
+    "text",
+  ],
+  [
+    "readonly",
+    "text",
+  ],
+  [
+    "autocomplete",
+    "text",
+  ],
+  [
+    "required",
+    "text",
+  ],
+  [
+    "ranged",
+    "text",
+  ],
+  [
+    "wrapped-in-label",
+    "text",
+  ],
+  [
+    "labelled-by-for",
+    "text",
+  ],
+  [
+    "unlabelled",
+    "text",
+  ],
+  [
+    "",
+    "text",
+  ],
+  [
+    "input-outside-form",
+    "text",
+  ],
+]
+`;
+
+exports[`revealing > removes validation attributes and the types that validate 2`] = `
+[
+  {
+    "message": "removeFormValidationMultipleResult",
+    "parameters": [
+      11,
+    ],
+    "type": "display-notification",
+  },
+]
+`;
+
+exports[`revealing > takes the type off every password field 1`] = `
+[
+  {
+    "message": "displayPasswordsSingleResult",
+    "parameters": undefined,
+    "type": "display-notification",
+  },
+]
+`;

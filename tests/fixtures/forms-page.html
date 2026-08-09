@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Forms fixture</title>
+</head>
+<body>
+
+<!-- No method attribute: convertFormMethods counts this one as a conversion
+     for post and leaves it alone for get, which is not symmetric and is the
+     branch worth pinning. -->
+<form id="form-no-method" action="/submit">
+  <label for="text-named">Named</label>
+  <input id="text-named" type="text" name="username" value="taken">
+  <input id="text-empty" type="text" name="street" value="">
+  <input id="text-no-name" type="text">
+  <input id="text-email-by-name" type="text" name="contactEmail">
+  <input id="text-zip-by-name" type="text" name="zipCode">
+  <input id="text-phone-by-name" type="text" name="phoneNumber">
+  <input id="text-maxlength" type="text" name="a-very-long-field-name" maxlength="4">
+
+  <input id="email" type="email" name="email">
+  <input id="password" type="password" name="password">
+  <input id="search" type="search" name="search">
+  <input id="url" type="url" name="homepage">
+  <input id="tel" type="tel" name="tel">
+  <input id="colour" type="color" name="colour">
+  <input id="date" type="date" name="date">
+  <input id="datetime-local" type="datetime-local" name="when">
+  <input id="month" type="month" name="month">
+  <input id="time" type="time" name="time">
+  <input id="week" type="week" name="week">
+  <input id="number-bounded" type="number" name="quantity" min="10" max="20">
+  <input id="number-unbounded" type="number" name="count">
+
+  <input id="hidden" type="hidden" name="csrf" value="secret">
+  <input id="checkbox-off" type="checkbox" name="terms" value="yes">
+  <input id="checkbox-on" type="checkbox" name="news" value="yes" checked>
+  <input id="radio-a" type="radio" name="plan" value="a" checked>
+  <input id="radio-b" type="radio" name="plan" value="b">
+  <input id="submit" type="submit" value="Send">
+  <input id="reset" type="reset" value="Reset">
+  <input id="image" type="image" src="/button.png" alt="Send" disabled>
+  <input id="file" type="file" name="upload">
+  <input id="button" type="button" value="Press">
+
+  <input id="disabled" type="text" name="disabled-field" disabled>
+  <input id="readonly" type="text" name="readonly-field" value="fixed" readonly>
+  <input id="autocomplete" type="text" name="card" autocomplete="off">
+  <input id="required" type="text" name="required-field" required pattern="[a-z]+">
+  <input id="ranged" type="range" name="ranged" min="1" max="9">
+
+  <select id="select-blank-first" name="country">
+    <option value="">Choose</option>
+    <option value="uk">United Kingdom</option>
+    <option value="us">United States</option>
+  </select>
+  <select id="select-single" name="single">
+    <option value="only">Only</option>
+  </select>
+  <select id="select-sized" name="sized" size="2">
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+  <select id="select-disabled" name="disabled-select" disabled>
+    <option value="">Choose</option>
+    <option value="x">X</option>
+  </select>
+
+  <textarea id="textarea" name="comments"></textarea>
+  <textarea id="textarea-maxlength" name="a-long-textarea-name" maxlength="6"></textarea>
+  <textarea id="textarea-filled" name="filled">already here</textarea>
+
+  <button id="button-element" name="action" value="save">Save</button>
+</form>
+
+<!-- A second form, with a method that already matches get. -->
+<form id="form-get" method="GET" action="/search">
+  <label>Wrapped<input id="wrapped-in-label" type="text" name="wrapped"></label>
+  <input id="labelled-by-for" type="text" name="labelled">
+  <label for="labelled-by-for">Labelled</label>
+  <input id="unlabelled" type="text" name="unlabelled">
+  <input type="text" name="no-id-no-label">
+</form>
+
+<!-- Outside any form: document.forms misses these, getElementsByTagName does
+     not, and the two halves of the menu disagree on purpose. -->
+<select id="select-outside-form" name="loose">
+  <option value="loose">Loose</option>
+</select>
+<input id="input-outside-form" type="text" name="loose-input">
+<textarea id="textarea-outside-form" name="loose-textarea"></textarea>
+
+</body>
+</html>
