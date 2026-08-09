@@ -70,14 +70,25 @@
   } as const;
 
   /**
-   * Columns enough to keep a group short.
+   * How many columns a group is laid out in.
    *
-   * Six rows is about where a block stops reading as a block. Information has
-   * sixteen toggles, which is three columns of six; four would not fit the
-   * label lengths at this width.
+   * Three at most: the content area is about 620px, and a fourth column would
+   * put every label of any length onto two lines.
+   *
+   * A grid rather than CSS `columns`, which is what this was first. A
+   * multi-column block is as tall as its tallest column, so one wrapped label
+   * anywhere in the group left dead space under every shorter column -- and
+   * since the gap under the last row is what separates one group from the
+   * next, the groups looked unevenly spaced. Images showed it and Information,
+   * whose labels happened to balance, did not. A grid ends flush with its last
+   * row, so the spacing between groups is the spacing, and nothing else.
    */
   function columnsFor(count: number): number {
-    return Math.min(3, Math.ceil(count / 6));
+    if (count <= 2) {
+      return count;
+    }
+
+    return count <= 4 ? 2 : 3;
   }
 
   /**
@@ -198,12 +209,14 @@
               </h2>
 
               <ul
-                class="gap-x-6"
-                style="columns: {columnsFor(group.features.length)}"
+                class="grid gap-x-6"
+                style="grid-template-columns: repeat({columnsFor(
+                  group.features.length,
+                )}, minmax(0, 1fr))"
                 id={group.kind === "dialog" ? listId(menu.id) : undefined}
               >
                 {#each group.features as feature (feature.id)}
-                  <li class="break-inside-avoid">
+                  <li>
                     <a
                       href="#{feature.id}"
                       id={feature.id}
@@ -244,7 +257,7 @@
                   the markup carried in the options menu and nothing toggles.
                 -->
                 {#if menu.id === "options" && group.kind === "dialog"}
-                  <li class="break-inside-avoid">
+                  <li>
                     <a
                       href={`${HOMEPAGE_URL}help/`}
                       target="_blank"
