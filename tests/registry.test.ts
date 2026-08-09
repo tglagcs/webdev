@@ -21,14 +21,23 @@ import { FEATURES, columns, visibleMenus } from "@/features/registry";
 import { MENUS } from "@/features/types";
 import { MESSAGE_KEYS } from "@/lib/i18n-keys";
 
-/** The ids that shipped, read out of the popup markup and frozen. */
-const SHIPPED: string[] = JSON.parse(
+/**
+ * What the markup-driven popup offered, frozen.
+ *
+ * Taken from `popup/index.html` before the Svelte popup replaced it, which is
+ * why it is a fixture rather than a parse of the current markup: the markup is
+ * gone, and this is now the only record of which items existed and which of
+ * them had an on state.
+ */
+const SHIPPED: { id: string; stateful: boolean }[] = JSON.parse(
   readFileSync(resolve("tests/fixtures/feature-ids.json"), "utf-8"),
 );
 
+const SHIPPED_IDS = SHIPPED.map((feature) => feature.id);
+
 describe("identity", () => {
   it("has every feature that shipped, and no others", () => {
-    expect([...FEATURES.map((feature) => feature.id)].sort()).toEqual([...SHIPPED].sort());
+    expect([...FEATURES.map((feature) => feature.id)].sort()).toEqual([...SHIPPED_IDS].sort());
   });
 
   it("has no duplicate ids", () => {
@@ -137,22 +146,18 @@ describe("capabilities", () => {
   });
 });
 
-// The registry is only useful if it says what the popup did. This checks the
-// two facts that are not visible anywhere else once the markup is gone.
-describe("against the markup that shipped", () => {
-  const html = readFileSync(resolve("src/entrypoints/popup/index.html"), "utf-8");
-
+// The registry is only useful if it says what the popup did. These are the two
+// facts nothing else records now that the markup is gone.
+describe("against the popup that shipped", () => {
   it("marks as stateful exactly the items that carried the state icons", () => {
-    for (const feature of FEATURES) {
-      const item = new RegExp(`<li><a href="#" id="${feature.id}"[^>]*>(.*?)</a></li>`, "s").exec(
-        html,
-      );
+    const shipped = Object.fromEntries(SHIPPED.map((feature) => [feature.id, feature.stateful]));
 
-      expect(!!feature.stateful).toBe(item![1].includes("i-check"));
-    }
+    expect(Object.fromEntries(FEATURES.map((feature) => [feature.id, !!feature.stateful]))).toEqual(
+      shipped,
+    );
   });
 
   it("keeps the ids in the order the popup listed them", () => {
-    expect(FEATURES.map((feature) => feature.id)).toEqual(SHIPPED);
+    expect(FEATURES.map((feature) => feature.id)).toEqual(SHIPPED_IDS);
   });
 });

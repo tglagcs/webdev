@@ -6,57 +6,12 @@ WebDeveloper.Overlay.Outline = WebDeveloper.Overlay.Outline || {};
 // Initializes the outline overlay
 WebDeveloper.Overlay.Outline.initialize = function()
 {
-  var outlineAbsolutePositionedElementsMenu = document.getElementById("outline-absolute-positioned-elements");
-  var outlineBlockLevelElementsMenu         = document.getElementById("outline-block-level-elements");
-  var outlineDeprecatedElementsMenu         = document.getElementById("outline-deprecated-elements");
-  var outlineExternalLinksMenu              = document.getElementById("outline-external-links");
-  var outlineFixedPositionedElementsMenu    = document.getElementById("outline-fixed-positioned-elements");
-  var outlineFloatedElementsMenu            = document.getElementById("outline-floated-elements");
-  var outlineFramesMenu                     = document.getElementById("outline-frames");
-  var outlineHeadingsMenu                   = document.getElementById("outline-headings");
-  var outlineNonSecureElementsMenu          = document.getElementById("outline-non-secure-elements");
-  var outlineRelativePositionedElementsMenu = document.getElementById("outline-relative-positioned-elements");
-  var outlineTableCaptionsMenu              = document.getElementById("outline-table-captions");
-  var outlineTableCellsMenu                 = document.getElementById("outline-table-cells");
-  var outlineTablesMenu                     = document.getElementById("outline-tables");
-  var showElementTagNamesMenu               = document.getElementById("show-element-tag-names");
-
-  outlineAbsolutePositionedElementsMenu.append(WebDeveloper.Locales.getString("outlineAbsolutePositionedElements"));
-  outlineBlockLevelElementsMenu.append(WebDeveloper.Locales.getString("outlineBlockLevelElements"));
-  outlineDeprecatedElementsMenu.append(WebDeveloper.Locales.getString("outlineDeprecatedElements"));
-  outlineExternalLinksMenu.append(WebDeveloper.Locales.getString("outlineExternalLinks"));
-  outlineFixedPositionedElementsMenu.append(WebDeveloper.Locales.getString("outlineFixedPositionedElements"));
-  outlineFloatedElementsMenu.append(WebDeveloper.Locales.getString("outlineFloatedElements"));
-  outlineFramesMenu.append(WebDeveloper.Locales.getString("outlineFrames"));
-  outlineHeadingsMenu.append(WebDeveloper.Locales.getString("outlineHeadings"));
-  outlineNonSecureElementsMenu.append(WebDeveloper.Locales.getString("outlineNonSecureElements"));
-  outlineRelativePositionedElementsMenu.append(WebDeveloper.Locales.getString("outlineRelativePositionedElements"));
-  outlineTableCaptionsMenu.append(WebDeveloper.Locales.getString("outlineTableCaptions"));
-  outlineTableCellsMenu.append(WebDeveloper.Locales.getString("outlineTableCells"));
-  outlineTablesMenu.append(WebDeveloper.Locales.getString("outlineTables"));
-  showElementTagNamesMenu.append(WebDeveloper.Locales.getString("showElementTagNames"));
-
-  outlineAbsolutePositionedElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineAbsolutePositionedElements);
-  outlineBlockLevelElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineBlockLevelElements);
-  outlineDeprecatedElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineDeprecatedElements);
-  outlineExternalLinksMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineExternalLinks);
-  outlineFixedPositionedElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineFixedPositionedElements);
-  outlineFloatedElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineFloatedElements);
-  outlineFramesMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineFrames);
-  outlineHeadingsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineHeadings);
-  outlineNonSecureElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineNonSecureElements);
-  outlineRelativePositionedElementsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineRelativePositionedElements);
-  outlineTableCaptionsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineTableCaptions);
-  outlineTableCellsMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineTableCells);
-  outlineTablesMenu.addEventListener("click", WebDeveloper.Overlay.Outline.outlineTables);
-  showElementTagNamesMenu.addEventListener("click", WebDeveloper.Overlay.Outline.toggleShowElementTagNames);
 
   WebDeveloper.Storage.getItem("outline.show.element.tag.names", function(showElementTagNames)
   {
     // If the outline show element tag names preference is set to true
     if(showElementTagNames)
     {
-      showElementTagNamesMenu.classList.add("active");
     }
   });
 };

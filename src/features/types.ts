@@ -13,7 +13,9 @@
  * that reason.
  */
 
-import type { MessageKey } from "@/lib/i18n";
+// PlainMessageKey, not MessageKey: a menu label never takes a substitution,
+// and the narrower type is what lets t() be called without one.
+import type { PlainMessageKey } from "@/lib/i18n-keys";
 import type { Capabilities } from "@/lib/capabilities";
 
 /** The eleven tabs, in the order the popup shows them. */
@@ -37,7 +39,7 @@ export interface Feature {
   /** Must match the legacy DOM id: it is the key of the per-tab state. */
   id: string;
 
-  labelKey: MessageKey;
+  labelKey: PlainMessageKey;
 
   /** Which of the menu's columns it sits in, 1-based, as the popup laid it out. */
   column: number;

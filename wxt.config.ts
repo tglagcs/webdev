@@ -1,4 +1,5 @@
 import { defineConfig } from "wxt";
+import tailwindcss from "@tailwindcss/vite";
 
 import { HOMEPAGE_URL } from "./src/branding";
 
@@ -18,6 +19,7 @@ export default defineConfig({
 
   // The about page used to show a @build.date@ token substituted by gulp.
   vite: () => ({
+    plugins: [tailwindcss()],
     define: {
       __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
     },

@@ -214,44 +214,7 @@ WebDeveloper.Overlay.CSS.getViewCSSLocale = function()
 // Initializes the CSS overlay
 WebDeveloper.Overlay.CSS.initialize = function()
 {
-  var disableAllStylesMenu            = document.getElementById("disable-all-styles");
-  var disableBrowserDefaultStylesMenu = document.getElementById("disable-browser-default-styles");
-  var disableEmbeddedStylesMenu       = document.getElementById("disable-embedded-styles");
-  var disableInlineStylesMenu         = document.getElementById("disable-inline-styles");
-  var disableLinkedStyleSheetsMenu    = document.getElementById("disable-linked-style-sheets");
-  var disablePrintStylesMenu          = document.getElementById("disable-print-styles");
-  var displayHandheldStylesMenu       = document.getElementById("display-handheld-styles");
-  var displayPrintStylesMenu          = document.getElementById("display-print-styles");
-  var editCSSMenu                     = document.getElementById("edit-css");
-  var reloadLinkedStyleSheetsMenu     = document.getElementById("reload-linked-style-sheets");
-  var useBorderBoxModelMenu           = document.getElementById("use-border-box-model");
-  var viewCSSMenu                     = document.getElementById("view-css");
 
-  disableAllStylesMenu.append(WebDeveloper.Locales.getString("disableAllStyles"));
-  disableBrowserDefaultStylesMenu.append(WebDeveloper.Locales.getString("disableBrowserDefaultStyles"));
-  disableEmbeddedStylesMenu.append(WebDeveloper.Locales.getString("disableEmbeddedStyles"));
-  disableInlineStylesMenu.append(WebDeveloper.Locales.getString("disableInlineStyles"));
-  disableLinkedStyleSheetsMenu.append(WebDeveloper.Locales.getString("disableLinkedStyleSheets"));
-  disablePrintStylesMenu.append(WebDeveloper.Locales.getString("disablePrintStyles"));
-  displayHandheldStylesMenu.append(WebDeveloper.Locales.getString("displayHandheldStyles"));
-  displayPrintStylesMenu.append(WebDeveloper.Locales.getString("displayPrintStyles"));
-  editCSSMenu.append(WebDeveloper.Locales.getString("editCSS"));
-  reloadLinkedStyleSheetsMenu.append(WebDeveloper.Locales.getString("reloadLinkedStyleSheets"));
-  useBorderBoxModelMenu.append(WebDeveloper.Locales.getString("useBorderBoxModel"));
-  viewCSSMenu.append(WebDeveloper.Locales.getString("viewCSS"));
-
-  disableAllStylesMenu.addEventListener("click", WebDeveloper.Overlay.CSS.disableAllStyles);
-  disableBrowserDefaultStylesMenu.addEventListener("click", WebDeveloper.Overlay.CSS.disableBrowserDefaultStyles);
-  disableEmbeddedStylesMenu.addEventListener("click", WebDeveloper.Overlay.CSS.disableEmbeddedStyles);
-  disableInlineStylesMenu.addEventListener("click", WebDeveloper.Overlay.CSS.disableInlineStyles);
-  disableLinkedStyleSheetsMenu.addEventListener("click", WebDeveloper.Overlay.CSS.disableLinkedStyleSheets);
-  disablePrintStylesMenu.addEventListener("click", WebDeveloper.Overlay.CSS.disablePrintStyles);
-  displayHandheldStylesMenu.addEventListener("click", WebDeveloper.Overlay.CSS.displayHandheldStyles);
-  displayPrintStylesMenu.addEventListener("click", WebDeveloper.Overlay.CSS.displayPrintStyles);
-  editCSSMenu.addEventListener("click", WebDeveloper.Overlay.CSS.editCSS);
-  reloadLinkedStyleSheetsMenu.addEventListener("click", WebDeveloper.Overlay.CSS.reloadLinkedStyleSheets);
-  useBorderBoxModelMenu.addEventListener("click", WebDeveloper.Overlay.CSS.useBorderBoxModel);
-  viewCSSMenu.addEventListener("click", WebDeveloper.Overlay.CSS.viewCSS);
 };
 
 // Reloads the linked style sheets of the page

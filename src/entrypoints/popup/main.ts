@@ -1,10 +1,16 @@
-// Loads the legacy scripts this page used to pull in with <script src>
-// tags, in the order common/gulp/build.js concatenated them.
+// The popup.
+//
+// The menus are rendered by Svelte from the feature registry; the behaviour
+// behind each item is still the legacy handler, reached through bridge.ts. So
+// the legacy files are loaded for their handlers only -- tools/unwire-menus.py
+// took the menu wiring out of their initialisers, since the elements they
+// reached for by id no longer exist.
 import "@/legacy/globals";
 // Must precede the legacy imports: it makes them defer their
 // initialisers instead of running each one on import.
 import { flushDomReady } from "@/legacy/dom-ready";
 import "@/legacy/shims/dom";
+import "@/legacy/shims/vendor-globals";
 import "@/legacy/js/common/cookies.js";
 import "@/legacy/shims/cookies";
 import "@/legacy/shims/locales";
@@ -21,22 +27,69 @@ import "@/legacy/js/overlay/overlay.js";
 import "@/legacy/js/overlay/resize.js";
 import "@/legacy/js/overlay/tools.js";
 
-import { capabilities, markCapabilities } from "@/lib/capabilities";
+import { mount } from "svelte";
 
-// Hides what this browser cannot do; replaces the per-browser overlay.css
-// override upstream concatenated in at build time.
-markCapabilities();
+import "@/app.css";
+import { WebDeveloper } from "@/legacy/globals";
+import { capabilities } from "@/lib/capabilities";
+import { initTheme } from "@/lib/theme";
+import { visibleMenus } from "@/features/registry";
+import App from "./App.svelte";
+import { ui, type NotificationType } from "./ui.svelte";
 
 // Imported dynamically because it initialises itself against
-// chrome.contentSettings, which only Chromium has. Its initialiser runs on
-// DOMContentLoaded or immediately, so arriving late is safe.
+// chrome.contentSettings, which only Chromium has.
 if (capabilities.contentSettings) {
   await import("@/legacy/js/overlay/disable.js");
 }
 
+// Before the mount, so a dark setup never sees a light frame. MV3's CSP rules
+// out the inline script that would otherwise do this.
+await initTheme();
+
+// The four places a legacy handler talks back to the popup. Overriding them
+// here rather than editing those files keeps the seam in one place, and it has
+// to happen after the imports that define them.
+const overlay = WebDeveloper.Overlay as Record<string, unknown>;
+
+overlay.displayNotification = (message: string, type?: NotificationType) => {
+  ui.notify(message, type ?? "success");
+};
+
+overlay.closeNotification = () => {
+  ui.notification = null;
+};
+
+overlay.displayConfirmation = (
+  _title: string,
+  message: string,
+  buttonText: string,
+  buttonIcon: string,
+  confirm: () => void,
+) => {
+  ui.notification = null;
+  ui.confirmation = { message, buttonText, buttonIcon, confirm };
+};
+
+overlay.closeConfirmation = () => {
+  ui.confirmation = null;
+};
+
+// The dialogs are still legacy and still find their fields by id, so their
+// initialisers run against the markup the Svelte components render.
+mount(App, { target: document.getElementById("app")! });
+
 flushDomReady();
 
-// The <title> stays as __MSG_extensionName__ because WXT reads it to build
-// action.default_title, the toolbar tooltip, which the browser does localise.
-// It does not localise HTML, so set the document title here.
+await ui.restoreLabels();
+await ui.restoreMenu(visibleMenus().map((menu) => menu.id));
+
+// What the popup shows as switched on is per tab, and the popup is opened over
+// one specific tab.
+const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+
+if (tab?.id !== undefined) {
+  await ui.restoreFeatures(tab.id);
+}
+
 document.title = browser.i18n.getMessage("extensionName");

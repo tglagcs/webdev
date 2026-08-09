@@ -204,76 +204,23 @@ WebDeveloper.Overlay.getSelectedWindow = function(callback)
 // Initializes the overlay
 WebDeveloper.Overlay.initialize = function()
 {
-  var confirmationCancel = document.getElementById("confirmation-cancel");
+  // What is left of this. The Svelte popup renders the menus, restores the
+  // open tab and the per-tab state, and owns the notification and the
+  // confirmation, so everything this used to do to the markup has gone with
+  // the markup.
+  //
+  // Two things still belong to the page rather than to a component:
 
-  // Cached, because close() is called from event handlers that cannot await a
-  // storage read.
+  // close() is called from event handlers that cannot await a storage read,
+  // so the answer is cached here.
   WebDeveloper.Storage.getItem("popup_in_window", function(inWindow)
   {
     WebDeveloper.Overlay.keepOpen = !!inWindow;
   });
 
-  WebDeveloper.Storage.getItem("display_overlay_with", function(displayOverlayWith)
-  {
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#cookies-toolbar > a"), WebDeveloper.Locales.getString("cookies"), displayOverlayWith);
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#css-toolbar > a"), WebDeveloper.Locales.getString("css"), displayOverlayWith);
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#disable-toolbar > a"), WebDeveloper.Locales.getString("disable"), displayOverlayWith);
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#forms-toolbar > a"), WebDeveloper.Locales.getString("forms"), displayOverlayWith);
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#images-toolbar > a"), WebDeveloper.Locales.getString("images"), displayOverlayWith);
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#information-toolbar > a"), WebDeveloper.Locales.getString("information"), displayOverlayWith);
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#miscellaneous-toolbar > a"), WebDeveloper.Locales.getString("miscellaneous"), displayOverlayWith);
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#options-toolbar > a"), WebDeveloper.Locales.getString("options"), displayOverlayWith);
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#outline-toolbar > a"), WebDeveloper.Locales.getString("outline"), displayOverlayWith);
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#resize-toolbar > a"), WebDeveloper.Locales.getString("resize"), displayOverlayWith);
-    WebDeveloper.Overlay.labelMenu(document.querySelector("#tools-toolbar > a"), WebDeveloper.Locales.getString("tools"), displayOverlayWith);
-
-    // If the display overlay with setting is set to text
-    if(displayOverlayWith == "text")
-    {
-      document.querySelector(".nav-tabs").classList.add("overlay-text");
-    }
-  });
-
-  WebDeveloper.Storage.getItem("menu", function(menu)
-  {
-    // If the menu is not set
-    if(!menu)
-    {
-      // Default to the cookies toolbar since disable is not available on all browsers
-      menu = "cookies-toolbar";
-    }
-
-    // If the menu is set
-    if(menu)
-    {
-      bootstrap.Tab.getOrCreateInstance(document.querySelector("#" + menu + " > a")).show();
-    }
-  });
-
-  WebDeveloper.Overlay.getSelectedTab(function(tab)
-  {
-    WebDeveloper.Storage.getFeaturesOnTab(tab.id, function(featuresOnTab)
-    {
-      // If there are features on the tab
-      if(featuresOnTab)
-      {
-        // Loop through the features on the tab
-        for(var i = 0, l = featuresOnTab.length; i < l; i++)
-        {
-          document.getElementById(featuresOnTab[i]).classList.add("active");
-        }
-      }
-    });
-  });
-
-  confirmationCancel.append(WebDeveloper.Locales.getString("cancel"));
-
+  // Firefox does not grant host permissions at install time; without this the
+  // first feature a user tries fails with nothing to explain why.
   WebDeveloper.Overlay.checkPermissions();
-
-  confirmationCancel.addEventListener("click", WebDeveloper.Overlay.closeConfirmation);
-  document.getElementById("notification-close").addEventListener("click", WebDeveloper.Overlay.closeNotification);
-  document.querySelector(".container-fluid").addEventListener("click", WebDeveloper.Overlay.openURL);
-  document.querySelector(".nav-tabs").addEventListener("click", WebDeveloper.Overlay.changeTab);
 };
 
 // Returns true if this is a valid tab

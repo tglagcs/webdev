@@ -192,16 +192,10 @@ WebDeveloper.Overlay.Cookies.initialize = function()
   var addCookieDialog           = document.getElementById("add-cookie-dialog");
   var addCookieExpires          = document.getElementById("add-cookie-expires");
   var addCookieHost             = document.getElementById("add-cookie-host");
-  var addCookieMenu             = document.getElementById("add-cookie");
   var addCookieName             = document.getElementById("add-cookie-name");
   var addCookiePath             = document.getElementById("add-cookie-path");
   var addCookieSubmit           = document.getElementById("add-cookie-submit");
   var addCookieValue            = document.getElementById("add-cookie-value");
-  var deleteDomainCookiesMenu   = document.getElementById("delete-domain-cookies");
-  var deletePathCookiesMenu     = document.getElementById("delete-path-cookies");
-  var deleteSessionCookiesMenu  = document.getElementById("delete-session-cookies");
-  var disableCookiesMenu        = document.getElementById("disable-cookies");
-  var viewCookieInformationMenu = document.getElementById("view-cookie-information");
 
   document.querySelector('[for="add-cookie-expires"]').append(WebDeveloper.Locales.getString("expires"));
   document.querySelector('[for="add-cookie-host"]').append(WebDeveloper.Locales.getString("host"));
@@ -212,13 +206,7 @@ WebDeveloper.Overlay.Cookies.initialize = function()
   document.querySelector('[for="add-cookie-value"]').append(WebDeveloper.Locales.getString("value"));
   addCookieCancel.append(WebDeveloper.Locales.getString("cancel"));
   addCookieDialog.querySelector("legend").append(WebDeveloper.Locales.getString("addCookie"));
-  addCookieMenu.append(WebDeveloper.Locales.getString("addCookieMenu"));
   addCookieSubmit.append(WebDeveloper.Locales.getString("add"));
-  deleteDomainCookiesMenu.append(WebDeveloper.Locales.getString("deleteDomainCookies"));
-  deletePathCookiesMenu.append(WebDeveloper.Locales.getString("deletePathCookies"));
-  deleteSessionCookiesMenu.append(WebDeveloper.Locales.getString("deleteSessionCookies"));
-  disableCookiesMenu.append(WebDeveloper.Locales.getString("disableCookies"));
-  viewCookieInformationMenu.append(WebDeveloper.Locales.getString("viewCookieInformation"));
 
   addCookieExpires.setAttribute("placeholder", WebDeveloper.Locales.getString("expiresPlaceholder"));
   addCookieHost.setAttribute("placeholder", WebDeveloper.Locales.getString("hostPlaceholder"));
@@ -231,18 +219,11 @@ WebDeveloper.Overlay.Cookies.initialize = function()
   addCookieDialog.addEventListener("submit", function(event) { event.preventDefault(); });
   addCookieExpires.addEventListener("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
   addCookieHost.addEventListener("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
-  addCookieMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.addCookie);
   addCookieName.addEventListener("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
   addCookiePath.addEventListener("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
   addCookieSubmit.addEventListener("click", WebDeveloper.Overlay.Cookies.submitAddCookie);
   addCookieValue.addEventListener("keypress", WebDeveloper.Overlay.Cookies.addCookieKeyPress);
-  deleteDomainCookiesMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.deleteDomainCookies);
-  deletePathCookiesMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.deletePathCookies);
-  deleteSessionCookiesMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.deleteSessionCookies);
-  disableCookiesMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.toggleCookies);
-  viewCookieInformationMenu.addEventListener("click", WebDeveloper.Overlay.Cookies.viewCookieInformation);
 
-  WebDeveloper.Overlay.updateContentSettingMenu(disableCookiesMenu, "cookies");
 };
 
 // Populates a cookie from a dialog

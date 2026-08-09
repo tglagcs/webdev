@@ -142,67 +142,7 @@ WebDeveloper.Overlay.Images.hideImages = function()
 // Initializes the images overlay
 WebDeveloper.Overlay.Images.initialize = function()
 {
-  var disableImagesMenu                        = document.getElementById("disable-images");
-  var displayAltAttributesMenu                 = document.getElementById("display-alt-attributes");
-  var displayImageDimensionsMenu               = document.getElementById("display-image-dimensions");
-  var displayImagePathsMenu                    = document.getElementById("display-image-paths");
-  var findBrokenImagesMenu                     = document.getElementById("find-broken-images");
-  var hideBackgroundImagesMenu                 = document.getElementById("hide-background-images");
-  var hideImagesMenu                           = document.getElementById("hide-images");
-  var makeImagesFullSizeMenu                   = document.getElementById("make-images-full-size");
-  var makeImagesInvisibleMenu                  = document.getElementById("make-images-invisible");
-  var outlineAllImagesMenu                     = document.getElementById("outline-all-images");
-  var outlineBackgroundImagesMenu              = document.getElementById("outline-background-images");
-  var outlineImagesWithAdjustedDimensionsMenu  = document.getElementById("outline-images-with-adjusted-dimensions");
-  var outlineImagesWithEmptyAltAttributesMenu  = document.getElementById("outline-images-with-empty-alt-attributes");
-  var outlineImagesWithOversizedDimensionsMenu = document.getElementById("outline-images-with-oversized-dimensions");
-  var outlineImagesWithoutAltAttributesMenu    = document.getElementById("outline-images-without-alt-attributes");
-  var outlineImagesWithoutDimensionsMenu       = document.getElementById("outline-images-without-dimensions");
-  var reloadImagesMenu                         = document.getElementById("reload-images");
-  var replaceImagesWithAltAttributesMenu       = document.getElementById("replace-images-with-alt-attributes");
-  var viewImageInformationMenu                 = document.getElementById("view-image-information");
 
-  disableImagesMenu.append(WebDeveloper.Locales.getString("disableImages"));
-  displayAltAttributesMenu.append(WebDeveloper.Locales.getString("displayAltAttributes"));
-  displayImageDimensionsMenu.append(WebDeveloper.Locales.getString("displayImageDimensions"));
-  displayImagePathsMenu.append(WebDeveloper.Locales.getString("displayImagePaths"));
-  findBrokenImagesMenu.append(WebDeveloper.Locales.getString("findBrokenImages"));
-  hideBackgroundImagesMenu.append(WebDeveloper.Locales.getString("hideBackgroundImages"));
-  hideImagesMenu.append(WebDeveloper.Locales.getString("hideImages"));
-  makeImagesFullSizeMenu.append(WebDeveloper.Locales.getString("makeImagesFullSize"));
-  makeImagesInvisibleMenu.append(WebDeveloper.Locales.getString("makeImagesInvisible"));
-  outlineAllImagesMenu.append(WebDeveloper.Locales.getString("outlineAllImages"));
-  outlineBackgroundImagesMenu.append(WebDeveloper.Locales.getString("outlineBackgroundImages"));
-  outlineImagesWithAdjustedDimensionsMenu.append(WebDeveloper.Locales.getString("outlineImagesWithAdjustedDimensions"));
-  outlineImagesWithEmptyAltAttributesMenu.append(WebDeveloper.Locales.getString("outlineImagesWithEmptyAltAttributes"));
-  outlineImagesWithOversizedDimensionsMenu.append(WebDeveloper.Locales.getString("outlineImagesWithOversizedDimensions"));
-  outlineImagesWithoutAltAttributesMenu.append(WebDeveloper.Locales.getString("outlineImagesWithoutAltAttributes"));
-  outlineImagesWithoutDimensionsMenu.append(WebDeveloper.Locales.getString("outlineImagesWithoutDimensions"));
-  reloadImagesMenu.append(WebDeveloper.Locales.getString("reloadImages"));
-  replaceImagesWithAltAttributesMenu.append(WebDeveloper.Locales.getString("replaceImagesWithAltAttributes"));
-  viewImageInformationMenu.append(WebDeveloper.Locales.getString("viewImageInformation"));
-
-  disableImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.toggleImages);
-  displayAltAttributesMenu.addEventListener("click", WebDeveloper.Overlay.Images.displayAltAttributes);
-  displayImageDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Images.displayImageDimensions);
-  displayImagePathsMenu.addEventListener("click", WebDeveloper.Overlay.Images.displayImagePaths);
-  findBrokenImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.findBrokenImages);
-  hideBackgroundImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.hideBackgroundImages);
-  hideImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.hideImages);
-  makeImagesFullSizeMenu.addEventListener("click", WebDeveloper.Overlay.Images.makeImagesFullSize);
-  makeImagesInvisibleMenu.addEventListener("click", WebDeveloper.Overlay.Images.makeImagesInvisible);
-  outlineAllImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineAllImages);
-  outlineBackgroundImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineBackgroundImages);
-  outlineImagesWithAdjustedDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineImagesWithAdjustedDimensions);
-  outlineImagesWithEmptyAltAttributesMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineImagesWithEmptyAltAttributes);
-  outlineImagesWithOversizedDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineImagesWithOversizedDimensions);
-  outlineImagesWithoutAltAttributesMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineImagesWithoutAltAttributes);
-  outlineImagesWithoutDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Images.outlineImagesWithoutDimensions);
-  reloadImagesMenu.addEventListener("click", WebDeveloper.Overlay.Images.reloadImages);
-  replaceImagesWithAltAttributesMenu.addEventListener("click", WebDeveloper.Overlay.Images.replaceImagesWithAltAttributes);
-  viewImageInformationMenu.addEventListener("click", WebDeveloper.Overlay.Images.viewImageInformation);
-
-  WebDeveloper.Overlay.updateContentSettingMenu(disableImagesMenu, "images");
 };
 
 // Makes all images full size

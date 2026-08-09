@@ -18,8 +18,13 @@
 /** Bumped whenever MIGRATIONS gains an entry. */
 export const SCHEMA_VERSION = 1;
 
+// Type-only, so no runtime dependency from storage on the registry: the
+// popup's menu list is defined once, next to the features it groups.
+import type { MenuId } from "@/features/types";
+
 export type OverlayIcon = "color" | "gray" | "monochrome";
 export type DisplayOverlayWith = "icons_text" | "icons" | "text";
+export type Theme = "system" | "light" | "dark";
 
 export interface Settings {
   /** Set once the migrations for that version have run. Absent means v0. */
@@ -39,7 +44,17 @@ export interface Settings {
    */
   syntax_highlight_theme: string;
 
+  /** Which menu the popup was last on, so it reopens where the user left it. */
+  menu: MenuId;
+
   // General
+  /**
+   * The extension's own UI theme: "system", "light" or "dark". Only the
+   * extension's pages and its in-page widgets follow it -- the feature
+   * stylesheets injected into other people's pages stay theme-blind.
+   */
+  theme: Theme;
+
   display_overlay_with: DisplayOverlayWith;
   overlay_icon: OverlayIcon;
 
@@ -93,12 +108,14 @@ export const DEFAULTS: Pick<
   Settings,
   | "populate_email_address"
   | "syntax_highlight_theme"
+  | "theme"
   | "display_overlay_with"
   | "overlay_icon"
   | "popup_in_window"
 > = {
   populate_email_address: "example@example.com",
   syntax_highlight_theme: "light",
+  theme: "system",
   display_overlay_with: "icons_text",
   overlay_icon: "color",
   popup_in_window: false,

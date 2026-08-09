@@ -6,24 +6,7 @@ WebDeveloper.Overlay.Disable = WebDeveloper.Overlay.Disable || {};
 // Initializes the disable overlay
 WebDeveloper.Overlay.Disable.initialize = function()
 {
-  var disableJavaScriptMenu    = document.getElementById("disable-javascript");
-  var disableNotificationsMenu = document.getElementById("disable-notifications");
-  var disablePopupsMenu        = document.getElementById("disable-popups");
-  var resetDisableFeaturesMenu = document.getElementById("reset-disable-features");
 
-  disableJavaScriptMenu.appendChild(document.createTextNode(WebDeveloper.Locales.getString("disableJavaScript")));
-  disableNotificationsMenu.appendChild(document.createTextNode(WebDeveloper.Locales.getString("disableNotifications")));
-  disablePopupsMenu.appendChild(document.createTextNode(WebDeveloper.Locales.getString("disablePopups")));
-  resetDisableFeaturesMenu.appendChild(document.createTextNode(WebDeveloper.Locales.getString("resetDisableFeatures")));
-
-  disableJavaScriptMenu.addEventListener("click", WebDeveloper.Overlay.Disable.toggleJavaScript);
-  disableNotificationsMenu.addEventListener("click", WebDeveloper.Overlay.Disable.toggleNotifications);
-  disablePopupsMenu.addEventListener("click", WebDeveloper.Overlay.Disable.togglePopups);
-  resetDisableFeaturesMenu.addEventListener("click", WebDeveloper.Overlay.Disable.resetFeatures);
-
-  WebDeveloper.Overlay.updateContentSettingMenu(disableJavaScriptMenu, "javascript");
-  WebDeveloper.Overlay.updateContentSettingMenu(disableNotificationsMenu, "notifications");
-  WebDeveloper.Overlay.updateContentSettingMenu(disablePopupsMenu, "popups");
 };
 
 // Resets the disable features

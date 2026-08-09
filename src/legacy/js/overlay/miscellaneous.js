@@ -150,46 +150,13 @@ WebDeveloper.Overlay.Miscellaneous.displayRuler = function()
 // Initializes the miscellaneous overlay
 WebDeveloper.Overlay.Miscellaneous.initialize = function()
 {
-  var clearCacheMenu            = document.getElementById("clear-cache");
-  var clearHistoryMenu          = document.getElementById("clear-history");
-  var displayColorPickerMenu    = document.getElementById("display-color-picker");
-  var displayHiddenElementsMenu = document.getElementById("display-hidden-elements");
-  var displayLineGuidesMenu     = document.getElementById("display-line-guides");
-  var displayRulerMenu          = document.getElementById("display-ruler");
-  var linearizePageMenu         = document.getElementById("linearize-page");
-  var makeFramesResizableMenu   = document.getElementById("make-frames-resizable");
-  var markAllLinksUnvisitedMenu = document.getElementById("mark-all-links-unvisited");
-  var markAllLinksVisitedMenu   = document.getElementById("mark-all-links-visited");
-
-  clearHistoryMenu.append(WebDeveloper.Locales.getString("clearHistory"));
-  displayColorPickerMenu.append(WebDeveloper.Locales.getString("displayColorPicker"));
-  displayHiddenElementsMenu.append(WebDeveloper.Locales.getString("displayHiddenElements"));
-  displayLineGuidesMenu.append(WebDeveloper.Locales.getString("displayLineGuides"));
-  displayRulerMenu.append(WebDeveloper.Locales.getString("displayRuler"));
-  linearizePageMenu.append(WebDeveloper.Locales.getString("linearizePage"));
-  makeFramesResizableMenu.append(WebDeveloper.Locales.getString("makeFramesResizable"));
-  markAllLinksUnvisitedMenu.append(WebDeveloper.Locales.getString("markAllLinksUnvisited"));
-  markAllLinksVisitedMenu.append(WebDeveloper.Locales.getString("markAllLinksVisited"));
-
-  clearHistoryMenu.addEventListener("click", WebDeveloper.Overlay.Miscellaneous.confirmClearHistory);
-  displayColorPickerMenu.addEventListener("click", WebDeveloper.Overlay.Miscellaneous.displayColorPicker);
-  displayHiddenElementsMenu.addEventListener("click", WebDeveloper.Overlay.Miscellaneous.displayHiddenElements);
-  displayLineGuidesMenu.addEventListener("click", WebDeveloper.Overlay.Miscellaneous.displayLineGuides);
-  displayRulerMenu.addEventListener("click", WebDeveloper.Overlay.Miscellaneous.displayRuler);
-  linearizePageMenu.addEventListener("click", WebDeveloper.Overlay.Miscellaneous.linearizePage);
-  makeFramesResizableMenu.addEventListener("click", WebDeveloper.Overlay.Miscellaneous.makeFramesResizable);
-  markAllLinksUnvisitedMenu.addEventListener("click", function() { WebDeveloper.Overlay.Miscellaneous.toggleVisitedLinks(false); });
-  markAllLinksVisitedMenu.addEventListener("click", function() { WebDeveloper.Overlay.Miscellaneous.toggleVisitedLinks(true); });
 
   // If the browsing data API is set
   if(chrome.browsingData)
   {
-    clearCacheMenu.append(WebDeveloper.Locales.getString("clearCache"));
-    clearCacheMenu.addEventListener("click", WebDeveloper.Overlay.Miscellaneous.confirmClearCache);
   }
   else
   {
-    clearCacheMenu.classList.add("hide");
   }
 };
 

@@ -1,0 +1,72 @@
+/**
+ * The extension's own UI: the popup, and later the options page and reports.
+ *
+ * Not the feature stylesheets in src/public/features, which are injected into
+ * other people's pages and must stay theme-blind -- Tailwind never sees that
+ * directory, and CI greps it for theme tokens.
+ */
+
+@import "tailwindcss";
+
+/* The viewer's choice wins over the host system's, so the theme is an
+   attribute rather than a media query. src/lib/theme.ts sets it before the app
+   mounts, which is what stops the light flash on a dark setup. */
+@custom-variant dark (&:where([data-wd-theme="dark"], [data-wd-theme="dark"] *));
+
+@theme {
+  --color-surface: #ffffff;
+  --color-surface-raised: #f4f5f7;
+  --color-surface-sunken: #e9ebee;
+  --color-line: #d9dce1;
+  --color-ink: #1f2328;
+  --color-ink-muted: #5c6470;
+  --color-accent: #0d6efd;
+  --color-on: #198754;
+  --color-off: #dc3545;
+}
+
+[data-wd-theme="dark"] {
+  --color-surface: #16181d;
+  --color-surface-raised: #1f232a;
+  --color-surface-sunken: #0f1114;
+  --color-line: #2f343d;
+  --color-ink: #e6e8ec;
+  --color-ink-muted: #9aa3b0;
+  --color-accent: #63a4ff;
+  --color-on: #3fb950;
+  --color-off: #f85149;
+}
+
+html {
+  color-scheme: light;
+}
+
+[data-wd-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+}
+
+/**
+ * Two classes the legacy dialogs still write to directly.
+ *
+ * `cookies.js` and `resize.js` show and hide themselves with `d-none` and mark
+ * an invalid field with `is-invalid`, both from Bootstrap. They keep working
+ * because the classes are defined here rather than because Bootstrap is still
+ * loaded -- it is not. They go when those two dialogs are ported.
+ */
+.d-none {
+  display: none !important;
+}
+
+.is-invalid {
+  border-color: var(--color-off) !important;
+}

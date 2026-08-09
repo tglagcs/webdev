@@ -28,21 +28,8 @@ WebDeveloper.Overlay.Tools.editTools = function()
 // Initializes the tools overlay
 WebDeveloper.Overlay.Tools.initialize = function()
 {
-  var editToolsMenu         = document.getElementById("edit-tools");
-  var validateLocalCSSMenu  = document.getElementById("validate-local-css");
-  var validateLocalHTMLMenu = document.getElementById("validate-local-html");
-  var viewSourceMenu        = document.getElementById("view-source");
-
-  editToolsMenu.append(WebDeveloper.Locales.getString("editTools"));
-  validateLocalCSSMenu.append(WebDeveloper.Locales.getString("validateLocalCSS"));
-  validateLocalHTMLMenu.append(WebDeveloper.Locales.getString("validateLocalHTML"));
-  viewSourceMenu.append(WebDeveloper.Locales.getString("viewSource"));
 
   document.getElementById("custom-tools").addEventListener("click", WebDeveloper.Overlay.Tools.customTool);
-  editToolsMenu.addEventListener("click", WebDeveloper.Overlay.Tools.editTools);
-  validateLocalCSSMenu.addEventListener("click", WebDeveloper.Overlay.Tools.validateLocalCSS);
-  validateLocalHTMLMenu.addEventListener("click", WebDeveloper.Overlay.Tools.validateLocalHTML);
-  viewSourceMenu.addEventListener("click", WebDeveloper.Overlay.Tools.viewSource);
 
   WebDeveloper.Overlay.Tools.setupCustomTools();
 };

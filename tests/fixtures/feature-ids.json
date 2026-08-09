@@ -1,121 +1,478 @@
 [
-  "disable-javascript",
-  "disable-notifications",
-  "disable-popups",
-  "reset-disable-features",
-  "disable-cookies",
-  "add-cookie",
-  "delete-domain-cookies",
-  "delete-path-cookies",
-  "delete-session-cookies",
-  "view-cookie-information",
-  "disable-all-styles",
-  "disable-browser-default-styles",
-  "disable-embedded-styles",
-  "disable-inline-styles",
-  "disable-linked-style-sheets",
-  "disable-print-styles",
-  "display-handheld-styles",
-  "display-print-styles",
-  "edit-css",
-  "reload-linked-style-sheets",
-  "use-border-box-model",
-  "view-css",
-  "check-all-checkboxes",
-  "uncheck-all-checkboxes",
-  "clear-form-fields",
-  "clear-radio-buttons",
-  "convert-form-gets-to-posts",
-  "convert-form-posts-to-gets",
-  "convert-select-elements-to-text-inputs",
-  "convert-text-inputs-to-textareas",
-  "display-form-details",
-  "display-passwords",
-  "enable-auto-completion",
-  "enable-form-fields",
-  "expand-select-elements",
-  "make-form-fields-writable",
-  "outline-form-fields-without-labels",
-  "populate-form-fields",
-  "remove-form-validation",
-  "remove-maximum-lengths",
-  "view-form-information",
-  "disable-images",
-  "display-alt-attributes",
-  "display-image-dimensions",
-  "display-image-paths",
-  "find-broken-images",
-  "hide-background-images",
-  "hide-images",
-  "make-images-full-size",
-  "make-images-invisible",
-  "outline-all-images",
-  "outline-background-images",
-  "outline-images-with-adjusted-dimensions",
-  "outline-images-with-empty-alt-attributes",
-  "outline-images-with-oversized-dimensions",
-  "outline-images-without-alt-attributes",
-  "outline-images-without-dimensions",
-  "reload-images",
-  "replace-images-with-alt-attributes",
-  "view-image-information",
-  "display-abbreviations",
-  "display-access-keys",
-  "display-anchors",
-  "display-aria-roles",
-  "display-div-dimensions",
-  "display-div-order",
-  "display-element-information",
-  "display-id-class-details",
-  "display-link-details",
-  "display-object-information",
-  "display-stack-levels",
-  "display-tab-index",
-  "display-table-depth",
-  "display-table-information",
-  "display-title-attributes",
-  "display-topographic-information",
-  "find-duplicate-ids",
-  "view-anchor-information",
-  "view-color-information",
-  "view-document-outline",
-  "view-javascript",
-  "view-link-information",
-  "view-meta-tag-information",
-  "view-response-headers",
-  "clear-cache",
-  "clear-history",
-  "display-color-picker",
-  "display-hidden-elements",
-  "display-line-guides",
-  "display-ruler",
-  "linearize-page",
-  "make-frames-resizable",
-  "mark-all-links-unvisited",
-  "mark-all-links-visited",
-  "outline-absolute-positioned-elements",
-  "outline-block-level-elements",
-  "outline-deprecated-elements",
-  "outline-external-links",
-  "outline-fixed-positioned-elements",
-  "outline-floated-elements",
-  "outline-frames",
-  "outline-headings",
-  "outline-non-secure-elements",
-  "outline-relative-positioned-elements",
-  "outline-table-captions",
-  "outline-table-cells",
-  "outline-tables",
-  "show-element-tag-names",
-  "display-window-size",
-  "resize-window",
-  "edit-resize-dimensions",
-  "view-responsive-layouts",
-  "edit-tools",
-  "validate-local-css",
-  "validate-local-html",
-  "view-source",
-  "reset-page",
-  "options",
-  "about"
+  {
+    "id": "disable-javascript",
+    "stateful": true
+  },
+  {
+    "id": "disable-notifications",
+    "stateful": true
+  },
+  {
+    "id": "disable-popups",
+    "stateful": true
+  },
+  {
+    "id": "reset-disable-features",
+    "stateful": false
+  },
+  {
+    "id": "disable-cookies",
+    "stateful": true
+  },
+  {
+    "id": "add-cookie",
+    "stateful": false
+  },
+  {
+    "id": "delete-domain-cookies",
+    "stateful": false
+  },
+  {
+    "id": "delete-path-cookies",
+    "stateful": false
+  },
+  {
+    "id": "delete-session-cookies",
+    "stateful": false
+  },
+  {
+    "id": "view-cookie-information",
+    "stateful": false
+  },
+  {
+    "id": "disable-all-styles",
+    "stateful": true
+  },
+  {
+    "id": "disable-browser-default-styles",
+    "stateful": true
+  },
+  {
+    "id": "disable-embedded-styles",
+    "stateful": true
+  },
+  {
+    "id": "disable-inline-styles",
+    "stateful": true
+  },
+  {
+    "id": "disable-linked-style-sheets",
+    "stateful": true
+  },
+  {
+    "id": "disable-print-styles",
+    "stateful": true
+  },
+  {
+    "id": "display-handheld-styles",
+    "stateful": true
+  },
+  {
+    "id": "display-print-styles",
+    "stateful": true
+  },
+  {
+    "id": "edit-css",
+    "stateful": true
+  },
+  {
+    "id": "reload-linked-style-sheets",
+    "stateful": false
+  },
+  {
+    "id": "use-border-box-model",
+    "stateful": true
+  },
+  {
+    "id": "view-css",
+    "stateful": false
+  },
+  {
+    "id": "check-all-checkboxes",
+    "stateful": false
+  },
+  {
+    "id": "uncheck-all-checkboxes",
+    "stateful": false
+  },
+  {
+    "id": "clear-form-fields",
+    "stateful": false
+  },
+  {
+    "id": "clear-radio-buttons",
+    "stateful": false
+  },
+  {
+    "id": "convert-form-gets-to-posts",
+    "stateful": false
+  },
+  {
+    "id": "convert-form-posts-to-gets",
+    "stateful": false
+  },
+  {
+    "id": "convert-select-elements-to-text-inputs",
+    "stateful": false
+  },
+  {
+    "id": "convert-text-inputs-to-textareas",
+    "stateful": false
+  },
+  {
+    "id": "display-form-details",
+    "stateful": true
+  },
+  {
+    "id": "display-passwords",
+    "stateful": false
+  },
+  {
+    "id": "enable-auto-completion",
+    "stateful": false
+  },
+  {
+    "id": "enable-form-fields",
+    "stateful": false
+  },
+  {
+    "id": "expand-select-elements",
+    "stateful": false
+  },
+  {
+    "id": "make-form-fields-writable",
+    "stateful": false
+  },
+  {
+    "id": "outline-form-fields-without-labels",
+    "stateful": true
+  },
+  {
+    "id": "populate-form-fields",
+    "stateful": false
+  },
+  {
+    "id": "remove-form-validation",
+    "stateful": false
+  },
+  {
+    "id": "remove-maximum-lengths",
+    "stateful": false
+  },
+  {
+    "id": "view-form-information",
+    "stateful": false
+  },
+  {
+    "id": "disable-images",
+    "stateful": true
+  },
+  {
+    "id": "display-alt-attributes",
+    "stateful": true
+  },
+  {
+    "id": "display-image-dimensions",
+    "stateful": true
+  },
+  {
+    "id": "display-image-paths",
+    "stateful": true
+  },
+  {
+    "id": "find-broken-images",
+    "stateful": false
+  },
+  {
+    "id": "hide-background-images",
+    "stateful": true
+  },
+  {
+    "id": "hide-images",
+    "stateful": true
+  },
+  {
+    "id": "make-images-full-size",
+    "stateful": false
+  },
+  {
+    "id": "make-images-invisible",
+    "stateful": false
+  },
+  {
+    "id": "outline-all-images",
+    "stateful": true
+  },
+  {
+    "id": "outline-background-images",
+    "stateful": true
+  },
+  {
+    "id": "outline-images-with-adjusted-dimensions",
+    "stateful": true
+  },
+  {
+    "id": "outline-images-with-empty-alt-attributes",
+    "stateful": true
+  },
+  {
+    "id": "outline-images-with-oversized-dimensions",
+    "stateful": true
+  },
+  {
+    "id": "outline-images-without-alt-attributes",
+    "stateful": true
+  },
+  {
+    "id": "outline-images-without-dimensions",
+    "stateful": true
+  },
+  {
+    "id": "reload-images",
+    "stateful": false
+  },
+  {
+    "id": "replace-images-with-alt-attributes",
+    "stateful": true
+  },
+  {
+    "id": "view-image-information",
+    "stateful": false
+  },
+  {
+    "id": "display-abbreviations",
+    "stateful": true
+  },
+  {
+    "id": "display-access-keys",
+    "stateful": true
+  },
+  {
+    "id": "display-anchors",
+    "stateful": true
+  },
+  {
+    "id": "display-aria-roles",
+    "stateful": true
+  },
+  {
+    "id": "display-div-dimensions",
+    "stateful": true
+  },
+  {
+    "id": "display-div-order",
+    "stateful": true
+  },
+  {
+    "id": "display-element-information",
+    "stateful": true
+  },
+  {
+    "id": "display-id-class-details",
+    "stateful": true
+  },
+  {
+    "id": "display-link-details",
+    "stateful": true
+  },
+  {
+    "id": "display-object-information",
+    "stateful": true
+  },
+  {
+    "id": "display-stack-levels",
+    "stateful": true
+  },
+  {
+    "id": "display-tab-index",
+    "stateful": true
+  },
+  {
+    "id": "display-table-depth",
+    "stateful": true
+  },
+  {
+    "id": "display-table-information",
+    "stateful": true
+  },
+  {
+    "id": "display-title-attributes",
+    "stateful": true
+  },
+  {
+    "id": "display-topographic-information",
+    "stateful": true
+  },
+  {
+    "id": "find-duplicate-ids",
+    "stateful": false
+  },
+  {
+    "id": "view-anchor-information",
+    "stateful": false
+  },
+  {
+    "id": "view-color-information",
+    "stateful": false
+  },
+  {
+    "id": "view-document-outline",
+    "stateful": false
+  },
+  {
+    "id": "view-javascript",
+    "stateful": false
+  },
+  {
+    "id": "view-link-information",
+    "stateful": false
+  },
+  {
+    "id": "view-meta-tag-information",
+    "stateful": false
+  },
+  {
+    "id": "view-response-headers",
+    "stateful": false
+  },
+  {
+    "id": "clear-cache",
+    "stateful": false
+  },
+  {
+    "id": "clear-history",
+    "stateful": false
+  },
+  {
+    "id": "display-color-picker",
+    "stateful": true
+  },
+  {
+    "id": "display-hidden-elements",
+    "stateful": true
+  },
+  {
+    "id": "display-line-guides",
+    "stateful": true
+  },
+  {
+    "id": "display-ruler",
+    "stateful": true
+  },
+  {
+    "id": "linearize-page",
+    "stateful": true
+  },
+  {
+    "id": "make-frames-resizable",
+    "stateful": false
+  },
+  {
+    "id": "mark-all-links-unvisited",
+    "stateful": false
+  },
+  {
+    "id": "mark-all-links-visited",
+    "stateful": false
+  },
+  {
+    "id": "outline-absolute-positioned-elements",
+    "stateful": true
+  },
+  {
+    "id": "outline-block-level-elements",
+    "stateful": true
+  },
+  {
+    "id": "outline-deprecated-elements",
+    "stateful": true
+  },
+  {
+    "id": "outline-external-links",
+    "stateful": true
+  },
+  {
+    "id": "outline-fixed-positioned-elements",
+    "stateful": true
+  },
+  {
+    "id": "outline-floated-elements",
+    "stateful": true
+  },
+  {
+    "id": "outline-frames",
+    "stateful": true
+  },
+  {
+    "id": "outline-headings",
+    "stateful": true
+  },
+  {
+    "id": "outline-non-secure-elements",
+    "stateful": true
+  },
+  {
+    "id": "outline-relative-positioned-elements",
+    "stateful": true
+  },
+  {
+    "id": "outline-table-captions",
+    "stateful": true
+  },
+  {
+    "id": "outline-table-cells",
+    "stateful": true
+  },
+  {
+    "id": "outline-tables",
+    "stateful": true
+  },
+  {
+    "id": "show-element-tag-names",
+    "stateful": true
+  },
+  {
+    "id": "display-window-size",
+    "stateful": false
+  },
+  {
+    "id": "resize-window",
+    "stateful": false
+  },
+  {
+    "id": "edit-resize-dimensions",
+    "stateful": false
+  },
+  {
+    "id": "view-responsive-layouts",
+    "stateful": false
+  },
+  {
+    "id": "edit-tools",
+    "stateful": false
+  },
+  {
+    "id": "validate-local-css",
+    "stateful": false
+  },
+  {
+    "id": "validate-local-html",
+    "stateful": false
+  },
+  {
+    "id": "view-source",
+    "stateful": false
+  },
+  {
+    "id": "reset-page",
+    "stateful": false
+  },
+  {
+    "id": "options",
+    "stateful": false
+  },
+  {
+    "id": "about",
+    "stateful": false
+  }
 ]

@@ -14,23 +14,6 @@ WebDeveloper.Overlay.Options.about = function()
 };
 
 // Initializes the options overlay
-WebDeveloper.Overlay.Options.initialize = function()
-{
-  var aboutMenu     = document.getElementById("about");
-  var helpMenu      = document.getElementById("help");
-  var optionsMenu   = document.getElementById("options");
-  var resetPageMenu = document.getElementById("reset-page");
-
-  aboutMenu.append(WebDeveloper.Locales.getString("aboutMenu"));
-  helpMenu.append(WebDeveloper.Locales.getString("help"));
-  optionsMenu.append(WebDeveloper.Locales.getString("optionsMenu"));
-  resetPageMenu.append(WebDeveloper.Locales.getString("resetPage"));
-
-  aboutMenu.addEventListener("click", WebDeveloper.Overlay.Options.about);
-  optionsMenu.addEventListener("click", WebDeveloper.Overlay.Options.options);
-  resetPageMenu.addEventListener("click", WebDeveloper.Overlay.Options.resetPage);
-};
-
 // Opens the options
 WebDeveloper.Overlay.Options.options = function()
 {
@@ -50,12 +33,3 @@ WebDeveloper.Overlay.Options.resetPage = function()
   });
 };
 
-// If the document is still loading
-if(document.readyState === "loading")
-{
-  document.addEventListener("DOMContentLoaded", WebDeveloper.Overlay.Options.initialize);
-}
-else
-{
-  WebDeveloper.Overlay.Options.initialize();
-}

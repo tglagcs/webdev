@@ -82,39 +82,27 @@ WebDeveloper.Overlay.Resize.getViewResponsiveLayoutsLocale = function()
 // Initializes the resize overlay
 WebDeveloper.Overlay.Resize.initialize = function()
 {
-  var displayWindowSizeMenu     = document.getElementById("display-window-size");
-  var editResizeDimensionsMenu  = document.getElementById("edit-resize-dimensions");
   var resizeWindowCancel        = document.getElementById("resize-window-cancel");
   var resizeWindowDialog        = document.getElementById("resize-window-dialog");
   var resizeWindowHeight        = document.getElementById("resize-window-height");
-  var resizeWindowMenu          = document.getElementById("resize-window");
   var resizeWindowSubmit        = document.getElementById("resize-window-submit");
   var resizeWindowWidth         = document.getElementById("resize-window-width");
-  var viewResponsiveLayoutsMenu = document.getElementById("view-responsive-layouts");
 
   document.querySelector('[for="resize-window-height"]').append(WebDeveloper.Locales.getString("height"));
   document.querySelector('[for="resize-window-width"]').append(WebDeveloper.Locales.getString("width"));
-  displayWindowSizeMenu.append(WebDeveloper.Locales.getString("displayWindowSize"));
-  editResizeDimensionsMenu.append(WebDeveloper.Locales.getString("editResizeDimensions"));
   resizeWindowCancel.append(WebDeveloper.Locales.getString("cancel"));
   resizeWindowDialog.querySelector("legend").append(WebDeveloper.Locales.getString("resizeWindow"));
-  resizeWindowMenu.append(WebDeveloper.Locales.getString("resizeWindowMenu"));
   resizeWindowSubmit.append(WebDeveloper.Locales.getString("resize"));
-  viewResponsiveLayoutsMenu.append(WebDeveloper.Locales.getString("viewResponsiveLayouts"));
 
   resizeWindowHeight.setAttribute("placeholder", WebDeveloper.Locales.getString("heightPlaceholder"));
   resizeWindowWidth.setAttribute("placeholder", WebDeveloper.Locales.getString("widthPlaceholder"));
 
   document.getElementById("custom-resize-options").addEventListener("click", WebDeveloper.Overlay.Resize.customResizeWindow);
-  displayWindowSizeMenu.addEventListener("click", WebDeveloper.Overlay.Resize.displayWindowSize);
-  editResizeDimensionsMenu.addEventListener("click", WebDeveloper.Overlay.Resize.editResizeDimensions);
   resizeWindowCancel.addEventListener("click", WebDeveloper.Overlay.Resize.cancelResizeWindow);
   resizeWindowDialog.addEventListener("submit", function(event) { event.preventDefault(); });
   resizeWindowHeight.addEventListener("keypress", WebDeveloper.Overlay.Resize.resizeWindowKeyPress);
-  resizeWindowMenu.addEventListener("click", WebDeveloper.Overlay.Resize.displayResizeDialog);
   resizeWindowSubmit.addEventListener("click", WebDeveloper.Overlay.Resize.submitResizeWindow);
   resizeWindowWidth.addEventListener("keypress", WebDeveloper.Overlay.Resize.resizeWindowKeyPress);
-  viewResponsiveLayoutsMenu.addEventListener("click", WebDeveloper.Overlay.Resize.viewResponsiveLayouts);
 
   WebDeveloper.Overlay.Resize.setupCustomResizeOptions();
 };
