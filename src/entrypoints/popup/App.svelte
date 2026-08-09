@@ -13,7 +13,7 @@
   import DOMPurify from "dompurify";
 
   import { HOMEPAGE_URL } from "@/branding";
-  import { columns, visibleMenus } from "@/features/registry";
+  import { visibleMenus } from "@/features/registry";
   import type { Feature, MenuId } from "@/features/types";
   import { t } from "@/lib/i18n";
   import { runFeature } from "./bridge";
@@ -44,148 +44,164 @@
     return t(menu);
   }
 
-  function listId(menu: MenuId, index: number): string | undefined {
-    if (index !== 0) {
-      return undefined;
+  // Two menus grow a list of the user's own entries -- saved window sizes and
+  // custom tools -- which resize.js and tools.js still render into these
+  // elements by id.
+  function listId(menu: MenuId): string | undefined {
+    if (menu === "resize") {
+      return "custom-resize-options";
     }
 
-    return menu === "resize" ? "custom-resize-options" : menu === "tools" ? "custom-tools" : undefined;
+    return menu === "tools" ? "custom-tools" : undefined;
   }
 </script>
 
-<div class="flex min-h-full w-[34rem] flex-col bg-surface text-ink">
-  <nav class="flex shrink-0 gap-0.5 border-b border-line bg-surface-raised px-1 pt-1">
+<!--
+  800px is the widest a browser will make a popup, and eleven tabs do not fit
+  across it -- so they run down the side instead, where all eleven are always
+  visible and nothing scrolls.
+
+  The items flow into CSS columns rather than the fixed columns the markup
+  had. Those were only a reading order, not a grouping -- each menu ran
+  alphabetically down one column and on to the next -- so letting the browser
+  balance them costs nothing and keeps the long menus off the scrollbar.
+-->
+<div class="flex min-h-full w-[800px] max-w-full bg-surface text-ink">
+  <nav class="flex w-40 shrink-0 flex-col gap-0.5 border-r border-line bg-surface-raised p-1.5">
     {#each menus as menu (menu.id)}
       <button
         type="button"
-        title={menuName(menu.id)}
         aria-current={menu.id === current.id}
-        class="flex items-center gap-1.5 rounded-t-md border border-transparent px-2.5 py-1.5 text-xs
-               text-ink-muted transition-colors hover:bg-surface hover:text-ink
-               aria-[current=true]:border-line aria-[current=true]:border-b-surface
-               aria-[current=true]:bg-surface aria-[current=true]:text-ink"
+        class="flex items-center gap-2 rounded-md border border-transparent px-2 py-1.5 text-left
+               text-xs text-ink-muted transition-colors hover:bg-surface hover:text-ink
+               aria-[current=true]:border-line aria-[current=true]:bg-surface
+               aria-[current=true]:text-ink aria-[current=true]:shadow-sm"
         onclick={() => ui.selectMenu(menu.id)}
       >
         {#if ui.labels !== "text"}
-          <img src={menuIcon(menu.id)} width="14" height="14" alt="" />
+          <img src={menuIcon(menu.id)} width="14" height="14" alt="" class="shrink-0" />
         {/if}
         {#if ui.labels !== "icons"}
-          <span>{menuName(menu.id)}</span>
+          <span class="truncate">{menuName(menu.id)}</span>
         {/if}
       </button>
     {/each}
   </nav>
 
-  {#if ui.confirmation}
-    <div
-      class="m-2 flex items-center gap-2 rounded-md border border-amber-400/40 bg-amber-400/10 p-2 text-xs"
-    >
-      <span class="grow">{ui.confirmation.message}</span>
-      <button
-        type="button"
-        class="rounded border border-line px-2 py-1 hover:bg-surface-raised"
-        onclick={() => (ui.confirmation = null)}
+  <div class="flex min-w-0 grow flex-col">
+    {#if ui.confirmation}
+      <div
+        class="m-2 flex items-center gap-2 rounded-md border border-amber-400/40 bg-amber-400/10 p-2 text-xs"
       >
-        {t("cancel")}
-      </button>
-      <button
-        type="button"
-        class="rounded bg-amber-500 px-2 py-1 font-medium text-black hover:bg-amber-400"
-        onclick={() => {
-          const confirmation = ui.confirmation;
-          ui.confirmation = null;
-          confirmation?.confirm();
-        }}
-      >
-        {ui.confirmation.buttonText}
-      </button>
-    </div>
-  {/if}
-
-  {#if ui.notification}
-    <div
-      class="m-2 flex items-start gap-2 rounded-md border p-2 text-xs {ui.notification.type ===
-      'danger'
-        ? 'border-off/50 bg-off/10'
-        : 'border-line bg-surface-raised'}"
-    >
-      <!-- Sanitized because a few result messages carry markup, as upstream's did. -->
-      <span class="grow">{@html DOMPurify.sanitize(ui.notification.message)}</span>
-      <button
-        type="button"
-        aria-label={t("cancel")}
-        class="text-ink-muted hover:text-ink"
-        onclick={() => (ui.notification = null)}>&times;</button
-      >
-    </div>
-  {/if}
-
-  <!--
-    Every menu is rendered and the inactive ones are hidden, rather than only
-    the open one being in the DOM. The two dynamic lists -- saved window sizes
-    and custom tools -- are still filled in by resize.js and tools.js at
-    startup, and they look their containers up by id.
-  -->
-  <div class="tab-content grow p-2">
-    {#each menus as menu (menu.id)}
-      <div class="flex flex-wrap gap-x-6 gap-y-1" hidden={menu.id !== current.id}>
-        {#each columns(menu) as column, index (index)}
-          <ul class="min-w-40 grow basis-0 space-y-0.5" id={listId(menu.id, index)}>
-            {#each column as feature (feature.id)}
-              <li>
-                <a
-                  href="#{feature.id}"
-                  id={feature.id}
-                  class="flex items-center gap-1.5 rounded px-1.5 py-1 text-xs text-ink no-underline
-                         hover:bg-surface-raised"
-                  class:font-medium={ui.isActive(feature.id)}
-                  onclick={(event) => click(feature, event)}
-                >
-                  {#if feature.stateful}
-                    <svg
-                      class="size-3.5 shrink-0"
-                      class:text-on={ui.isActive(feature.id)}
-                      class:text-ink-muted={!ui.isActive(feature.id)}
-                      aria-hidden="true"
-                    >
-                      <use
-                        href="/svg/icons/icons.svg#{ui.isActive(feature.id)
-                          ? 'i-check'
-                          : 's-remove'}"
-                      ></use>
-                    </svg>
-                  {:else}
-                    <span class="size-3.5 shrink-0"></span>
-                  {/if}
-                  {label(feature)}
-                </a>
-              </li>
-            {/each}
-
-            <!--
-              Not a feature: an ordinary link to the documentation, which the
-              markup carried in the options menu and nothing toggles.
-            -->
-            {#if menu.id === "options" && index === columns(menu).length - 1}
-              <li>
-                <a
-                  href={`${HOMEPAGE_URL}help/`}
-                  target="_blank"
-                  rel="noreferrer"
-                  class="flex items-center gap-1.5 rounded px-1.5 py-1 text-xs text-ink no-underline
-                         hover:bg-surface-raised"
-                >
-                  <span class="size-3.5 shrink-0"></span>
-                  {t("help")}
-                </a>
-              </li>
-            {/if}
-          </ul>
-        {/each}
+        <span class="grow">{ui.confirmation.message}</span>
+        <button
+          type="button"
+          class="rounded border border-line px-2 py-1 hover:bg-surface-raised"
+          onclick={() => (ui.confirmation = null)}
+        >
+          {t("cancel")}
+        </button>
+        <button
+          type="button"
+          class="rounded bg-amber-500 px-2 py-1 font-medium text-black hover:bg-amber-400"
+          onclick={() => {
+            const confirmation = ui.confirmation;
+            ui.confirmation = null;
+            confirmation?.confirm();
+          }}
+        >
+          {ui.confirmation.buttonText}
+        </button>
       </div>
-    {/each}
-  </div>
+    {/if}
 
-  <AddCookieDialog />
-  <ResizeDialog />
+    {#if ui.notification}
+      <div
+        class="m-2 flex items-start gap-2 rounded-md border p-2 text-xs {ui.notification.type ===
+        'danger'
+          ? 'border-off/50 bg-off/10'
+          : 'border-line bg-surface-raised'}"
+      >
+        <!-- Sanitized because a few result messages carry markup, as upstream's did. -->
+        <span class="grow">{@html DOMPurify.sanitize(ui.notification.message)}</span>
+        <button
+          type="button"
+          aria-label={t("cancel")}
+          class="text-ink-muted hover:text-ink"
+          onclick={() => (ui.notification = null)}>&times;</button
+        >
+      </div>
+    {/if}
+
+    <div class="tab-content grow p-2">
+      {#each menus as menu (menu.id)}
+        <!--
+          Every menu is in the DOM and the inactive ones are hidden: resize.js
+          and tools.js still fill their lists in at startup and find the
+          container by id, whichever menu is open.
+        -->
+        <ul
+          class="gap-x-6 {menu.features.length > 8 ? 'columns-3' : 'columns-2'}"
+          id={listId(menu.id)}
+          hidden={menu.id !== current.id}
+        >
+          {#each menu.features as feature (feature.id)}
+            <li class="break-inside-avoid">
+              <a
+                href="#{feature.id}"
+                id={feature.id}
+                class="group flex items-start gap-1.5 rounded px-1.5 py-1 text-xs text-ink
+                       no-underline hover:bg-surface-raised"
+                class:font-medium={ui.isActive(feature.id)}
+                onclick={(event) => click(feature, event)}
+              >
+                <!--
+                  Nothing is drawn for a toggle that is off: a marker on every
+                  one of them is noise, and upstream hid them for the same
+                  reason. A tick means on, and hovering it shows the cross that
+                  says clicking will switch it off.
+                -->
+                {#if feature.stateful && ui.isActive(feature.id)}
+                  <svg class="mt-px size-3.5 shrink-0 text-on group-hover:hidden" aria-hidden="true">
+                    <use href="/svg/icons/icons.svg#i-check"></use>
+                  </svg>
+                  <svg
+                    class="mt-px hidden size-3.5 shrink-0 text-off group-hover:block"
+                    aria-hidden="true"
+                  >
+                    <use href="/svg/icons/icons.svg#s-remove"></use>
+                  </svg>
+                {:else}
+                  <span class="mt-px size-3.5 shrink-0"></span>
+                {/if}
+                {label(feature)}
+              </a>
+            </li>
+          {/each}
+
+          <!--
+            Not a feature: an ordinary link to the documentation, which the
+            markup carried in the options menu and nothing toggles.
+          -->
+          {#if menu.id === "options"}
+            <li class="break-inside-avoid">
+              <a
+                href={`${HOMEPAGE_URL}help/`}
+                target="_blank"
+                rel="noreferrer"
+                class="flex items-start gap-1.5 rounded px-1.5 py-1 text-xs text-ink no-underline
+                       hover:bg-surface-raised"
+              >
+                <span class="size-3.5 shrink-0"></span>
+                {t("help")}
+              </a>
+            </li>
+          {/if}
+        </ul>
+      {/each}
+    </div>
+
+    <AddCookieDialog />
+    <ResizeDialog />
+  </div>
 </div>
