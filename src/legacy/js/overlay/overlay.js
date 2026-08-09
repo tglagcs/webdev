@@ -110,11 +110,10 @@ WebDeveloper.Overlay.checkPermissions = function()
 // Closes the overlay
 WebDeveloper.Overlay.close = function()
 {
-  // The popup closes on anything that moves focus elsewhere -- opening a
-  // report, resizing the window, running a tool. With keep_popup_open set the
-  // user has asked for it to stay, so several features can be applied in one
-  // visit. Read into a variable at startup because this is called from event
-  // handlers that cannot wait for storage.
+  // In window mode this page is a window of its own, and closing itself after
+  // every report or tool would defeat the point of asking for it. Read into a
+  // variable at startup because this is called from event handlers that
+  // cannot wait for a storage read.
   if(WebDeveloper.Overlay.keepOpen)
   {
     return;
@@ -208,10 +207,10 @@ WebDeveloper.Overlay.initialize = function()
   var confirmationCancel = document.getElementById("confirmation-cancel");
 
   // Cached, because close() is called from event handlers that cannot await a
-  // storage read. The popup is short-lived, so it cannot go stale.
-  WebDeveloper.Storage.getItem("keep_popup_open", function(keepOpen)
+  // storage read.
+  WebDeveloper.Storage.getItem("popup_in_window", function(inWindow)
   {
-    WebDeveloper.Overlay.keepOpen = !!keepOpen;
+    WebDeveloper.Overlay.keepOpen = !!inWindow;
   });
 
   WebDeveloper.Storage.getItem("display_overlay_with", function(displayOverlayWith)

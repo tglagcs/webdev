@@ -16,6 +16,7 @@ import { handleBackgroundMessages } from "@/lib/messaging";
 import { seedDefaults } from "@/lib/storage/defaults";
 import { runMigrations } from "@/lib/storage/migrations";
 import * as settings from "@/lib/storage/settings";
+import { getOr } from "@/lib/storage/settings";
 import {
   clearTab,
   getFeaturesOnTab,
@@ -80,6 +81,64 @@ handleBackgroundMessages({
 });
 
 /**
+ * Where the last standalone popup window went, so a second click focuses it
+ * rather than opening another. Session-scoped, like the window itself.
+ */
+const POPUP_WINDOW = "popup-window";
+
+/**
+ * Points the toolbar button at either the popup or the onClicked handler.
+ *
+ * A popup is dismissed by the browser as soon as focus leaves it, and there
+ * is no API to prevent that. The only way to have the UI stay put while the
+ * user works on the page is not to use a popup: clearing default_popup makes
+ * action.onClicked fire instead, and that opens the same page as a window.
+ */
+async function applyPopupMode(): Promise<void> {
+  const inWindow = await getOr("popup_in_window", false);
+
+  await browser.action.setPopup({ popup: inWindow ? "" : "/popup.html" });
+}
+
+async function openPopupWindow(): Promise<void> {
+  const stored = await browser.storage.session.get(POPUP_WINDOW);
+  const existing = stored[POPUP_WINDOW] as number | undefined;
+
+  if (existing !== undefined) {
+    try {
+      await browser.windows.update(existing, { focused: true });
+
+      return;
+    } catch {
+      // Closed since; fall through and open a new one.
+    }
+  }
+
+  const created = await browser.windows.create({
+    url: browser.runtime.getURL("/popup.html"),
+    type: "popup",
+    width: 840,
+    height: 660,
+  });
+
+  await browser.storage.session.set({ [POPUP_WINDOW]: created?.id });
+}
+
+// Only ever fires while the setting is on, because default_popup is set
+// otherwise and a popup suppresses onClicked.
+browser.action.onClicked.addListener(() => {
+  void openPopupWindow();
+});
+
+// So the setting takes effect when the user changes it, not at the next
+// browser start.
+browser.storage.onChanged.addListener((changes, area) => {
+  if (area === "local" && "popup_in_window" in changes) {
+    void applyPopupMode();
+  }
+});
+
+/**
  * Features live on the rendered document, so a navigation drops all of them.
  * The guard matches upstream: an update with no status, or status "loading",
  * is a navigation; updates carrying only a title or favicon change are not.
@@ -137,4 +196,5 @@ export default defineBackground(() => {
   // that woke it.
   void setBadgeColour();
   void updateActionIcon();
+  void applyPopupMode();
 });

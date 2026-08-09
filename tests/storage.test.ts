@@ -155,17 +155,17 @@ describe("seedDefaults", () => {
 
   // A boolean the user has turned off is a value, not an absence.
   it("does not resurrect a default the user has switched off", async () => {
-    await browser.storage.local.set({ keep_popup_open: false });
+    await browser.storage.local.set({ popup_in_window: false });
 
     await seedDefaults();
 
-    expect(await settings.get("keep_popup_open")).toBe(false);
+    expect(await settings.get("popup_in_window")).toBe(false);
   });
 
   it("seeds a boolean default on a fresh profile", async () => {
     await seedDefaults();
 
-    expect(await settings.get("keep_popup_open")).toBe(false);
+    expect(await settings.get("popup_in_window")).toBe(false);
   });
 
   it("is idempotent", async () => {

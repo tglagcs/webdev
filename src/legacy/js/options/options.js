@@ -279,12 +279,12 @@ WebDeveloper.Options.initializeGeneralTab = function()
     document.getElementById("overlay_icon_" + item).checked = true;
   });
 
-  WebDeveloper.Storage.getItem("keep_popup_open", function(item)
+  WebDeveloper.Storage.getItem("popup_in_window", function(item)
   {
-    document.getElementById("keep_popup_open").checked = !!item;
+    document.getElementById("popup_in_window").checked = !!item;
   });
 
-  document.getElementById("keep_popup_open").addEventListener("change", WebDeveloper.Options.updateKeepPopupOpen);
+  document.getElementById("popup_in_window").addEventListener("change", WebDeveloper.Options.updatePopupInWindow);
   displayOverlayWith.addEventListener("change", WebDeveloper.Options.updateDisplayOverlayWith);
   document.getElementById("overlay-icon-form").addEventListener("change", WebDeveloper.Options.updateOverlayIcon);
 };
@@ -567,7 +567,7 @@ WebDeveloper.Options.localizeGeneralTab = function()
 {
   document.getElementById("overlay-icon").append(WebDeveloper.Locales.getString("overlayIcon"));
   document.querySelector('[for="display_overlay_with"]').append(WebDeveloper.Locales.getString("displayOverlayWith"));
-  document.querySelector('[for="keep_popup_open"]').append(WebDeveloper.Locales.getString("keepPopupOpen"));
+  document.querySelector('[for="popup_in_window"]').append(WebDeveloper.Locales.getString("popupInWindow"));
   document.querySelector('[for="overlay_icon_color"]').append(WebDeveloper.Locales.getString("color"));
   document.querySelector('[for="overlay_icon_gray"]').append(WebDeveloper.Locales.getString("gray"));
   document.querySelector('[for="overlay_icon_monochrome"]').append(WebDeveloper.Locales.getString("monochrome"));
@@ -852,9 +852,9 @@ WebDeveloper.Options.toolsClick = function(event)
 };
 
 // Updates the display overlay with setting
-WebDeveloper.Options.updateKeepPopupOpen = function()
+WebDeveloper.Options.updatePopupInWindow = function()
 {
-  WebDeveloper.Storage.setItem("keep_popup_open", document.getElementById("keep_popup_open").checked);
+  WebDeveloper.Storage.setItem("popup_in_window", document.getElementById("popup_in_window").checked);
 };
 
 // Updates the display overlay with setting

@@ -383,7 +383,7 @@
   "deleteTool": { "message": "Delete Tool" },
   "deleteToolConfirmation": { "message": "Are you sure you want to delete the '$option$' tool?", "placeholders": { "option": { "content": "$1" } } },
   "descriptionPlaceholder": { "message": "Enter a description" },
-  "keepPopupOpen": { "message": "Keep the popup open after applying a feature" },
+  "popupInWindow": { "message": "Open in a separate window, so it stays open while you work on the page" },
   "displayOverlayWith": { "message": "Display the overlay with" },
   "dragDropReorder": { "message": "Drag and drop to re-order." },
   "editResizeOption": { "message": "Edit Resize Option" },

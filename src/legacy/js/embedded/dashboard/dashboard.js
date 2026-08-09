@@ -61,12 +61,17 @@ WebDeveloper.Dashboard.createDashboard = function(contentDocument, dashboardHTML
 
   // Closing from here rather than from the popup, which is the point of the
   // button: the dashboard covers the page and the popup is two clicks away.
-  closeButton.addEventListener("click", function(event)
+  // Guarded: a template without the button must degrade to a dashboard that
+  // cannot be closed from the page, not to no dashboard at all.
+  if(closeButton)
   {
-    event.preventDefault();
+    closeButton.addEventListener("click", function(event)
+    {
+      event.preventDefault();
 
-    WebDeveloper.Dashboard.close(contentDocument);
-  }, false);
+      WebDeveloper.Dashboard.close(contentDocument);
+    }, false);
+  }
 
   contentDocument.addEventListener("mouseup", window.WebDeveloperEvents.Dashboard.mouseUp, false);
   dashboardDocument.addEventListener("mousemove", WebDeveloper.Dashboard.mouseMove, false);
@@ -137,7 +142,7 @@ WebDeveloper.Dashboard.getDashboardTemplate = function(title)
   return `<div id="web-developer-dashboard-resizer" class="bg-body-secondary"></div>
   <ul id="web-developer-dashboard-tabs" class="bg-body-secondary border-bottom nav nav-underline px-2">
   <li class="ms-auto nav-item"><a href="#" class="disabled link-secondary nav-link"><h1 class="small"><img src="` + WebDeveloper.Common.getChromeURL("svg/logos/color/logo.svg") + '" alt="" class="me-1">' + title + `</h1></a></li>
-  <li class="nav-item"><a href="#" id="web-developer-dashboard-close" class="link-secondary nav-link" title="` + WebDeveloper.Locales.getString("close") + `">&times;</a></li>
+  <li class="nav-item"><a href="#" id="web-developer-dashboard-close" class="link-secondary nav-link" title="` + WebDeveloper.Dashboard.closeLabel() + `">&times;</a></li>
   </ul>
   <div id="web-developer-dashboard-panels" class="tab-content"></div>`;
 };
@@ -189,6 +194,24 @@ WebDeveloper.Dashboard.openDashboardTab = function(tabId, tabTitle, contentDocum
 };
 
 WebDeveloper.Dashboard.DASHBOARD_FEATURES = ["edit-css", "display-element-information"];
+
+// The tooltip for the close button
+//
+// Not WebDeveloper.Locales: this runs in the page, where the content script
+// has put WebDeveloper.Common but not the locales shim, so reaching for it
+// throws and takes the whole dashboard with it. chrome.i18n is available to a
+// content script, and the fallback covers the case where it is not.
+WebDeveloper.Dashboard.closeLabel = function()
+{
+  try
+  {
+    return chrome.i18n.getMessage("close") || "Close";
+  }
+  catch(exception)
+  {
+    return "Close";
+  }
+};
 
 // Closes the dashboard from its own close button
 //

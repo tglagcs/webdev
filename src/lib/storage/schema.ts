@@ -39,14 +39,14 @@ export interface Settings {
   overlay_icon: OverlayIcon;
 
   /**
-   * Whether the popup stays open after a feature is applied.
+   * Whether the toolbar button opens a standalone window instead of a popup.
    *
-   * Off by default, matching upstream: the popup closes on anything that
-   * moves focus elsewhere -- opening a report, resizing the window, running a
-   * tool. Turning it on suppresses those closes, so several features can be
-   * applied in one visit.
+   * A popup is closed by the browser the moment focus leaves it, and no API
+   * can prevent that -- so "keep the popup open" is only achievable by not
+   * using a popup. With this on, the button opens the same page as a small
+   * window, which stays put while the user works on the page.
    */
-  keep_popup_open: boolean;
+  popup_in_window: boolean;
 
   // Set by the in-page dashboard as the user drags it.
   dashboard_height: number;
@@ -90,13 +90,13 @@ export const DEFAULTS: Pick<
   | "syntax_highlight_theme"
   | "display_overlay_with"
   | "overlay_icon"
-  | "keep_popup_open"
+  | "popup_in_window"
 > = {
   populate_email_address: "example@example.com",
   syntax_highlight_theme: "none",
   display_overlay_with: "icons_text",
   overlay_icon: "color",
-  keep_popup_open: false,
+  popup_in_window: false,
 };
 
 /**

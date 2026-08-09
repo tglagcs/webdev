@@ -211,7 +211,6 @@ export type PlainMessageKey =
   | "information"
   | "internalBrowserPagesError"
   | "javaScript"
-  | "keepPopupOpen"
   | "keyboard"
   | "label"
   | "layout"
@@ -280,6 +279,7 @@ export type PlainMessageKey =
   | "populateEmailAddress"
   | "populateFormFields"
   | "populateFormFieldsSingleResult"
+  | "popupInWindow"
   | "position"
   | "positionLabel"
   | "preview"
@@ -646,7 +646,6 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "information",
   "internalBrowserPagesError",
   "javaScript",
-  "keepPopupOpen",
   "keyboard",
   "label",
   "layout",
@@ -719,6 +718,7 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "populateFormFields",
   "populateFormFieldsMultipleResult",
   "populateFormFieldsSingleResult",
+  "popupInWindow",
   "position",
   "positionLabel",
   "preview",
