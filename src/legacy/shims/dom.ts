@@ -19,6 +19,7 @@
  */
 
 import { WebDeveloper } from "../globals";
+import { formatDimensions } from "@/lib/dimensions";
 import { formatCSS } from "@/lib/format-css";
 import { styleSheetLabel, uniqueLabels } from "@/lib/stylesheet-label";
 import {
@@ -64,6 +65,7 @@ Object.assign(WebDeveloper.Common, {
   addClass,
   escapeHTML,
   formatCSS,
+  formatDimensions,
   styleSheetLabel,
   uniqueLabels,
   getCSSText,

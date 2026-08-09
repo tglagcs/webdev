@@ -1,9 +1,9 @@
 /**
  * Golden tests for the Images feature bundle.
  *
- * Taken against the legacy implementation before it is ported, like the
- * Outline and CSS bundles. The assertion is the DOM mutation, because that is
- * all these features produce.
+ * Taken against the legacy implementation before the port, like the Outline
+ * and CSS bundles, and unchanged across it. The assertion is the DOM
+ * mutation, because that is all these features produce.
  *
  * What happy-dom cannot reach, and so is not covered here:
  *
@@ -24,15 +24,7 @@ import { resolve } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
 import { fakeBrowser } from "wxt/testing/fake-browser";
 
-import "@/legacy/globals";
-import "@/legacy/js/common/common.js";
-import "@/legacy/js/common/css.js";
-import "@/legacy/shims/dom";
-import "@/legacy/shims/notify";
-import "@/legacy/js/features/images.js";
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const Images = (globalThis as any).WebDeveloper.Images;
+import * as Images from "@/features/images";
 
 const fixture = readFileSync(resolve("tests/fixtures/images-page.html"), "utf-8");
 
