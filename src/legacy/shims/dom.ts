@@ -54,6 +54,7 @@ import {
   isMediaStyleSheet,
   isValidStyleSheet,
   setStyleSheet,
+  toggleAllStyleSheets,
   toggleStyleSheet,
 } from "@/lib/dom/stylesheets";
 import { getDocuments } from "@/content/report";
@@ -99,6 +100,9 @@ Object.assign(WebDeveloper.CSS, {
   isAlternateStyleSheet,
   isMediaStyleSheet,
   isValidStyleSheet,
+  // Edit CSS and the dashboard's close button call this against the host page;
+  // the CSS bundle calls the same function for Disable All Styles.
+  toggleAllStyleSheets,
 });
 
 Object.assign(WebDeveloper.Content, { getDocumentCSS, getDocuments });

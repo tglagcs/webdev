@@ -107,6 +107,21 @@ export function getImportedStyleSheets(styleSheet: CSSStyleSheet | null): string
 }
 
 /**
+ * Disables or enables every stylesheet in a document.
+ *
+ * Alternate sheets are off by default, so enabling them would turn on styles
+ * the user never had -- but disabling them is what the user asked for. Hence
+ * the asymmetry, which upstream repeats at each of its four call sites.
+ */
+export function toggleAllStyleSheets(disable: boolean, contentDocument: Document): void {
+  for (const styleSheet of Array.from(contentDocument.styleSheets)) {
+    if (isValidStyleSheet(styleSheet) && (!isAlternateStyleSheet(styleSheet) || disable)) {
+      styleSheet.disabled = disable;
+    }
+  }
+}
+
+/**
  * Adds one of the extension's stylesheets to a document, or removes it if it
  * is already there.
  *

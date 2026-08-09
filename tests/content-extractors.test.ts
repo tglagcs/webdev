@@ -31,18 +31,6 @@ import {
 import { getBrokenImages, getCSS, getImages, getJavaScript } from "@/content/resources";
 import { getAnchors, getDocumentOutline, getDuplicateIds } from "@/content/structure";
 
-// Still legacy: the CSS features have not been ported, so formatStyleValue
-// keeps its snapshot against the original.
-import "@/legacy/globals";
-import "@/legacy/js/common/common.js";
-import "@/legacy/js/common/css.js";
-
-interface CssApi {
-  formatStyleValue(value: string): string;
-}
-
-const CSS = (globalThis as { WebDeveloper?: { CSS: CssApi } }).WebDeveloper!.CSS;
-
 const fixture = readFileSync(resolve("tests/fixtures/host-page.html"), "utf-8");
 
 /** The document URL is pinned in vitest.config.ts, not here. */
@@ -102,17 +90,10 @@ describe("colour formatting", () => {
     expect(formatColor(input)).toBe(expected);
   });
 
-  // This is what turns a computed style into the hex shown in the colour
-  // report, and it does its own padding.
-  it.each([
-    ["rgb(0, 0, 0)", "#000000"],
-    ["rgb(255, 255, 255)", "#ffffff"],
-    ["rgb(238, 102, 0)", "#ee6600"],
-    ["rgb(1, 2, 3)", "#010203"],
-    ["none", "none"],
-  ])("converts %s to %s", (input, expected) => {
-    expect(CSS.formatStyleValue(input)).toBe(expected);
-  });
+  // The rgb() string a real engine reports goes through the same padding, on
+  // the way into getDocumentColors. Covered there and in the harness rather
+  // than here: legacy's formatStyleValue, which this used to assert against,
+  // had no caller left and went with css.js.
 
   it("de-duplicates and sorts colours", () => {
     expect(tidyColors(["#ffffff", "#000000", "#ffffff", "#ee6600"])).toMatchSnapshot();

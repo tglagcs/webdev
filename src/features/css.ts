@@ -12,6 +12,7 @@ import {
   isAlternateStyleSheet,
   isMediaStyleSheet,
   isValidStyleSheet,
+  toggleAllStyleSheets,
   toggleStyleSheet,
 } from "@/lib/dom/stylesheets";
 import { displayNotification } from "./notify";
@@ -39,15 +40,6 @@ function mayToggle(styleSheet: CSSStyleSheet, disable: boolean): boolean {
 
 function sheetsOf(contentDocument: Document): CSSStyleSheet[] {
   return Array.from(contentDocument.styleSheets);
-}
-
-/** Disables or enables every sheet in the document, alternates included. */
-function toggleAllStyleSheets(disable: boolean, contentDocument: Document): void {
-  for (const styleSheet of sheetsOf(contentDocument)) {
-    if (isValidStyleSheet(styleSheet) && mayToggle(styleSheet, disable)) {
-      styleSheet.disabled = disable;
-    }
-  }
 }
 
 /**
