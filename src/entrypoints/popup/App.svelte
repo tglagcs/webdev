@@ -34,8 +34,11 @@
     runFeature(feature, ui);
   }
 
+  // A sprite reference rather than an <img>: an external SVG in an <img> is
+  // its own document and cannot see this page's CSS, so currentColor never
+  // resolves and the icon cannot follow the theme.
   function menuIcon(menu: MenuId): string {
-    return `/svg/overlay/color/${menu}.svg`;
+    return `/svg/overlay/menus.svg#${menu}`;
   }
 
   // The menu ids are message keys in their own right -- "cookies", "css" and
@@ -79,7 +82,12 @@
         onclick={() => ui.selectMenu(menu.id)}
       >
         {#if ui.labels !== "text"}
-          <img src={menuIcon(menu.id)} width="14" height="14" alt="" class="shrink-0" />
+          <svg
+            class="size-4 shrink-0 {menu.id === current.id ? 'text-accent' : ''}"
+            aria-hidden="true"
+          >
+            <use href={menuIcon(menu.id)}></use>
+          </svg>
         {/if}
         {#if ui.labels !== "icons"}
           <span class="truncate">{menuName(menu.id)}</span>

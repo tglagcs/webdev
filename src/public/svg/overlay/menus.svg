@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!--
+    The eleven menu icons, as one sprite.
+
+    Drawn as strokes on a 24x24 grid with no colours of their own, so they take
+    the colour of the tab they sit in and follow the theme. That is the reason
+    for the sprite: the popup used an img element, and an external SVG loaded
+    that way is its own document that cannot see the page's CSS, so
+    currentColor inside it never resolves. Hence the old icons being
+    multi-colour drawings, and hence their blurring at the 14px the tab rail
+    draws them at.
+
+    Three things about this file are load bearing, and each of them fails
+    silently rather than loudly:
+
+    1. The stroke settings are attributes on each symbol rather than a
+       stylesheet in this file. An external use clones the referenced subtree
+       and nothing else, so a style sibling would not come with it and every
+       icon would paint as a solid black blob.
+
+    2. No double hyphen anywhere in these comments. This is XML, not HTML: a
+       double hyphen inside a comment is a parse error, and a sprite that does
+       not parse renders as nothing at all.
+
+    3. The ids are the menu ids.
+
+       App.svelte builds each reference from the menu it is rendering, so a
+       renamed symbol draws nothing.
+  -->
+
+  <!-- Disable: the universal "no". -->
+  <symbol
+    id="disable"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <circle cx="12" cy="12" r="8.5" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </symbol>
+
+  <!-- Cookies: a biscuit with its chips. -->
+  <symbol
+    id="cookies"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <circle cx="12" cy="12" r="8.5" />
+    <circle cx="9" cy="9.5" r="1.1" fill="currentColor" stroke="none" />
+    <circle cx="14.5" cy="10.5" r="1.1" fill="currentColor" stroke="none" />
+    <circle cx="10.5" cy="15" r="1.1" fill="currentColor" stroke="none" />
+    <circle cx="15.5" cy="15" r="0.9" fill="currentColor" stroke="none" />
+  </symbol>
+
+  <!-- CSS: a pair of braces, which is what a rule looks like. -->
+  <symbol
+    id="css"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M9.5 5H8.5a2 2 0 0 0-2 2v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a2 2 0 0 0 2 2h1" />
+    <path d="M14.5 5h1a2 2 0 0 1 2 2v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a2 2 0 0 1-2 2h-1" />
+  </symbol>
+
+  <!-- Forms: two fields and a checkbox. -->
+  <symbol
+    id="forms"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" />
+    <line x1="7" y1="9" x2="17" y2="9" />
+    <line x1="7" y1="12.5" x2="14" y2="12.5" />
+    <rect x="7" y="15" width="3" height="3" rx="0.8" />
+  </symbol>
+
+  <!-- Images: a picture frame with a sun and hills. -->
+  <symbol
+    id="images"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" />
+    <circle cx="8.5" cy="9.5" r="1.5" fill="currentColor" stroke="none" />
+    <path d="M4 17.5l4.2-4.2a1.8 1.8 0 0 1 2.6 0l3.2 3.2" />
+    <path d="M13.8 15.2l1.6-1.6a1.8 1.8 0 0 1 2.6 0l2 2" />
+  </symbol>
+
+  <!-- Information: the letter i. -->
+  <symbol
+    id="information"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <circle cx="12" cy="12" r="8.5" />
+    <circle cx="12" cy="8" r="1.1" fill="currentColor" stroke="none" />
+    <line x1="12" y1="11" x2="12" y2="16.5" />
+  </symbol>
+
+  <!-- Miscellaneous: everything else, so the "more" dots. -->
+  <symbol id="miscellaneous" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <circle cx="6" cy="12" r="1.6" />
+    <circle cx="12" cy="12" r="1.6" />
+    <circle cx="18" cy="12" r="1.6" />
+  </symbol>
+
+  <!-- Outline: the dashed frame the feature draws round an element. -->
+  <symbol
+    id="outline"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <rect x="3.5" y="4.5" width="17" height="15" rx="2" stroke-dasharray="3.5 3" />
+    <rect x="8.5" y="9.5" width="7" height="5" rx="1" />
+  </symbol>
+
+  <!-- Resize: a window with a grip in the corner. -->
+  <symbol
+    id="resize"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" />
+    <line x1="13" y1="19" x2="19.5" y2="12.5" />
+    <line x1="16.5" y1="19" x2="19.5" y2="16" />
+  </symbol>
+
+  <!-- Tools: a spanner, head open at the top, turned to the usual angle. -->
+  <symbol
+    id="tools"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <g transform="rotate(-40 12 12)">
+      <path d="M9.2 6.6a3.4 3.4 0 1 0 5.6 0" />
+      <path d="M9.2 6.6V4.2M14.8 6.6V4.2" />
+      <rect x="10.4" y="9.4" width="3.2" height="10.4" rx="1.6" />
+    </g>
+  </symbol>
+
+  <!-- Options: a gear, its teeth simplified to spokes. -->
+  <symbol
+    id="options"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <circle cx="12" cy="12" r="6" />
+    <circle cx="12" cy="12" r="2.4" />
+    <path
+      d="M12 6V3.5M12 18v2.5M18 12h2.5M6 12H3.5M16.2 7.8l1.8-1.8M6 18l1.8-1.8M16.2 16.2l1.8 1.8M6 6l1.8 1.8"
+    />
+  </symbol>
+</svg>
