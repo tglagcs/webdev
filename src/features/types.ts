@@ -80,6 +80,16 @@ export type PayloadSource =
 export interface Injected {
   bundle: string;
   payload?: Record<string, PayloadSource>;
+
+  /**
+   * A feature that cannot be on at the same time as this one.
+   *
+   * Display Handheld Styles and Display Print Styles are the pair: a page
+   * cannot be shown as both at once. Switching one on switches the other off
+   * first. Upstream did this by reaching for the other menu item's element and
+   * toggling that, which is exactly the coupling the registry replaces.
+   */
+  exclusiveWith?: string;
 }
 
 export interface Feature {

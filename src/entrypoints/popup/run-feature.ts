@@ -118,8 +118,23 @@ export async function inject({ tabId, feature }: Injection): Promise<void> {
  * Reload Images inject and are finished; upstream ran those through
  * `addFeatureOnTab` rather than `toggleFeatureOnTab` for the same reason.
  */
-export async function runInjected(feature: Feature, tabId: number): Promise<boolean> {
+export async function runInjected(
+  feature: Feature,
+  tabId: number,
+  registry: Feature[] = [],
+): Promise<boolean> {
   try {
+    // The exclusive partner goes off first, and only when this one is coming
+    // on: switching a feature off leaves the other alone.
+    const partner = registry.find((candidate) => candidate.id === feature.inject?.exclusiveWith);
+
+    if (partner && !(await getFeaturesOnTab(tabId)).includes(feature.id)) {
+      if ((await getFeaturesOnTab(tabId)).includes(partner.id)) {
+        await inject({ tabId, feature: partner });
+        await toggleFeatureOnTab(partner.id, tabId);
+      }
+    }
+
     await inject({ tabId, feature });
   } catch (exception) {
     log("Injected script did not return a usable result.", exception);

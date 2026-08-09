@@ -16,6 +16,7 @@ import {
   toggleStyleSheet,
 } from "@/lib/dom/stylesheets";
 import { displayNotification } from "./notify";
+import type { Entry } from "./entries";
 
 /**
  * A sheet the extension may touch: ours and the browser's are excluded, and so
@@ -227,3 +228,34 @@ export function toggleMediaTypeStyles(
     }
   }
 }
+
+/**
+ * The CSS menu, as entries the popup can name in the registry.
+ *
+ * Ten of the twelve; Edit CSS builds the in-page dashboard and View CSS opens
+ * a report, so neither is injected this way.
+ *
+ * The two media-type features are one function with the type in front, and
+ * they are mutually exclusive -- a page cannot be shown as handheld and as
+ * print at once. The registry says so with `exclusiveWith`, and the popup
+ * switches the other off first; upstream did it by reaching for the other
+ * menu item's element and toggling that.
+ */
+export const CSS_ENTRIES: Record<string, Entry> = {
+  "disable-all-styles": (payload, documents) => toggleAllStyles(!payload.enabled, documents),
+  "disable-embedded-styles": (payload, documents) =>
+    toggleEmbeddedStyles(!payload.enabled, documents),
+  "disable-inline-styles": (payload, documents) => toggleInlineStyles(!payload.enabled, documents),
+  "disable-linked-style-sheets": (payload, documents) =>
+    toggleLinkedStyleSheets(!payload.enabled, documents),
+  "disable-print-styles": (payload, documents) => togglePrintStyles(!payload.enabled, documents),
+
+  "disable-browser-default-styles": (_payload, documents) => toggleBrowserDefaultStyles(documents),
+  "use-border-box-model": (_payload, documents) => useBorderBoxModel(documents),
+  "reload-linked-style-sheets": (_payload, documents) => reloadLinkedStyleSheets(documents),
+
+  "display-handheld-styles": (payload, documents) =>
+    toggleMediaTypeStyles("handheld", !payload.enabled, documents),
+  "display-print-styles": (payload, documents) =>
+    toggleMediaTypeStyles("print", !payload.enabled, documents),
+};

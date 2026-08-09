@@ -12,6 +12,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fakeBrowser } from "wxt/testing/fake-browser";
 
 import { register, run } from "@/features/entries";
+import { CSS_ENTRIES } from "@/features/css";
 import { IMAGES_ENTRIES } from "@/features/images";
 import { INFORMATION_ENTRIES } from "@/features/information";
 import { OUTLINE_ENTRIES } from "@/features/outline";
@@ -24,6 +25,7 @@ const BUNDLES: Record<string, Record<string, unknown>> = {
   "/feature-outline.js": OUTLINE_ENTRIES,
   "/feature-images.js": IMAGES_ENTRIES,
   "/feature-information.js": INFORMATION_ENTRIES,
+  "/feature-css.js": CSS_ENTRIES,
 };
 
 beforeEach(() => {
@@ -65,6 +67,31 @@ describe("the registry against the bundle", () => {
       for (const source of Object.values(feature.inject!.payload ?? {})) {
         expect(["value", "setting", "message", "enabled"]).toContain(source.from);
       }
+    }
+  });
+});
+
+describe("exclusive pairs", () => {
+  // Display Handheld Styles and Display Print Styles switch each other off. If
+  // one named a partner that did not name it back, the popup would switch one
+  // off and leave the menu showing both on.
+  it("is declared from both sides", () => {
+    for (const feature of injected) {
+      const partner = feature.inject!.exclusiveWith;
+
+      if (!partner) {
+        continue;
+      }
+
+      expect(injected.find((candidate) => candidate.id === partner)?.inject?.exclusiveWith).toBe(
+        feature.id,
+      );
+    }
+  });
+
+  it("pairs only features that have an on state", () => {
+    for (const feature of injected.filter((candidate) => candidate.inject!.exclusiveWith)) {
+      expect(feature.stateful).toBe(true);
     }
   });
 });

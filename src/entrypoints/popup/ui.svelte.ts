@@ -12,6 +12,7 @@ import { SvelteSet } from "svelte/reactivity";
 import { getFeaturesOnTab } from "@/lib/storage/tab-state";
 import * as settings from "@/lib/storage/settings";
 import type { Feature, MenuId } from "@/features/types";
+import { FEATURES } from "@/features/registry";
 import { runInjected, refusalFor } from "./run-feature";
 import { runFeature } from "./bridge";
 import { t } from "@/lib/i18n";
@@ -115,7 +116,25 @@ class PopupState {
       return;
     }
 
-    this.setActive(feature.id, await runInjected(feature, tabId));
+    await runInjected(feature, tabId, FEATURES);
+
+    // The per-tab list is re-read rather than assumed, because a feature can
+    // change more than its own state: switching Display Handheld Styles on
+    // switches Display Print Styles off. The preference-backed items are not
+    // in that list and are kept as they are.
+    await this.syncWithTab(tabId);
+  }
+
+  private async syncWithTab(tabId: number): Promise<void> {
+    const onTab = new Set(await getFeaturesOnTab(tabId));
+
+    for (const feature of FEATURES) {
+      if (feature.setting) {
+        continue;
+      }
+
+      this.setActive(feature.id, onTab.has(feature.id));
+    }
   }
 
   /** What is already switched on for the tab the popup was opened over. */

@@ -5,6 +5,9 @@
  * tools/extract-registry.py -- the ids, columns and message keys are the ones
  * that shipped, and the per-tab state is stored under the id, so none of them
  * may be renamed.
+ *
+ * Ten of the twelve name an entry in the CSS bundle. Edit CSS builds the
+ * in-page dashboard and goes with the widgets; View CSS opens a report.
  */
 
 import type { Feature } from "../types";
@@ -16,7 +19,10 @@ export const CSS_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.CSS.disableAllStyles",
+    inject: {
+      bundle: "/feature-css.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "disable-browser-default-styles",
@@ -24,7 +30,9 @@ export const CSS_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.CSS.disableBrowserDefaultStyles",
+    inject: {
+      bundle: "/feature-css.js",
+    },
   },
   {
     id: "disable-embedded-styles",
@@ -32,7 +40,10 @@ export const CSS_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.CSS.disableEmbeddedStyles",
+    inject: {
+      bundle: "/feature-css.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "disable-inline-styles",
@@ -40,7 +51,10 @@ export const CSS_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.CSS.disableInlineStyles",
+    inject: {
+      bundle: "/feature-css.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "disable-linked-style-sheets",
@@ -48,7 +62,10 @@ export const CSS_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.CSS.disableLinkedStyleSheets",
+    inject: {
+      bundle: "/feature-css.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "disable-print-styles",
@@ -56,7 +73,10 @@ export const CSS_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.CSS.disablePrintStyles",
+    inject: {
+      bundle: "/feature-css.js",
+      payload: { enabled: { from: "enabled" } },
+    },
   },
   {
     id: "display-handheld-styles",
@@ -64,7 +84,11 @@ export const CSS_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.CSS.displayHandheldStyles",
+    inject: {
+      bundle: "/feature-css.js",
+      payload: { enabled: { from: "enabled" } },
+      exclusiveWith: "display-print-styles",
+    },
   },
   {
     id: "display-print-styles",
@@ -72,7 +96,11 @@ export const CSS_FEATURES: Feature[] = [
     column: 2,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.CSS.displayPrintStyles",
+    inject: {
+      bundle: "/feature-css.js",
+      payload: { enabled: { from: "enabled" } },
+      exclusiveWith: "display-handheld-styles",
+    },
   },
   {
     id: "edit-css",
@@ -87,7 +115,9 @@ export const CSS_FEATURES: Feature[] = [
     labelKey: "reloadLinkedStyleSheets",
     column: 3,
     kind: "action",
-    handler: "WebDeveloper.Overlay.CSS.reloadLinkedStyleSheets",
+    inject: {
+      bundle: "/feature-css.js",
+    },
   },
   {
     id: "use-border-box-model",
@@ -95,7 +125,9 @@ export const CSS_FEATURES: Feature[] = [
     column: 3,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.CSS.useBorderBoxModel",
+    inject: {
+      bundle: "/feature-css.js",
+    },
   },
   {
     id: "view-css",

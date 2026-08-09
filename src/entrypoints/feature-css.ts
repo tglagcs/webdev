@@ -13,8 +13,12 @@ import "@/legacy/shims/dom";
 import "@/legacy/shims/notify";
 
 import * as css from "@/features/css";
+import { register, run } from "@/features/entries";
 
 WebDeveloper.CSS = { ...WebDeveloper.CSS, ...css };
+
+register(css.CSS_ENTRIES);
+WebDeveloper.run = run;
 
 // Upstream appended "void(0);" so the script's completion value stayed
 // serialisable. main() returning nothing does the same job here.
