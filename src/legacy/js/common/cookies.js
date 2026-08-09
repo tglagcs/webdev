@@ -2,54 +2,10 @@ import { WebDeveloper } from "../../globals";
 
 WebDeveloper.Cookies = WebDeveloper.Cookies || {};
 
-// Adds a cookie
-WebDeveloper.Cookies.addCookie = function(cookie)
-{
-  var host     = WebDeveloper.Cookies.sanitizeHost(cookie.host.trim());
-  var name     = cookie.name.trim();
-  var protocol = "http://";
-  var secure   = cookie.secure;
-  var url      = null;
-  var value    = cookie.value.trim();
-
-  // If the cookie is secure
-  if(secure)
-  {
-    protocol = "https://";
-  }
-
-  url = protocol + host + cookie.path.trim();
-
-  // If the cookie is a session cookie
-  if(cookie.session)
-  {
-    chrome.cookies.set({ domain: host, name: name, secure: secure, url: url, value: value });
-  }
-  else
-  {
-    chrome.cookies.set({ domain: host, expirationDate: new Date(cookie.expires.trim()).getTime() / 1000, name: name, secure: secure, url: url, value: value });
-  }
-};
-
-// Returns true if you can edit a local cookie
-WebDeveloper.Cookies.canEditLocalCookie = function()
-{
-  return false;
-};
-
-// Deletes a cookie
-WebDeveloper.Cookies.deleteCookie = function(cookie)
-{
-  var protocol = "http://";
-
-  // If the cookie is secure
-  if(cookie.secure)
-  {
-    protocol = "https://";
-  }
-
-  chrome.cookies.remove({ name: cookie.name, url: protocol + cookie.host + cookie.path });
-};
+// What is left of this file is the three delete-everything features, which are
+// a count, a confirmation dialog and a notification -- all popup UI, and all
+// rewritten with the popup. The operations they call moved to src/lib/cookies
+// and reach this namespace through shims/cookies.
 
 // Deletes all the cookies for the current domain
 WebDeveloper.Cookies.deleteDomainCookies = function(cookies)
@@ -209,26 +165,4 @@ WebDeveloper.Cookies.deleteSessionCookies = function(allCookies)
       }
     });
   }
-};
-
-// Returns tomorrow's date as a string
-WebDeveloper.Cookies.getDateTomorrow = function()
-{
-  var date = new Date();
-
-  date.setDate(date.getDate() + 1);
-
-  return date.toUTCString();
-};
-
-// Sanitizes a cookie host
-WebDeveloper.Cookies.sanitizeHost = function(host)
-{
-  // If the host is set and starts with '.'
-  if(host && host.charAt(0) == ".")
-  {
-    return host.substring(1);
-  }
-
-  return host;
 };

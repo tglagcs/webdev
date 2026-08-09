@@ -7,6 +7,7 @@ import { flushDomReady } from "@/legacy/dom-ready";
 import "@/legacy/js/common/common.js";
 import "@/legacy/shims/dom";
 import "@/legacy/js/common/cookies.js";
+import "@/legacy/shims/cookies";
 import "@/legacy/shims/locales";
 import "@/legacy/shims/storage";
 import "@/legacy/js/overlay/cookies.js";

@@ -4,5 +4,6 @@ import "@/legacy/globals";
 import "@/legacy/js/common/common.js";
 import "@/legacy/shims/dom";
 import "@/legacy/js/common/cookies.js";
+import "@/legacy/shims/cookies";
 import "@/legacy/js/generated/common.js";
 import "@/legacy/js/generated/view-cookie-information.js";
