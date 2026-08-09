@@ -46,9 +46,9 @@ src/
     globals.ts           the WebDeveloper namespace, anchored to globalThis
     dom-ready.ts         restores upstream's DOMContentLoaded timing
     shims/               Storage / Locales / dom over the typed core
-    js/                  42 files / ~11,100 lines of upstream ES5, being ported
+    js/                  41 files / ~10,300 lines of upstream ES5, being ported
   content/               the extractors feeding all 16 reports, + dispatch
-  features/              the injected bundles (Outline, CSS, Miscellaneous, Images)
+  features/              the injected bundles; only Forms is still legacy
   lib/
     dom/                 documents, css-values, elements, stylesheets
     i18n.ts              t(); i18n-keys.ts is generated from en_US
@@ -278,8 +278,7 @@ script it sends one to the popup to render. Upstream defined it twice and never
 loaded both. `shims/notify.ts` is the injected half — loading it in the popup
 would make the popup message itself.
 
-Still legacy: the Forms and Information bundles, and
-`common.js`/`css.js`/`cookies.js`.
+Still legacy: the Forms bundle, and `common.js`/`css.js`/`cookies.js`.
 
 Then the Svelte popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.

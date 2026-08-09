@@ -1,8 +1,8 @@
 /**
  * Golden tests for the Information feature bundle.
  *
- * Taken against the legacy implementation before it is ported. The assertion
- * is the DOM mutation, as for the other bundles.
+ * Taken against the legacy implementation before the port and unchanged
+ * across it. The assertion is the DOM mutation, as for the other bundles.
  *
  * Not reachable from happy-dom, and so not covered here:
  *
@@ -20,15 +20,7 @@ import { resolve } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
 import { fakeBrowser } from "wxt/testing/fake-browser";
 
-import "@/legacy/globals";
-import "@/legacy/js/common/common.js";
-import "@/legacy/js/common/css.js";
-import "@/legacy/shims/dom";
-import "@/legacy/shims/notify";
-import "@/legacy/js/features/information.js";
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const Information = (globalThis as any).WebDeveloper.Information;
+import * as Information from "@/features/information";
 
 const fixture = readFileSync(resolve("tests/fixtures/information-page.html"), "utf-8");
 

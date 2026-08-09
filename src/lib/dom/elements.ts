@@ -95,3 +95,16 @@ export function escapeHTML(text: string): string {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
+
+/** Inserts a child at the front, whether or not the element already has any. */
+export function insertAsFirstChild(element: Element | null, child: Node): void {
+  if (!element) {
+    return;
+  }
+
+  if (element.hasChildNodes()) {
+    element.insertBefore(child, element.firstChild);
+  } else {
+    element.appendChild(child);
+  }
+}
