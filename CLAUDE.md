@@ -45,16 +45,16 @@ src/
   legacy/
     globals.ts           the WebDeveloper namespace, anchored to globalThis
     dom-ready.ts         restores upstream's DOMContentLoaded timing
-    shims/               Storage / Locales / dom over the typed core
-    js/                  41 files / ~10,300 lines of upstream ES5, being ported
+    shims/               Storage / Locales / dom / cookies over the typed core
+    js/                  39 files / ~11,700 lines of upstream ES5, being ported
   content/               the extractors feeding all 16 reports, + dispatch
-  features/              the injected bundles; only Forms is still legacy
+  features/              all six injected bundles
   lib/
     dom/                 documents, css-values, elements, stylesheets
     i18n.ts              t(); i18n-keys.ts is generated from en_US
     storage/             schema, settings, tab-state, migrations, defaults
     messaging.ts         the typed background message contract
-    badge.ts  capabilities.ts  content-settings.ts
+    badge.ts  capabilities.ts  content-settings.ts  cookies.ts
   public/                static assets at the URLs the legacy code expects
 tools/                   one-shot migrations and CI guards
 tests/                   vitest; fixtures/host-page.html is the extractor input
@@ -221,19 +221,23 @@ and then collide with a reused id. And the numbered settings (`tool_3_url`,
 writes those exact names; collapsing them to arrays is migration v2, in the
 phase that rewrites that page.
 
-### `shims/dom` must be imported _after_ `common.js` and `css.js`
+### A shim must be imported _after_ the legacy file it overwrites
 
 Fourteen DOM helpers moved to `src/lib/dom`, but ~130 call sites in
 `src/legacy/js` still reach them through `WebDeveloper.Common` and
 `WebDeveloper.CSS`. `src/legacy/shims/dom.ts` overwrites those namespace
 entries so one implementation is live, rather than leaving the ported copy
-under test and the original running in the features.
+under test and the original running in the features. `shims/cookies.ts` does
+the same for the five cookie operations over what is left of `cookies.js`.
 
 Overwriting only works in import order, and ES imports are hoisted — an import
 at the top of `common.js` would run _before_ its own definitions and be undone
-by them. So every entrypoint loading `common.js` or `css.js` loads the shim on
-the line after, and the now-dead originals stay in those files until the
-feature bundles are ported and the files are deleted.
+by them. So every entrypoint loading a legacy file loads its shim on the line
+after, and the now-dead originals stay in that file until it is deleted.
+
+`toggleAllStyleSheets` is the case that shows why this matters: it lived in
+both `css.js` and, privately, in `features/css.ts`. The widgets got one copy
+and Disable All Styles the other, and neither was under test.
 
 Migrations are keyed by the version they produce and run in order, each
 awaited — `SCHEMA_VERSION` in `schema.ts` must match the highest key in
@@ -334,7 +338,22 @@ script it sends one to the popup to render. Upstream defined it twice and never
 loaded both. `shims/notify.ts` is the injected half — loading it in the popup
 would make the popup message itself.
 
-Still legacy: the Forms bundle, and `common.js`/`css.js`/`cookies.js`.
+The Forms bundle is ported too, under the same discipline and with the
+snapshots unchanged, and driven in a real browser for the values happy-dom
+cannot judge — the date, time, week and month strings a real input accepts.
+That run showed the colour branch of Populate Form Fields is dead: an
+`<input type="color">` reports `#000000` rather than `""`, so the caller's
+"is it empty" test is never true for one. Upstream's, kept, and commented.
+
+`css.js` is gone. Of `cookies.js` only the three delete-everything features
+remain — a count, a confirmation dialog and a notification, which are popup UI
+and are rewritten with the popup; the five operations are in `src/lib/cookies`.
+One inconsistency there is pinned rather than fixed: `deleteCookie` leaves the
+leading dot on a domain cookie's host where `addCookie` strips it, so the URL
+it looks the cookie up by is `http://.example.com/`. It needs checking against
+a real cookie store before it is called a bug.
+
+Still legacy: `common.js`, and that half of `cookies.js`.
 
 Four things landed ahead of their phase because in-browser testing asked for
 them, and each cost a regression worth remembering — all of them in the seam
