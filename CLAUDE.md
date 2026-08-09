@@ -46,11 +46,11 @@ src/
     globals.ts           the WebDeveloper namespace, anchored to globalThis
     dom-ready.ts         restores upstream's DOMContentLoaded timing
     shims/               Storage / Locales / dom / cookies over the typed core
-    js/                  39 files / ~11,700 lines of upstream ES5, being ported
+    js/                  38 files / ~10,600 lines of upstream ES5, being ported
   content/               the extractors feeding all 16 reports, + dispatch
   features/              all six injected bundles
   lib/
-    dom/                 documents, css-values, elements, stylesheets
+    dom/                 documents, css-values, elements, position, stylesheets
     i18n.ts              t(); i18n-keys.ts is generated from en_US
     storage/             schema, settings, tab-state, migrations, defaults
     messaging.ts         the typed background message contract
@@ -353,7 +353,17 @@ leading dot on a domain cookie's host where `addCookie` strips it, so the URL
 it looks the cookie up by is `http://.example.com/`. It needs checking against
 a real cookie store before it is called a bug.
 
-Still legacy: `common.js`, and that half of `cookies.js`.
+`common.js` is gone too, and with it `src/legacy/js/features` and most of
+`src/legacy/js/common`. Seven of its helpers had no caller anywhere and were
+deleted rather than moved; `contains` and `inArray` were
+`Array.prototype.includes` with looser equality, so their three string call
+sites use the native. `getURLContents` is `fetch` now, keeping the contract the
+two heavy reports depend on: it mutates the request objects with their content,
+puts the error message in as content when a fetch fails, and calls back once
+after the last one.
+
+Still legacy: the three confirmation flows in `cookies.js`, plus the widgets,
+the report pages, the options page and the popup — each in its own phase.
 
 Four things landed ahead of their phase because in-browser testing asked for
 them, and each cost a regression worth remembering — all of them in the seam
