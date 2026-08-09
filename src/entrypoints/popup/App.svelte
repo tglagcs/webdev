@@ -72,23 +72,21 @@
   /**
    * How many columns a group is laid out in.
    *
-   * Three at most: the content area is about 620px, and a fourth column would
-   * put every label of any length onto two lines.
+   * Two, and the reason is the label lengths. A grid row is as tall as its
+   * tallest cell, so one label wrapping to two lines anywhere in a row leaves
+   * a band of space under every other cell in it. At three columns the cells
+   * are about 200px and the longer names -- "Outline Images With Oversized
+   * Dimensions" and its like -- wrap; at two they are about 305px and the
+   * longest name in the registry still fits on one line, so every row is one
+   * line tall and the rhythm is even.
    *
-   * A grid rather than CSS `columns`, which is what this was first. A
-   * multi-column block is as tall as its tallest column, so one wrapped label
-   * anywhere in the group left dead space under every shorter column -- and
-   * since the gap under the last row is what separates one group from the
-   * next, the groups looked unevenly spaced. Images showed it and Information,
-   * whose labels happened to balance, did not. A grid ends flush with its last
-   * row, so the spacing between groups is the spacing, and nothing else.
+   * This is the second version of this rule. The first used CSS `columns`,
+   * where the block is as tall as its tallest column, which left the same kind
+   * of dead space -- but under the whole group, so the gaps between groups
+   * came out uneven.
    */
   function columnsFor(count: number): number {
-    if (count <= 2) {
-      return count;
-    }
-
-    return count <= 4 ? 2 : 3;
+    return count === 1 ? 1 : 2;
   }
 
   /**
