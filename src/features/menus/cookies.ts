@@ -16,7 +16,11 @@ export const COOKIES_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Cookies.toggleCookies",
+    contentSetting: {
+      type: "cookies",
+      enabledMessage: "enableCookiesResult",
+      disabledMessage: "disableCookiesResult",
+    },
   },
   {
     id: "add-cookie",

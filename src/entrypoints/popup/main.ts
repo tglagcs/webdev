@@ -36,12 +36,6 @@ import { FEATURES, visibleMenus } from "@/features/registry";
 import App from "./App.svelte";
 import { ui, type NotificationType } from "./ui.svelte";
 
-// Imported dynamically because it initialises itself against
-// chrome.contentSettings, which only Chromium has.
-if (capabilities.contentSettings) {
-  await import("@/legacy/js/overlay/disable.js");
-}
-
 // Before the mount, so a dark setup never sees a light frame. MV3's CSP rules
 // out the inline script that would otherwise do this.
 await initTheme();
@@ -82,6 +76,13 @@ flushDomReady();
 
 await ui.restoreLabels();
 await ui.restoreSettings(FEATURES);
+
+// Chromium only, and asked of the browser rather than of our own storage --
+// the Disable features are the one group whose state we do not own.
+if (capabilities.contentSettings) {
+  await ui.restoreContentSettings(FEATURES);
+}
+
 await ui.restoreMenu(visibleMenus().map((menu) => menu.id));
 
 // What the popup shows as switched on is per tab, and the popup is opened over

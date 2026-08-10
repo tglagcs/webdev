@@ -47,12 +47,6 @@ WebDeveloper.Overlay.Images.initialize = function()
 
 };
 
-// Toggles images
-WebDeveloper.Overlay.Images.toggleImages = function()
-{
-  WebDeveloper.Overlay.toggleContentSetting("images", this, "enableImagesResult", "disableImagesResult");
-};
-
 // Displays all the images
 WebDeveloper.Overlay.Images.viewImageInformation = function()
 {

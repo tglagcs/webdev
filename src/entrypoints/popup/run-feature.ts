@@ -12,7 +12,9 @@
  * section of CLAUDE.md.
  */
 
-import type { Feature, PayloadSource } from "@/features/types";
+import type { ContentSetting, Feature, PayloadSource } from "@/features/types";
+import type { PlainMessageKey } from "@/lib/i18n-keys";
+import { isBlocked, setBlocked } from "@/lib/content-settings";
 import type { Payload } from "@/features/entries";
 import { get } from "@/lib/storage/settings";
 import type { AnySettingKey } from "@/lib/storage/schema";
@@ -73,6 +75,23 @@ async function resolvePayload(
   }
 
   return payload;
+}
+
+/**
+ * Blocks or unblocks a content type, and says which way it went.
+ *
+ * Nothing is injected and no tab is involved: the state belongs to the browser
+ * and is read back from it, which is why this route records nothing itself.
+ * The caller shows the message and marks the item.
+ */
+export async function runContentSetting(
+  setting: ContentSetting,
+): Promise<{ blocked: boolean; message: PlainMessageKey }> {
+  const blocked = !(await isBlocked(setting.type));
+
+  await setBlocked(setting.type, blocked);
+
+  return { blocked, message: blocked ? setting.disabledMessage : setting.enabledMessage };
 }
 
 export interface Injection {

@@ -48,6 +48,10 @@ const REQUIRES: Record<string, (capabilities: Capabilities) => boolean> = {
   "disable-popups": (available) => available.contentSettings,
   "reset-disable-features": (available) => available.contentSettings,
   "disable-cookies": (available) => available.contentSettings,
+  // Upstream left this one showing on Firefox, where clicking it threw on an
+  // undefined chrome.contentSettings. It is the same mechanism as the rest and
+  // is gated with them.
+  "disable-images": (available) => available.contentSettings,
   "clear-cache": (available) => available.browsingData,
   "clear-history": (available) => available.browsingData,
 };

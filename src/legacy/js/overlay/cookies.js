@@ -292,12 +292,6 @@ WebDeveloper.Overlay.Cookies.submitAddCookie = function()
   }
 };
 
-// Toggles cookies
-WebDeveloper.Overlay.Cookies.toggleCookies = function()
-{
-  WebDeveloper.Overlay.toggleContentSetting("cookies", this, "enableCookiesResult", "disableCookiesResult");
-};
-
 // Returns true if the add dialog is valid
 WebDeveloper.Overlay.Cookies.validateAddDialog = function()
 {

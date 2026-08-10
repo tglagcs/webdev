@@ -17,6 +17,7 @@
 // and the narrower type is what lets t() be called without one.
 import type { PlainMessageKey } from "@/lib/i18n-keys";
 import type { Capabilities } from "@/lib/capabilities";
+import type { ContentSettingType } from "@/lib/content-settings";
 
 /** The eleven tabs, in the order the popup shows them. */
 export const MENUS = [
@@ -92,6 +93,22 @@ export interface Injected {
   exclusiveWith?: string;
 }
 
+/**
+ * A content type the Disable features block, and what to say either way.
+ *
+ * The messages are spelled out rather than derived from the type: they are
+ * checked message keys that way, and greppable from the locale.
+ */
+export interface ContentSetting {
+  type: ContentSettingType;
+
+  /** Shown when the block is lifted. */
+  enabledMessage: PlainMessageKey;
+
+  /** Shown when the block goes on. */
+  disabledMessage: PlainMessageKey;
+}
+
 export interface Feature {
   /** Must match the legacy DOM id: it is the key of the per-tab state. */
   id: string;
@@ -123,6 +140,19 @@ export interface Feature {
 
   /** Set instead of `handler` for a feature the popup runs itself. */
   inject?: Injected;
+
+  /**
+   * Set instead of both for a feature that blocks a content type browser-wide.
+   *
+   * The five of them are the only features that touch no page at all: the
+   * browser holds the state, so it is neither per tab nor in settings, and the
+   * popup reads it back from `chrome.contentSettings` each time it opens.
+   * Chromium only -- `available` hides them everywhere else.
+   */
+  contentSetting?: ContentSetting;
+
+  /** Reset Disable Features, the one item that drops all five rules at once. */
+  resetsContentSettings?: true;
 
   /**
    * Set instead of both for an item that only flips a stored preference.

@@ -15,9 +15,9 @@
  * all of the files had been evaluated.
  *
  * A module script is deferred and runs after parsing, so readyState is
- * "interactive" and each file initialises the moment it is imported --
- * overlay/cookies.js calls WebDeveloper.Overlay.updateContentSettingMenu
- * before overlay/overlay.js, which defines it, has been imported.
+ * "interactive" and each file initialises the moment it is imported -- so a
+ * file calling into WebDeveloper.Overlay runs before overlay/overlay.js, which
+ * defines it, has been imported.
  *
  * So: report "loading" and collect the DOMContentLoaded registrations while
  * the legacy modules evaluate, then run them in registration order once the

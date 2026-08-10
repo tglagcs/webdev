@@ -62,12 +62,19 @@ describe("labels", () => {
 });
 
 describe("handlers", () => {
-  // Three routes, and every feature takes exactly one: an entry in a bundle
-  // the popup injects, a stored preference, or -- until its menu is ported --
-  // the handler that shipped.
+  // Five routes, and every feature takes exactly one: an entry in a bundle the
+  // popup injects, a stored preference, a content setting, the reset that
+  // clears all of those, or -- until its menu is ported -- the handler that
+  // shipped.
   it("gives every feature exactly one way to run", () => {
     for (const feature of FEATURES) {
-      const routes = [feature.inject, feature.setting, feature.handler].filter(Boolean);
+      const routes = [
+        feature.inject,
+        feature.setting,
+        feature.contentSetting,
+        feature.resetsContentSettings,
+        feature.handler,
+      ].filter(Boolean);
 
       expect({ id: feature.id, routes: routes.length }).toEqual({ id: feature.id, routes: 1 });
     }
@@ -172,6 +179,46 @@ describe("layout", () => {
     const css = visibleMenus().find((menu) => menu.id === "css")!;
 
     expect(columns(css).map((column) => column.map((feature) => feature.id))).toMatchSnapshot();
+  });
+});
+
+describe("content settings", () => {
+  const withSetting = FEATURES.filter((feature) => feature.contentSetting);
+
+  // Five types, five features, one each. Two features pointing at the same
+  // type would fight over one piece of browser state and each show the other's
+  // result -- which is the failure the per-tab state cannot express, since the
+  // browser holds this state and not the extension.
+  it("gives each content type exactly one feature", () => {
+    const types = withSetting.map((feature) => feature.contentSetting!.type);
+
+    expect(types.sort()).toEqual(["cookies", "images", "javascript", "notifications", "popups"]);
+  });
+
+  it("has an on state, since the block persists", () => {
+    for (const feature of withSetting) {
+      expect({ id: feature.id, stateful: !!feature.stateful }).toEqual({
+        id: feature.id,
+        stateful: true,
+      });
+    }
+  });
+
+  // Including Disable Images, which is in the Images menu and which upstream
+  // left visible on Firefox, where chrome.contentSettings does not exist.
+  it("is hidden wherever the API is missing", () => {
+    const routed = FEATURES.filter(
+      (feature) => feature.contentSetting || feature.resetsContentSettings,
+    );
+
+    for (const feature of routed) {
+      const shown = feature.available?.({ contentSettings: false, browsingData: true });
+
+      expect({ id: feature.id, shown }).toEqual({
+        id: feature.id,
+        shown: false,
+      });
+    }
   });
 });
 

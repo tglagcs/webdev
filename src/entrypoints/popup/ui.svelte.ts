@@ -13,7 +13,8 @@ import { getFeaturesOnTab } from "@/lib/storage/tab-state";
 import * as settings from "@/lib/storage/settings";
 import type { Feature, MenuId } from "@/features/types";
 import { FEATURES } from "@/features/registry";
-import { runInjected, refusalFor } from "./run-feature";
+import { runInjected, runContentSetting, refusalFor } from "./run-feature";
+import { clearContentSettings, isBlocked } from "@/lib/content-settings";
 import { runFeature } from "./bridge";
 import { t } from "@/lib/i18n";
 import type { DisplayOverlayWith, SettingKey } from "@/lib/storage/schema";
@@ -96,6 +97,25 @@ class PopupState {
       return;
     }
 
+    if (feature.contentSetting) {
+      const { blocked, message } = await runContentSetting(feature.contentSetting);
+
+      this.setActive(feature.id, blocked);
+      this.notify(t(message));
+
+      return;
+    }
+
+    if (feature.resetsContentSettings) {
+      await clearContentSettings();
+      // Every one of the five may have changed, so they are re-read rather
+      // than assumed off: the browser's own settings survive the clear.
+      await this.restoreContentSettings(FEATURES);
+      this.notify(t("resetDisableFeaturesResult"));
+
+      return;
+    }
+
     if (!feature.inject) {
       runFeature(feature, this);
 
@@ -129,7 +149,10 @@ class PopupState {
     const onTab = new Set(await getFeaturesOnTab(tabId));
 
     for (const feature of FEATURES) {
-      if (feature.setting) {
+      // Neither the preference-backed items nor the content settings are in
+      // the per-tab list, and clearing them here would switch Disable
+      // JavaScript off in the menu while the browser went on blocking it.
+      if (feature.setting || feature.contentSetting) {
         continue;
       }
 
@@ -141,6 +164,19 @@ class PopupState {
   async restoreFeatures(tabId: number): Promise<void> {
     for (const id of await getFeaturesOnTab(tabId)) {
       this.active.add(id);
+    }
+  }
+
+  /**
+   * The content settings, which the browser holds rather than the extension.
+   *
+   * Read at every open, because the user can change any of them from the
+   * browser's own settings while the popup is closed -- and because a block
+   * applies to every tab, so there is nothing per-tab to remember.
+   */
+  async restoreContentSettings(features: Feature[]): Promise<void> {
+    for (const feature of features.filter((candidate) => candidate.contentSetting)) {
+      this.setActive(feature.id, await isBlocked(feature.contentSetting!.type));
     }
   }
 

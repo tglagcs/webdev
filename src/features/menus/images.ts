@@ -20,7 +20,11 @@ export const IMAGES_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Images.toggleImages",
+    contentSetting: {
+      type: "images",
+      enabledMessage: "enableImagesResult",
+      disabledMessage: "disableImagesResult",
+    },
   },
   {
     id: "display-alt-attributes",

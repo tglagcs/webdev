@@ -385,50 +385,6 @@ WebDeveloper.Overlay.openValidationTab = function(tabURL, tabIndex, data)
   });
 };
 
-// Sets a content setting
-WebDeveloper.Overlay.setContentSetting = function(settingType, currentSetting, newSetting, menu, message)
-{
-  chrome.contentSettings[settingType].clear({}, function()
-  {
-    chrome.contentSettings[settingType].get({ primaryUrl: "http://*/*" }, function(details)
-    {
-      // If the setting is still set to the current setting
-      if(details.setting == currentSetting)
-      {
-        chrome.contentSettings[settingType].set({ primaryPattern: "<all_urls>", setting: newSetting }, function()
-        {
-          WebDeveloper.Overlay.updateContentSettingMenu(menu, settingType);
-          WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString(message));
-        });
-      }
-      else
-      {
-        WebDeveloper.Overlay.updateContentSettingMenu(menu, settingType);
-        WebDeveloper.Overlay.displayNotification(WebDeveloper.Locales.getString(message));
-      }
-    });
-  });
-};
-
-// Toggles a content setting
-WebDeveloper.Overlay.toggleContentSetting = function(settingType, menu, enableMessage, disableMessage)
-{
-  chrome.contentSettings[settingType].get({ primaryUrl: "http://*/*" }, function(details)
-  {
-    var currentSetting = details.setting;
-
-    // If the setting is currently set to block
-    if(currentSetting == "block")
-    {
-      WebDeveloper.Overlay.setContentSetting(settingType, currentSetting, "allow", menu, enableMessage);
-    }
-    else
-    {
-      WebDeveloper.Overlay.setContentSetting(settingType, currentSetting, "block", menu, disableMessage);
-    }
-  });
-};
-
 // Toggles a feature on a tab
 WebDeveloper.Overlay.toggleFeatureOnTab = function(featureItem, tab, scriptFiles, scriptCode, args, closeOverlay)
 {
@@ -447,27 +403,6 @@ WebDeveloper.Overlay.toggleFeatureOnTab = function(featureItem, tab, scriptFiles
       }
     });
   });
-};
-
-// Updates the menu
-WebDeveloper.Overlay.updateContentSettingMenu = function(menu, settingType)
-{
-  // If content settings exists
-  if(chrome.contentSettings)
-  {
-    chrome.contentSettings[settingType].get({ primaryUrl: "http://*/*" }, function(details)
-    {
-      // If the setting is currently set to block
-      if(details.setting == "block")
-      {
-        menu.classList.add("active");
-      }
-      else if(menu.classList.contains("active"))
-      {
-        menu.classList.remove("active");
-      }
-    });
-  }
 };
 
 // If the document is still loading

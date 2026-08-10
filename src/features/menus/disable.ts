@@ -16,7 +16,11 @@ export const DISABLE_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Disable.toggleJavaScript",
+    contentSetting: {
+      type: "javascript",
+      enabledMessage: "enableJavaScriptResult",
+      disabledMessage: "disableJavaScriptResult",
+    },
   },
   {
     id: "disable-notifications",
@@ -24,7 +28,11 @@ export const DISABLE_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Disable.toggleNotifications",
+    contentSetting: {
+      type: "notifications",
+      enabledMessage: "enableNotificationsResult",
+      disabledMessage: "disableNotificationsResult",
+    },
   },
   {
     id: "disable-popups",
@@ -32,13 +40,17 @@ export const DISABLE_FEATURES: Feature[] = [
     column: 1,
     stateful: true,
     kind: "toggle",
-    handler: "WebDeveloper.Overlay.Disable.togglePopups",
+    contentSetting: {
+      type: "popups",
+      enabledMessage: "enablePopupsResult",
+      disabledMessage: "disablePopupsResult",
+    },
   },
   {
     id: "reset-disable-features",
     labelKey: "resetDisableFeatures",
     column: 2,
     kind: "action",
-    handler: "WebDeveloper.Overlay.Disable.resetFeatures",
+    resetsContentSettings: true,
   },
 ];
