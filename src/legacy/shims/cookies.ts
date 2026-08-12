@@ -1,9 +1,10 @@
 /**
  * Points the legacy namespace at the ported cookie operations.
  *
- * Same rule as shims/dom: import this *after* `common/cookies.js`, which still
- * holds the three confirmation flows and would otherwise overwrite these with
- * its own copies.
+ * `common/cookies.js` is gone -- the three delete-everything features it held
+ * are popup actions now -- so there is nothing left to import this after. It
+ * stays because the add-cookie dialog and the cookie report are still legacy
+ * and still reach for these through the namespace.
  */
 
 import { WebDeveloper } from "../globals";

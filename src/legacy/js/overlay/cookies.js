@@ -91,53 +91,6 @@ WebDeveloper.Overlay.Cookies.convertCookies = function(cookies)
   return convertedCookies;
 };
 
-// Deletes all the cookies for the current domain
-WebDeveloper.Overlay.Cookies.deleteDomainCookies = function()
-{
-  WebDeveloper.Overlay.getSelectedTab(function(tab)
-  {
-    // If the tab is valid
-    if(WebDeveloper.Overlay.isValidTab(tab))
-    {
-      chrome.cookies.getAll({}, function(allCookies)
-      {
-        chrome.tabs.sendMessage(tab.id, { allCookies: WebDeveloper.Overlay.Cookies.convertCookies(allCookies), type: "get-domain-cookies" }, function(cookies)
-        {
-          WebDeveloper.Cookies.deleteDomainCookies(cookies);
-        });
-      });
-    }
-  });
-};
-
-// Deletes all the cookies for the current path
-WebDeveloper.Overlay.Cookies.deletePathCookies = function()
-{
-  WebDeveloper.Overlay.getSelectedTab(function(tab)
-  {
-    // If the tab is valid
-    if(WebDeveloper.Overlay.isValidTab(tab))
-    {
-      chrome.cookies.getAll({}, function(allCookies)
-      {
-        chrome.tabs.sendMessage(tab.id, { allCookies: WebDeveloper.Overlay.Cookies.convertCookies(allCookies), type: "get-path-cookies" }, function(cookies)
-        {
-          WebDeveloper.Cookies.deletePathCookies(cookies);
-        });
-      });
-    }
-  });
-};
-
-// Deletes all session cookies
-WebDeveloper.Overlay.Cookies.deleteSessionCookies = function()
-{
-  chrome.cookies.getAll({}, function(allCookies)
-  {
-    WebDeveloper.Cookies.deleteSessionCookies(WebDeveloper.Overlay.Cookies.convertCookies(allCookies));
-  });
-};
-
 // Returns the locale for the view cookie information feature
 WebDeveloper.Overlay.Cookies.getViewCookieInformationLocale = function()
 {

@@ -2,9 +2,10 @@
  * The features the popup carries out itself.
  *
  * The third route, beside injecting a bundle and flipping a content setting.
- * These four touch no page: they call a browser API -- browsing data, history
- * -- and the two that mark links only ask the page which links it has before
- * doing so. There is nothing to run in the page, so there is no bundle entry.
+ * None of these runs anything in the page: they call a browser API -- browsing
+ * data, history, the cookie store -- and the ones that need to know what is on
+ * the page ask the content script first. So there is no bundle entry for any
+ * of them.
  *
  * Keyed by feature id, exactly as the bundle entry tables are, so the registry
  * and this file cannot drift apart without the invariant test noticing.
@@ -12,6 +13,8 @@
 
 import { sendToContent } from "@/lib/content-messaging";
 import { t } from "@/lib/i18n";
+import type { PlainMessageKey, SubstitutedMessageKey } from "@/lib/i18n";
+import { deleteCookie, fromBrowserCookies, type CookieIdentity } from "@/lib/cookies";
 import type { NotificationType } from "./ui.svelte";
 
 /**
@@ -73,6 +76,85 @@ async function markLinks(visited: boolean, { requirePage, notify }: ActionContex
   notify(t(visited ? "markAllLinksVisitedResult" : "markAllLinksUnvisitedResult"));
 }
 
+/**
+ * What one of the delete-everything cookie features says, at each count.
+ *
+ * Singular and plural are separate messages rather than one with a number in
+ * it, because that is how the catalogue is written and how it translates:
+ * several languages need a different sentence, not a different digit.
+ */
+interface DeletionMessages {
+  noneFound: PlainMessageKey;
+  singleConfirmation: PlainMessageKey;
+  multipleConfirmation: SubstitutedMessageKey;
+  singleResult: PlainMessageKey;
+  multipleResult: SubstitutedMessageKey;
+}
+
+/**
+ * Counts, asks, and deletes -- the shape all three delete features share.
+ *
+ * Nothing happens without an answer, and finding nothing to delete is
+ * reported rather than silently doing nothing: a confirmation dialog that
+ * says "delete 0 cookies" is worse than a notification saying there are none.
+ */
+function confirmDelete(
+  cookies: CookieIdentity[],
+  messages: DeletionMessages,
+  { confirm, notify }: ActionContext,
+): void {
+  const count = cookies.length;
+
+  if (count === 0) {
+    notify(t(messages.noneFound));
+
+    return;
+  }
+
+  const asked =
+    count === 1 ? t(messages.singleConfirmation) : t(messages.multipleConfirmation, String(count));
+
+  confirm(asked, t("delete"), "trash", () => {
+    for (const cookie of cookies) {
+      deleteCookie(cookie);
+    }
+
+    notify(count === 1 ? t(messages.singleResult) : t(messages.multipleResult, String(count)));
+  });
+}
+
+/**
+ * The cookies of the page, as the content script decides they are.
+ *
+ * The whole store is read here and filtered there, because the filtering is
+ * per document: a page's frames each have their own host and path, and the
+ * feature means "the cookies this page would send", not the top document's.
+ */
+async function pageCookies(
+  tabId: number,
+  type: "get-domain-cookies" | "get-path-cookies",
+): Promise<CookieIdentity[]> {
+  const allCookies = fromBrowserCookies(await browser.cookies.getAll({}));
+  const cookies = await sendToContent(tabId, type, { allCookies });
+
+  // Narrowed to what can be named in the store again. Nothing real is dropped
+  // -- filterCookies has already required a host and a path -- but the wire
+  // shape says those are optional, and a cookie without them cannot be
+  // deleted, only silently missed.
+  return cookies.flatMap((cookie) =>
+    cookie.host && cookie.name && cookie.path
+      ? [
+          {
+            host: cookie.host,
+            name: cookie.name,
+            path: cookie.path,
+            secure: cookie.secure === true,
+          },
+        ]
+      : [],
+  );
+}
+
 export const POPUP_ACTIONS: Record<string, PopupAction> = {
   "clear-cache": ({ confirm, notify }) => {
     confirm(t("clearCacheConfirmation"), t("clear"), "trash", () => {
@@ -94,4 +176,63 @@ export const POPUP_ACTIONS: Record<string, PopupAction> = {
 
   "mark-all-links-visited": (context) => markLinks(true, context),
   "mark-all-links-unvisited": (context) => markLinks(false, context),
+
+  "delete-domain-cookies": async (context) => {
+    const tabId = context.requirePage();
+
+    if (tabId === undefined) {
+      return;
+    }
+
+    confirmDelete(
+      await pageCookies(tabId, "get-domain-cookies"),
+      {
+        noneFound: "deleteDomainCookiesNoneFound",
+        singleConfirmation: "deleteDomainCookiesSingleConfirmation",
+        multipleConfirmation: "deleteDomainCookiesMultipleConfirmation",
+        singleResult: "deleteDomainCookiesSingleResult",
+        multipleResult: "deleteDomainCookiesMultipleResult",
+      },
+      context,
+    );
+  },
+
+  "delete-path-cookies": async (context) => {
+    const tabId = context.requirePage();
+
+    if (tabId === undefined) {
+      return;
+    }
+
+    confirmDelete(
+      await pageCookies(tabId, "get-path-cookies"),
+      {
+        noneFound: "deletePathCookiesNoneFound",
+        singleConfirmation: "deletePathCookiesSingleConfirmation",
+        multipleConfirmation: "deletePathCookiesMultipleConfirmation",
+        singleResult: "deletePathCookiesSingleResult",
+        multipleResult: "deletePathCookiesMultipleResult",
+      },
+      context,
+    );
+  },
+
+  // The only one that needs no page: session cookies are session cookies
+  // whatever tab the popup was opened over, and upstream did not ask for a
+  // tab here either.
+  "delete-session-cookies": async (context) => {
+    const allCookies = fromBrowserCookies(await browser.cookies.getAll({}));
+
+    confirmDelete(
+      allCookies.filter((cookie) => cookie.session),
+      {
+        noneFound: "deleteSessionCookiesNoneFound",
+        singleConfirmation: "deleteSessionCookiesSingleConfirmation",
+        multipleConfirmation: "deleteSessionCookiesMultipleConfirmation",
+        singleResult: "deleteSessionCookiesSingleResult",
+        multipleResult: "deleteSessionCookiesMultipleResult",
+      },
+      context,
+    );
+  },
 };

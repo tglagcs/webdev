@@ -1,9 +1,8 @@
 /**
  * The cookie operations behind the Cookies menu and the cookie report.
  *
- * Only the operations. The three delete-everything features are a count, a
- * confirmation dialog and a notification, all of which live in the popup, so
- * they stay in the legacy file until the popup is rewritten.
+ * Only the operations: the counting, confirming and reporting that the delete
+ * features do around them belongs to the popup and lives in its actions.
  */
 
 /**
@@ -35,6 +34,35 @@ export interface Cookie {
   path?: string;
   value?: string;
   [key: string]: unknown;
+}
+
+/** Enough of a cookie to name one in the store. */
+export interface CookieIdentity {
+  host: string;
+  name: string;
+  path: string;
+  secure?: boolean;
+}
+
+/**
+ * A cookie from the store, in the shape the extension passes around.
+ *
+ * The rename is upstream's and is load bearing: `domain` becomes `host`, and
+ * `expirationDate` becomes `expires`, which is what the report renders and
+ * what `filterCookies` matches on. Converting here rather than at each caller
+ * is the only reason those two spellings never meet.
+ */
+export function fromBrowserCookies(cookies: Browser.cookies.Cookie[]): (Cookie & CookieIdentity)[] {
+  return cookies.map((cookie) => ({
+    expires: cookie.expirationDate,
+    host: cookie.domain,
+    httpOnly: cookie.httpOnly,
+    name: cookie.name,
+    path: cookie.path,
+    secure: cookie.secure,
+    session: cookie.session,
+    value: cookie.value,
+  }));
 }
 
 /** By host, then by name. */
@@ -183,7 +211,7 @@ export function addCookie(cookie: EditableCookie): void {
   });
 }
 
-export function deleteCookie(cookie: EditableCookie): void {
+export function deleteCookie(cookie: CookieIdentity): void {
   // The host is not sanitized here, and upstream did not sanitize it either --
   // so a domain cookie, whose host is ".example.com", is looked up under a URL
   // with a leading dot in the host. Left as found until it is confirmed

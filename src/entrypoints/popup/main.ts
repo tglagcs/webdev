@@ -11,7 +11,6 @@ import "@/legacy/globals";
 import { flushDomReady } from "@/legacy/dom-ready";
 import "@/legacy/shims/dom";
 import "@/legacy/shims/vendor-globals";
-import "@/legacy/js/common/cookies.js";
 import "@/legacy/shims/cookies";
 import "@/legacy/shims/locales";
 import "@/legacy/shims/storage";
