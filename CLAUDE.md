@@ -200,10 +200,18 @@ violations.
 
 A bundler cannot express upstream's build-time exclusion of
 `overlay/disable.js` for Firefox — an ES import is static. `src/lib/
-capabilities.ts` detects `chrome.contentSettings` at runtime; the popup imports
-`disable.js` dynamically behind that check and marks the document, which drives
-a rule in `overlay.css`. `browsingData` **does** exist on Firefox; only
+capabilities.ts` detects `chrome.contentSettings` at runtime instead, and the
+registry says which features need it; `visibleMenus()` drops them, and a menu
+left with nothing loses its tab. `browsingData` **does** exist on Firefox; only
 `contentSettings` is Chromium-only.
+
+There is no Disable menu now. All six content-setting features — JavaScript,
+notifications, popups and the reset in Miscellaneous, Disable Cookies in
+Cookies, Disable Images in Images — sit with their subject, so no tab is
+Chromium-only and Firefox is missing items rather than a whole section. Their
+state is the one kind the extension does not own: the browser holds it, so it
+is neither per tab nor in settings and is re-read from `contentSettings` at
+every open. Keep it out of `syncWithTab`, which would otherwise clear it.
 
 ### Storage has a schema now; the legacy code reaches it through a shim
 

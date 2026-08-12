@@ -10,6 +10,17 @@
  * extension APIs, two rewrite history to mark links visited or unvisited, and
  * three open an in-page widget -- none of which is a script run against the
  * page, so none is an entry in a bundle.
+ *
+ * Four more arrived from the Disable menu, which is gone. Everything in it was
+ * `chrome.contentSettings`, so on Firefox the tab was empty and did not show at
+ * all -- and the other two content settings were never in it anyway: Disable
+ * Cookies sits in Cookies and Disable Images in Images, each with its subject.
+ * JavaScript, notifications and popups have no such tab, so they land in the
+ * one that is already the home for what belongs nowhere else, and the reset
+ * comes with them.
+ *
+ * Their `column` is chosen rather than transcribed, unlike every other one
+ * here: they never shipped in this menu.
  */
 
 import type { Feature } from "../types";
@@ -28,6 +39,42 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     column: 1,
     kind: "action",
     handler: "WebDeveloper.Overlay.Miscellaneous.confirmClearHistory",
+  },
+  {
+    id: "disable-javascript",
+    labelKey: "disableJavaScript",
+    column: 1,
+    stateful: true,
+    kind: "toggle",
+    contentSetting: {
+      type: "javascript",
+      enabledMessage: "enableJavaScriptResult",
+      disabledMessage: "disableJavaScriptResult",
+    },
+  },
+  {
+    id: "disable-notifications",
+    labelKey: "disableNotifications",
+    column: 1,
+    stateful: true,
+    kind: "toggle",
+    contentSetting: {
+      type: "notifications",
+      enabledMessage: "enableNotificationsResult",
+      disabledMessage: "disableNotificationsResult",
+    },
+  },
+  {
+    id: "disable-popups",
+    labelKey: "disablePopups",
+    column: 1,
+    stateful: true,
+    kind: "toggle",
+    contentSetting: {
+      type: "popups",
+      enabledMessage: "enablePopupsResult",
+      disabledMessage: "disablePopupsResult",
+    },
   },
   {
     id: "display-color-picker",
@@ -98,5 +145,12 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     kind: "action",
     handler: "WebDeveloper.Overlay.Miscellaneous.toggleVisitedLinks",
     argument: true,
+  },
+  {
+    id: "reset-disable-features",
+    labelKey: "resetDisableFeatures",
+    column: 3,
+    kind: "action",
+    resetsContentSettings: true,
   },
 ];

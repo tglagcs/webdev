@@ -10,7 +10,6 @@ import { capabilities, type Capabilities } from "@/lib/capabilities";
 import { MENUS, type Feature, type Menu, type MenuId } from "./types";
 import { COOKIES_FEATURES } from "./menus/cookies";
 import { CSS_FEATURES } from "./menus/css";
-import { DISABLE_FEATURES } from "./menus/disable";
 import { FORMS_FEATURES } from "./menus/forms";
 import { IMAGES_FEATURES } from "./menus/images";
 import { INFORMATION_FEATURES } from "./menus/information";
@@ -21,7 +20,6 @@ import { RESIZE_FEATURES } from "./menus/resize";
 import { TOOLS_FEATURES } from "./menus/tools";
 
 const BY_MENU: Record<MenuId, Feature[]> = {
-  disable: DISABLE_FEATURES,
   cookies: COOKIES_FEATURES,
   css: CSS_FEATURES,
   forms: FORMS_FEATURES,
@@ -39,8 +37,8 @@ const BY_MENU: Record<MenuId, Feature[]> = {
  *
  * Kept here rather than in the transcribed modules, which are the markup and
  * nothing else. `contentSettings` is Chromium-only and is not coming to
- * Firefox, so the whole Disable menu and Disable Cookies are hidden there
- * rather than shipped inert. `browsingData` exists on both.
+ * Firefox, so all six features that use it are hidden there rather than
+ * shipped inert. `browsingData` exists on both.
  */
 const REQUIRES: Record<string, (capabilities: Capabilities) => boolean> = {
   "disable-javascript": (available) => available.contentSettings,
@@ -68,7 +66,8 @@ export function featureById(id: string): Feature | undefined {
  * The menus to show, with the features this browser can run.
  *
  * A menu whose features are all unavailable is dropped rather than shown
- * empty -- on Firefox that is the whole Disable tab.
+ * empty. No menu is in that position now that the Disable tab is gone, but
+ * the rule is what allows a future menu to be Chromium-only.
  */
 export function visibleMenus(available: Capabilities = capabilities): Menu[] {
   return MENUS.map((menu) => ({

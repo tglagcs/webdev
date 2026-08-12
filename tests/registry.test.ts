@@ -1,8 +1,8 @@
 /**
  * Invariants of the feature registry.
  *
- * The registry is 119 entries transcribed out of the markup and the eleven
- * overlay initialisers. Transcription is exactly the kind of work that goes
+ * The registry is 119 entries transcribed out of the markup and the overlay
+ * initialisers that shipped. Transcription is exactly the kind of work that goes
  * wrong quietly -- a mistyped message key renders an empty label, a mistyped
  * id orphans the per-tab state the user had switched on, a missing handler
  * does nothing when clicked. None of those throw, and none of them show up in
@@ -231,13 +231,20 @@ describe("capabilities", () => {
   });
 
   // Not shipped inert: contentSettings is Chromium-only and has no Firefox
-  // equivalent, so the whole tab goes rather than showing four dead items.
-  it("drops the Disable menu entirely on Firefox", () => {
+  // equivalent, so the six features that use it are gone there. They live in
+  // three different menus, each of which keeps the rest of its items.
+  it("drops every content-setting feature on Firefox", () => {
     const menus = visibleMenus(firefox);
+    const ids = menus.flatMap((menu) => menu.features).map((feature) => feature.id);
 
-    expect(menus.map((menu) => menu.id)).not.toContain("disable");
-    expect(menus.flatMap((menu) => menu.features).map((feature) => feature.id)).not.toContain(
-      "disable-cookies",
+    expect(ids).not.toContain("disable-cookies");
+    expect(ids).not.toContain("disable-images");
+    expect(ids).not.toContain("disable-javascript");
+    expect(ids).not.toContain("reset-disable-features");
+
+    // The menus they were in stay, because none of them was only this.
+    expect(menus.map((menu) => menu.id)).toEqual(
+      expect.arrayContaining(["cookies", "images", "miscellaneous"]),
     );
   });
 
@@ -262,7 +269,18 @@ describe("against the popup that shipped", () => {
     );
   });
 
-  it("keeps the ids in the order the popup listed them", () => {
-    expect(FEATURES.map((feature) => feature.id)).toEqual(SHIPPED_IDS);
+  // The order was the popup's order exactly until the Disable menu was folded
+  // into Miscellaneous. Four items moved, and this says which four -- so a
+  // fifth cannot move by accident, and the rest are still where they shipped.
+  it("keeps the ids in the order the popup listed them, bar the four that moved", () => {
+    const moved = [
+      "disable-javascript",
+      "disable-notifications",
+      "disable-popups",
+      "reset-disable-features",
+    ];
+    const without = (ids: string[]) => ids.filter((id) => !moved.includes(id));
+
+    expect(without(FEATURES.map((feature) => feature.id))).toEqual(without(SHIPPED_IDS));
   });
 });

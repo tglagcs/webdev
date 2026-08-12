@@ -28,20 +28,6 @@
        renamed symbol draws nothing.
   -->
 
-  <!-- Disable: the universal "no". -->
-  <symbol
-    id="disable"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.75"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  >
-    <circle cx="12" cy="12" r="8.5" />
-    <line x1="6" y1="6" x2="18" y2="18" />
-  </symbol>
-
   <!-- Cookies: a biscuit with its chips. -->
   <symbol
     id="cookies"

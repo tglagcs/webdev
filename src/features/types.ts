@@ -19,9 +19,16 @@ import type { PlainMessageKey } from "@/lib/i18n-keys";
 import type { Capabilities } from "@/lib/capabilities";
 import type { ContentSettingType } from "@/lib/content-settings";
 
-/** The eleven tabs, in the order the popup shows them. */
+/**
+ * The ten tabs, in the order the popup shows them.
+ *
+ * Upstream had an eleventh, Disable, and everything in it was a
+ * `chrome.contentSettings` rule -- so the whole tab was missing on Firefox,
+ * while the same mechanism appeared under Cookies and Images with its subject.
+ * Those three items moved to Miscellaneous and the tab went; nothing is
+ * removed, and the ids are untouched, so the state a user had is still theirs.
+ */
 export const MENUS = [
-  "disable",
   "cookies",
   "css",
   "forms",
