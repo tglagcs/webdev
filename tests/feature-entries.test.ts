@@ -19,6 +19,7 @@ import { IMAGES_ENTRIES } from "@/features/images";
 import { INFORMATION_ENTRIES } from "@/features/information";
 import { OUTLINE_ENTRIES } from "@/features/outline";
 import { FEATURES } from "@/features/registry";
+import { POPUP_ACTIONS } from "@/entrypoints/popup/actions";
 
 const injected = FEATURES.filter((feature) => feature.inject);
 
@@ -72,6 +73,25 @@ describe("the registry against the bundle", () => {
         expect(["value", "setting", "message", "enabled"]).toContain(source.from);
       }
     }
+  });
+});
+
+// The same pairing, one route along: an action is named by the feature id too,
+// and a feature declaring one that the table does not have is a menu item that
+// does nothing when clicked.
+describe("the registry against the popup's own actions", () => {
+  const actions = FEATURES.filter((feature) => feature.popupAction);
+
+  it("has an action for every feature that declares one", () => {
+    const missing = actions.filter((feature) => !(feature.id in POPUP_ACTIONS));
+
+    expect(missing.map((feature) => feature.id)).toEqual([]);
+  });
+
+  it("has no action that no feature names", () => {
+    const ids = new Set(actions.map((feature) => feature.id));
+
+    expect(Object.keys(POPUP_ACTIONS).filter((id) => !ids.has(id))).toEqual([]);
   });
 });
 

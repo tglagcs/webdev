@@ -162,6 +162,15 @@ export interface Feature {
   resetsContentSettings?: true;
 
   /**
+   * Set instead of the others for a feature the popup carries out itself.
+   *
+   * The ones that call a browser API rather than run anything in the page --
+   * clearing the cache or the history, marking links visited. The
+   * implementation is in `popup/actions.ts`, keyed by this feature's id.
+   */
+  popupAction?: true;
+
+  /**
    * Set instead of both for an item that only flips a stored preference.
    *
    * Show Element Tag Names is the one: it changes what the other outline
@@ -169,14 +178,6 @@ export interface Feature {
    * than per tab like everything else with an on state.
    */
   setting?: string;
-
-  /**
-   * What the handler is given, where two features share one.
-   *
-   * Convert Form Gets To Posts and its opposite are one handler and a method
-   * name; Mark All Links Visited and Unvisited are one handler and a boolean.
-   */
-  argument?: string | boolean;
 
   /** Hides the item where the browser cannot support it. */
   available?: (capabilities: Capabilities) => boolean;

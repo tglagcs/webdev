@@ -77,13 +77,5 @@ export function runFeature(feature: Feature, state: FeatureState): void {
     return;
   }
 
-  const item = featureItem(feature.id, state);
-
-  if (feature.argument === undefined) {
-    handler.call(item);
-
-    return;
-  }
-
-  handler.call(item, feature.argument);
+  handler.call(featureItem(feature.id, state));
 }

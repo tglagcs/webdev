@@ -62,14 +62,15 @@ describe("labels", () => {
 });
 
 describe("handlers", () => {
-  // Five routes, and every feature takes exactly one: an entry in a bundle the
-  // popup injects, a stored preference, a content setting, the reset that
-  // clears all of those, or -- until its menu is ported -- the handler that
-  // shipped.
+  // Six routes, and every feature takes exactly one: an entry in a bundle the
+  // popup injects, an action the popup carries out itself, a stored
+  // preference, a content setting, the reset that clears all of those, or --
+  // until its menu is ported -- the handler that shipped.
   it("gives every feature exactly one way to run", () => {
     for (const feature of FEATURES) {
       const routes = [
         feature.inject,
+        feature.popupAction,
         feature.setting,
         feature.contentSetting,
         feature.resetsContentSettings,
@@ -88,33 +89,17 @@ describe("handlers", () => {
     expect(wrong.map((feature) => feature.id)).toEqual([]);
   });
 
-  // Four features share a handler and differ only in its argument -- convert
-  // form methods each way, and mark links visited or unvisited. Those four are
-  // the only allowed collision, so the pair has to be distinct even where the
-  // handler is not.
-  it("resolves to a distinct action per feature", () => {
-    const actions = FEATURES.filter((feature) => feature.handler).map(
-      (feature) => `${feature.handler}(${feature.argument ?? ""})`,
+  // Upstream expressed "same code, different argument" by pointing two menu
+  // items at one handler and passing it a word -- the form methods each way,
+  // the links visited or unvisited. Both pairs are two registry entries now,
+  // and no handler is shared any more, so a collision here means two items
+  // that would do the same thing.
+  it("resolves to a distinct handler per feature", () => {
+    const handlers = FEATURES.filter((feature) => feature.handler).map(
+      (feature) => feature.handler,
     );
 
-    expect(new Set(actions).size).toBe(actions.length);
-  });
-
-  // Two features sharing a handler is how upstream expressed "same code,
-  // different argument". Only the visited-links pair is left; the form-method
-  // pair became two entries when Forms was ported, and the rest go the same
-  // way.
-  it("passes an argument only where two features share a handler", () => {
-    const shared = FEATURES.filter(
-      (feature) =>
-        feature.handler && FEATURES.filter((other) => other.handler === feature.handler).length > 1,
-    );
-
-    expect(shared.map((feature) => feature.id).sort()).toEqual([
-      "mark-all-links-unvisited",
-      "mark-all-links-visited",
-    ]);
-    expect(shared.every((feature) => feature.argument !== undefined)).toBe(true);
+    expect(new Set(handlers).size).toBe(handlers.length);
   });
 });
 

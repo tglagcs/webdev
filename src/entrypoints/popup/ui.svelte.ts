@@ -16,6 +16,7 @@ import { FEATURES } from "@/features/registry";
 import { runInjected, runContentSetting, refusalFor } from "./run-feature";
 import { clearContentSettings, isBlocked } from "@/lib/content-settings";
 import { runFeature } from "./bridge";
+import { POPUP_ACTIONS } from "./actions";
 import { t } from "@/lib/i18n";
 import type { DisplayOverlayWith, SettingKey } from "@/lib/storage/schema";
 
@@ -116,6 +117,15 @@ class PopupState {
       return;
     }
 
+    // Before the refusal check below, which is about the page: Clear Cache and
+    // Clear History are browser-wide and work from an internal page, as they
+    // did upstream. An action that does need the page asks for it itself.
+    if (feature.popupAction) {
+      await this.runAction(feature);
+
+      return;
+    }
+
     if (!feature.inject) {
       runFeature(feature, this);
 
@@ -143,6 +153,40 @@ class PopupState {
     // switches Display Print Styles off. The preference-backed items are not
     // in that list and are kept as they are.
     await this.syncWithTab(tabId);
+  }
+
+  /**
+   * Runs a feature the popup owns, and reports what it cannot run.
+   *
+   * A missing action is warned about rather than ignored, for the same reason
+   * a missing bundle entry is: the item would look like it worked.
+   */
+  private async runAction(feature: Feature): Promise<void> {
+    const action = POPUP_ACTIONS[feature.id];
+
+    if (!action) {
+      console.warn(`WEBDEV LOG: no popup action for ${feature.id}`);
+
+      return;
+    }
+
+    await action({
+      notify: (message, type) => this.notify(message, type),
+      confirm: (message, buttonText, buttonIcon, run) => {
+        this.confirmation = { message, buttonText, buttonIcon, confirm: run };
+      },
+      requirePage: () => {
+        const refusal = refusalFor(this.tab?.url);
+
+        if (refusal) {
+          this.notify(`${t("extensionName")} ${t(refusal)}`, "danger");
+
+          return undefined;
+        }
+
+        return this.tab?.id;
+      },
+    });
   }
 
   private async syncWithTab(tabId: number): Promise<void> {
