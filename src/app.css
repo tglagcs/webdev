@@ -1,5 +1,6 @@
 /**
- * The extension's own UI: the popup, and later the options page and reports.
+ * The extension's own UI: the popup and the about page, and later the options
+ * page and reports.
  *
  * Not the feature stylesheets in src/public/features, which are injected into
  * other people's pages and must stay theme-blind -- Tailwind never sees that
@@ -7,47 +8,32 @@
  */
 
 @import "tailwindcss";
+@import "./theme.css";
 
 /* The viewer's choice wins over the host system's, so the theme is an
    attribute rather than a media query. src/lib/theme.ts sets it before the app
    mounts, which is what stops the light flash on a dark setup. */
 @custom-variant dark (&:where([data-wd-theme="dark"], [data-wd-theme="dark"] *));
 
-@theme {
-  --color-surface: #ffffff;
-  --color-surface-raised: #f4f5f7;
-  --color-surface-sunken: #e9ebee;
-  --color-line: #d9dce1;
-  --color-ink: #1f2328;
-  --color-ink-muted: #5c6470;
-  --color-accent: #0d6efd;
-  --color-on: #198754;
-  --color-off: #dc3545;
-}
-
-[data-wd-theme="dark"] {
-  --color-surface: #16181d;
-  --color-surface-raised: #1f232a;
-  --color-surface-sunken: #0f1114;
-  --color-line: #2f343d;
-  --color-ink: #e6e8ec;
-  --color-ink-muted: #9aa3b0;
-  --color-accent: #63a4ff;
-  --color-on: #3fb950;
-  --color-off: #f85149;
-}
-
-html {
-  color-scheme: light;
-}
-
-[data-wd-theme="dark"] {
-  color-scheme: dark;
+/* `inline`, so the utilities read the --wd- properties directly and follow
+   the [data-wd-theme] override in theme.css. */
+@theme inline {
+  --color-surface: var(--wd-surface);
+  --color-surface-raised: var(--wd-surface-raised);
+  --color-surface-sunken: var(--wd-surface-sunken);
+  --color-line: var(--wd-line);
+  --color-ink: var(--wd-ink);
+  --color-ink-muted: var(--wd-ink-muted);
+  --color-accent: var(--wd-accent);
+  --color-on-accent: var(--wd-on-accent);
+  --color-on: var(--wd-on);
+  --color-off: var(--wd-off);
+  --color-warn: var(--wd-warn);
 }
 
 body {
-  background: var(--color-surface);
-  color: var(--color-ink);
+  background: var(--wd-surface);
+  color: var(--wd-ink);
   font-family:
     system-ui,
     -apple-system,
@@ -68,5 +54,5 @@ body {
 }
 
 .is-invalid {
-  border-color: var(--color-off) !important;
+  border-color: var(--wd-off) !important;
 }

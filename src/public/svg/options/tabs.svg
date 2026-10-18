@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!--
+    The options page tab icons, drawn like the popup menu icons in
+    svg/overlay/menus.svg: strokes on a 24x24 grid with no colours of their
+    own, so they follow the theme. Resize and Tools are not here, the page
+    takes those two from menus.svg so the same tab looks the same in both.
+
+    The same rules as menus.svg hold: stroke settings as attributes on each
+    symbol, and no double hyphen in these comments.
+  -->
+
+  <!-- General: three sliders. -->
+  <symbol
+    id="general"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h11M19 17h1" />
+    <circle cx="15" cy="7" r="2" />
+    <circle cx="9" cy="12" r="2" />
+    <circle cx="17" cy="17" r="2" />
+  </symbol>
+
+  <!-- Colors: a palette with its wells. -->
+  <symbol
+    id="colors"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.3 0 2-.8 2-1.8 0-1.4-1.2-1.7-1.2-3 0-1 .8-1.7 1.8-1.7h2.2a3.7 3.7 0 0 0 3.7-3.7C20.5 6.6 16.7 3.5 12 3.5z" />
+    <circle cx="7.8" cy="11.5" r="1.1" fill="currentColor" stroke="none" />
+    <circle cx="10" cy="7.6" r="1.1" fill="currentColor" stroke="none" />
+    <circle cx="14.6" cy="7.6" r="1.1" fill="currentColor" stroke="none" />
+  </symbol>
+
+  <!-- Responsive: a screen with a phone in front of it. -->
+  <symbol
+    id="responsive"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M13 16.5H5a1.5 1.5 0 0 1-1.5-1.5V6A1.5 1.5 0 0 1 5 4.5h12A1.5 1.5 0 0 1 18.5 6v2" />
+    <path d="M7 20h6" />
+    <rect x="15.5" y="10" width="5" height="10" rx="1.2" />
+  </symbol>
+
+  <!-- Advanced: a flask, for the settings that are experiments. -->
+  <symbol
+    id="advanced"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M9.5 3.5h5M10.5 3.5v5.2L5 18.2a1.5 1.5 0 0 0 1.3 2.3h11.4a1.5 1.5 0 0 0 1.3-2.3l-5.5-9.5V3.5" />
+    <path d="M7.5 14.5h9" />
+  </symbol>
+</svg>

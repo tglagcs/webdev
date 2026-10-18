@@ -1,0 +1,71 @@
+/**
+ * The extension's colours, as plain custom properties.
+ *
+ * Kept out of app.css so a page that is not built on Tailwind can share them.
+ * The options page is still Bootstrap -- its legacy script drives Bootstrap's
+ * tabs and modal -- and maps these onto Bootstrap's own variables in
+ * options/style.css. app.css hands them to Tailwind with `@theme inline`.
+ *
+ * Never imported by src/public/features/css, which is injected into other
+ * people's pages and must stay theme-blind; CI greps that directory for
+ * `var(--wd-`.
+ */
+
+:root {
+  --wd-surface: #ffffff;
+  --wd-surface-raised: #f4f5f7;
+  --wd-surface-sunken: #e9ebee;
+  --wd-line: #d9dce1;
+  --wd-ink: #1f2328;
+  --wd-ink-muted: #5c6470;
+  --wd-accent: #0d6efd;
+  --wd-on-accent: #ffffff;
+  --wd-on: #198754;
+  --wd-off: #dc3545;
+  --wd-warn: #b45309;
+}
+
+[data-wd-theme="dark"] {
+  --wd-surface: #16181d;
+  --wd-surface-raised: #1f232a;
+  --wd-surface-sunken: #0f1114;
+  --wd-line: #2f343d;
+  --wd-ink: #e6e8ec;
+  --wd-ink-muted: #9aa3b0;
+  --wd-accent: #63a4ff;
+  --wd-on-accent: #0b1220;
+  --wd-on: #3fb950;
+  --wd-off: #f85149;
+  --wd-warn: #f0b429;
+}
+
+/* Before src/lib/theme.ts has run there is no attribute yet, and a static page
+   paints before its module script does. Following the system for that frame
+   means only a viewer whose setting disagrees with it sees the switch. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-wd-theme]) {
+    --wd-surface: #16181d;
+    --wd-surface-raised: #1f232a;
+    --wd-surface-sunken: #0f1114;
+    --wd-line: #2f343d;
+    --wd-ink: #e6e8ec;
+    --wd-ink-muted: #9aa3b0;
+    --wd-accent: #63a4ff;
+    --wd-on-accent: #0b1220;
+    --wd-on: #3fb950;
+    --wd-off: #f85149;
+    --wd-warn: #f0b429;
+  }
+}
+
+html {
+  color-scheme: light dark;
+}
+
+[data-wd-theme="light"] {
+  color-scheme: light;
+}
+
+[data-wd-theme="dark"] {
+  color-scheme: dark;
+}

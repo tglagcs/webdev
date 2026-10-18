@@ -418,6 +418,16 @@ it from `scripting.executeScript({ allFrames: true })` instead, one section per
 frame host. `localStorage` and `sessionStorage` come from the same call and the
 same grouping, and are queued for phase 8 — see the plan.
 
+The about and options pages follow the extension's theme. The colours live
+in `src/theme.css` as plain `--wd-*` properties, which `app.css` hands to
+Tailwind and `entrypoints/options/style.css` maps onto Bootstrap's variables
+-- the options page keeps Bootstrap until its phase, because `options.js`
+drives its tabs and modal and tells the row buttons apart by `.btn-primary`
+and `.btn-danger`. The Theme select there is the only UI for the `theme`
+setting. Its options are added by `main.ts`, not the markup: `options.js`
+localises the syntax-highlighting select by the first `[value="dark"]` in the
+document.
+
 Then the Svelte popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.
 

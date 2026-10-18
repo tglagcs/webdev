@@ -230,6 +230,12 @@
   "text": {
     "message": "Texto"
   },
+  "theme": {
+    "message": "Tema"
+  },
+  "themeSystem": {
+    "message": "Igual ao sistema"
+  },
   "tools": {
     "message": "Ferramentas"
   },

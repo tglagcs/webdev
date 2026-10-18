@@ -1,0 +1,332 @@
+/**
+ * The options page in the popup's style, on top of Bootstrap.
+ *
+ * Bootstrap stays because options.js drives its tabs and its modal and marks
+ * fields with its classes. So rather than restyle the components, this points
+ * Bootstrap's own variables at the extension's colours from theme.css, and
+ * main.ts mirrors `data-wd-theme` into `data-bs-theme` so the parts Bootstrap
+ * draws as images -- the select arrow, the close button, the check mark --
+ * switch too.
+ *
+ * Every selector carries `[data-wd-theme]`. Vite injects this sheet after the
+ * Bootstrap <link>, but that is an ordering the page does not control, and
+ * the extra attribute makes each rule outrank Bootstrap's whatever the order.
+ */
+
+@import "../../theme.css";
+
+:root[data-wd-theme] {
+  --bs-body-font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bs-body-font-size: 0.875rem;
+  --bs-body-bg: var(--wd-surface);
+  --bs-body-color: var(--wd-ink);
+  --bs-emphasis-color: var(--wd-ink);
+  --bs-heading-color: var(--wd-ink);
+  --bs-secondary-color: var(--wd-ink-muted);
+  --bs-tertiary-color: var(--wd-ink-muted);
+  --bs-secondary-bg: var(--wd-surface-raised);
+  --bs-tertiary-bg: var(--wd-surface-raised);
+  --bs-border-color: var(--wd-line);
+  --bs-border-color-translucent: var(--wd-line);
+  --bs-link-color: var(--wd-accent);
+  --bs-link-hover-color: var(--wd-accent);
+  --bs-focus-ring-color: color-mix(in srgb, var(--wd-accent) 30%, transparent);
+  --bs-form-invalid-color: var(--wd-off);
+  --bs-form-invalid-border-color: var(--wd-off);
+  --wd-accent-hover: color-mix(in srgb, var(--wd-accent) 85%, var(--wd-ink));
+}
+
+/* Layout: the popup's rail, and the content beside it. */
+
+[data-wd-theme] .wd-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+[data-wd-theme] .wd-rail {
+  background: var(--wd-surface-raised);
+  border-right: 1px solid var(--wd-line);
+  flex-shrink: 0;
+  padding: 0.75rem 0.5rem;
+  width: 13rem;
+}
+
+[data-wd-theme] .wd-rail .navbar-brand {
+  align-items: center;
+  color: var(--wd-ink);
+  display: flex;
+  font-size: 0.875rem;
+  font-weight: 600;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+[data-wd-theme] .wd-rail .nav-tabs {
+  border: 0;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+[data-wd-theme] .wd-rail .nav-link {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  color: var(--wd-ink-muted);
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.375rem 0.5rem;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+[data-wd-theme] .wd-rail .nav-link:hover {
+  background: var(--wd-surface);
+  color: var(--wd-ink);
+}
+
+[data-wd-theme] .wd-rail .nav-link.active {
+  background: var(--wd-surface);
+  border-color: var(--wd-line);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+  color: var(--wd-ink);
+}
+
+[data-wd-theme] .wd-tab-icon {
+  flex-shrink: 0;
+  height: 1rem;
+  width: 1rem;
+}
+
+[data-wd-theme] .nav-link.active .wd-tab-icon {
+  color: var(--wd-accent);
+}
+
+[data-wd-theme] .wd-main {
+  flex-grow: 1;
+  min-width: 0;
+  padding: 1.5rem 2rem;
+}
+
+[data-wd-theme] .wd-content {
+  max-width: 52rem;
+}
+
+/* Controls. */
+
+[data-wd-theme] .form-control,
+[data-wd-theme] .form-select {
+  background-color: var(--wd-surface-sunken);
+  border-color: var(--wd-line);
+  color: var(--wd-ink);
+}
+
+[data-wd-theme] .form-control:focus,
+[data-wd-theme] .form-select:focus,
+[data-wd-theme] .form-check-input:focus {
+  border-color: var(--wd-accent);
+  box-shadow: 0 0 0 0.2rem var(--bs-focus-ring-color);
+}
+
+[data-wd-theme] .form-control.is-invalid {
+  border-color: var(--wd-off);
+}
+
+[data-wd-theme] .input-group-text {
+  background-color: var(--wd-surface-raised);
+  border-color: var(--wd-line);
+  color: var(--wd-ink-muted);
+}
+
+[data-wd-theme] .form-check-input {
+  background-color: var(--wd-surface-sunken);
+  border-color: var(--wd-line);
+}
+
+[data-wd-theme] .form-check-input:checked {
+  background-color: var(--wd-accent);
+  border-color: var(--wd-accent);
+}
+
+[data-wd-theme] .col-form-label,
+[data-wd-theme] legend {
+  color: var(--wd-ink);
+}
+
+[data-wd-theme] fieldset legend {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+[data-wd-theme] .btn {
+  --bs-btn-font-size: 0.8125rem;
+  --bs-btn-border-radius: 0.375rem;
+}
+
+[data-wd-theme] .btn-primary {
+  --bs-btn-bg: var(--wd-accent);
+  --bs-btn-border-color: var(--wd-accent);
+  --bs-btn-color: var(--wd-on-accent);
+  --bs-btn-hover-bg: var(--wd-accent-hover);
+  --bs-btn-hover-border-color: var(--wd-accent-hover);
+  --bs-btn-hover-color: var(--wd-on-accent);
+  --bs-btn-active-bg: var(--wd-accent-hover);
+  --bs-btn-active-border-color: var(--wd-accent-hover);
+  --bs-btn-active-color: var(--wd-on-accent);
+}
+
+[data-wd-theme] .btn-danger {
+  --bs-btn-bg: var(--wd-off);
+  --bs-btn-border-color: var(--wd-off);
+  --bs-btn-color: #ffffff;
+  --bs-btn-hover-bg: color-mix(in srgb, var(--wd-off) 85%, var(--wd-ink));
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--wd-off) 85%, var(--wd-ink));
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-active-bg: color-mix(in srgb, var(--wd-off) 85%, var(--wd-ink));
+  --bs-btn-active-color: #ffffff;
+}
+
+[data-wd-theme] .btn-outline-secondary {
+  --bs-btn-color: var(--wd-ink);
+  --bs-btn-border-color: var(--wd-line);
+  --bs-btn-hover-bg: var(--wd-surface-raised);
+  --bs-btn-hover-border-color: var(--wd-line);
+  --bs-btn-hover-color: var(--wd-ink);
+  --bs-btn-active-bg: var(--wd-surface-raised);
+  --bs-btn-active-border-color: var(--wd-line);
+  --bs-btn-active-color: var(--wd-ink);
+}
+
+/*
+ * The edit and delete buttons in each row. options.js tells them apart by
+ * `.btn-primary` and `.btn-danger`, so those classes stay; they are drawn
+ * quiet here, as the popup's row actions are, and colour only on hover.
+ */
+[data-wd-theme] tbody .btn {
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: var(--wd-line);
+  --bs-btn-color: var(--wd-ink-muted);
+  --bs-btn-padding-y: 0.125rem;
+  --bs-btn-padding-x: 0.5rem;
+}
+
+[data-wd-theme] tbody .btn-primary {
+  --bs-btn-hover-bg: color-mix(in srgb, var(--wd-accent) 12%, transparent);
+  --bs-btn-hover-border-color: var(--wd-accent);
+  --bs-btn-hover-color: var(--wd-accent);
+}
+
+[data-wd-theme] tbody .btn-danger {
+  --bs-btn-hover-bg: color-mix(in srgb, var(--wd-off) 12%, transparent);
+  --bs-btn-hover-border-color: var(--wd-off);
+  --bs-btn-hover-color: var(--wd-off);
+}
+
+/* Tables, alerts, the modal. */
+
+[data-wd-theme] .table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--wd-ink);
+  --bs-table-striped-bg: var(--wd-surface-raised);
+  --bs-table-striped-color: var(--wd-ink);
+  border: 1px solid var(--wd-line);
+  border-collapse: separate;
+  border-radius: 0.5rem;
+  border-spacing: 0;
+  overflow: hidden;
+}
+
+[data-wd-theme] .table > :not(caption) > * > * {
+  padding: 0.5rem 0.75rem;
+  vertical-align: middle;
+}
+
+[data-wd-theme] .table thead th {
+  border-bottom: 1px solid var(--wd-line);
+  color: var(--wd-ink-muted);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+[data-wd-theme] .alert-warning {
+  --bs-alert-bg: color-mix(in srgb, var(--wd-warn) 10%, transparent);
+  --bs-alert-border-color: color-mix(in srgb, var(--wd-warn) 40%, transparent);
+  --bs-alert-color: var(--wd-ink);
+  font-size: 0.8125rem;
+}
+
+[data-wd-theme] .alert-warning .bi {
+  color: var(--wd-warn);
+}
+
+[data-wd-theme] .modal {
+  --bs-modal-bg: var(--wd-surface);
+  --bs-modal-border-color: var(--wd-line);
+  --bs-modal-header-border-color: var(--wd-line);
+  --bs-modal-footer-border-color: var(--wd-line);
+  --bs-modal-color: var(--wd-ink);
+}
+
+[data-wd-theme] .modal-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+[data-wd-theme] #syntax-highlight-browser {
+  border-color: var(--wd-line) !important;
+  border-radius: 0.5rem;
+}
+
+[data-wd-theme] h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Carried over from options/css/options.css. */
+
+.bi {
+  fill: currentColor;
+  height: 1em;
+  vertical-align: -0.125em;
+  width: 1em;
+}
+
+.single .btn-danger {
+  display: none;
+}
+
+.draggable {
+  cursor: move;
+  user-select: none;
+}
+
+.dragging {
+  opacity: 0.25;
+}
+
+/* Below this the rail would squeeze the forms; it goes across the top. */
+@media (max-width: 640px) {
+  [data-wd-theme] .wd-layout {
+    flex-direction: column;
+  }
+
+  [data-wd-theme] .wd-rail {
+    border-bottom: 1px solid var(--wd-line);
+    border-right: 0;
+    width: auto;
+  }
+
+  [data-wd-theme] .wd-rail .nav-tabs {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  [data-wd-theme] .wd-main {
+    padding: 1rem;
+  }
+}

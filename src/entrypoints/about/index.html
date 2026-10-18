@@ -4,40 +4,39 @@
 <head>
   <meta charset="utf-8">
   <title>WebDev</title>
-  <link href="/lib/bootstrap/bootstrap.css" rel="stylesheet">
-  <link href="/about/css/about.css" rel="stylesheet">
   <meta name="viewport" content="initial-scale=1.0,width=device-width">
   <link href="/svg/logos/color/logo.svg" rel="icon">
 </head>
 
+<!-- The ids are about.js's: it fills every one of them with its message. -->
 <body>
 
-<div class="container">
-  <div class="bg-body-tertiary m-5 p-5 rounded-4 text-center">
-    <img src="/svg/logos/color/logo.svg" width="100" height="100" alt="">
-    <h1 id="name" class="display-4"></h1>
-    <p id="description" class="lead"></p>
+<main class="flex min-h-screen items-center justify-center bg-surface-sunken p-4">
+  <div class="w-full max-w-xl rounded-xl border border-line bg-surface p-10 text-center shadow-sm">
+    <img src="/svg/logos/color/logo.svg" width="88" height="88" alt="" class="mx-auto">
+    <h1 id="name" class="mt-5 text-3xl font-semibold tracking-tight"></h1>
+    <p id="description" class="mt-2 text-ink-muted"></p>
 
-    <div class="gx-5 justify-content-center my-5 row text-body-tertiary">
-      <div class="col-md-auto my-2">
-        <h2 id="author" class="h4 mb-1"></h2>
-        <p id="author-value" class="mb-0"></p>
+    <dl class="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line text-sm sm:grid-cols-3">
+      <div class="bg-surface-raised px-4 py-3">
+        <dt id="author" class="text-[0.65rem] font-medium tracking-wide text-ink-muted uppercase"></dt>
+        <dd id="author-value" class="mt-1"></dd>
       </div>
 
-      <div class="col-md-auto my-2">
-        <h2 id="version" class="h4 mb-1"></h2>
-        <p id="version-value" class="mb-0"></p>
+      <div class="bg-surface-raised px-4 py-3">
+        <dt id="version" class="text-[0.65rem] font-medium tracking-wide text-ink-muted uppercase"></dt>
+        <dd id="version-value" class="mt-1 font-mono"></dd>
       </div>
 
-      <div class="col-md-auto my-2">
-        <h2 id="build-date" class="h4 mb-1"></h2>
-        <p id="build-date-value" class="mb-0"></p>
+      <div class="bg-surface-raised px-4 py-3">
+        <dt id="build-date" class="text-[0.65rem] font-medium tracking-wide text-ink-muted uppercase"></dt>
+        <dd id="build-date-value" class="mt-1 font-mono"></dd>
       </div>
-    </div>
+    </dl>
 
-    <a href="https://github.com/tglagcs/webdev/" id="website" class="btn btn-lg icon-link rounded-pill text-white"><svg class="bi"><use href="/svg/icons/icons.svg#circle-arrow-right"></svg></a>
+    <a id="website" href="#" class="mt-8 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2 text-sm font-medium text-on-accent no-underline transition-opacity hover:opacity-90"><svg class="size-4 fill-current" aria-hidden="true"><use href="/svg/icons/icons.svg#circle-arrow-right"></use></svg></a>
   </div>
-</div>
+</main>
 
 <script src="/lib/purify.js"></script>
 <script type="module" src="./main.ts"></script>

@@ -332,6 +332,8 @@ export type PlainMessageKey =
   | "syntaxHighlightTheme"
   | "syntaxHighlighting"
   | "text"
+  | "theme"
+  | "themeSystem"
   | "tool_1_description"
   | "tool_2_description"
   | "tool_3_description"
@@ -777,6 +779,8 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "syntaxHighlightTheme",
   "syntaxHighlighting",
   "text",
+  "theme",
+  "themeSystem",
   "tool_1_description",
   "tool_2_description",
   "tool_3_description",
