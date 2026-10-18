@@ -13,6 +13,10 @@
   inside it. A flex row there would put those entries side by side with the
   link. Positioned at the bottom, the star stays level with the feature's own
   row, which is always the last thing in the li.
+
+  The star is on the left, next to the label it marks. On the right it sat
+  against the scrollbar of the Search list, close enough that a click meant
+  for it could land on the scrollbar instead.
 -->
 <script lang="ts">
   import type { Feature } from "@/features/types";
@@ -38,7 +42,7 @@
   <a
     href="#{feature.id}"
     id={withId ? feature.id : undefined}
-    class="group flex items-start gap-1.5 rounded py-1 pr-6 pl-1.5 text-xs text-ink
+    class="group flex items-start gap-1.5 rounded py-1 pr-1.5 pl-6 text-xs text-ink
            no-underline hover:bg-surface-raised {highlighted ? 'bg-surface-raised' : ''}"
     class:font-medium={ui.isActive(feature.id)}
     onclick={(event) => {
@@ -73,7 +77,7 @@
   -->
   <button
     type="button"
-    class="absolute right-0.5 bottom-0.5 rounded p-0.5 hover:bg-surface-sunken
+    class="absolute bottom-0.5 left-1 rounded p-0.5 hover:bg-surface-sunken
            {favorite
       ? 'text-warn'
       : 'text-ink-muted opacity-0 group-hover/row:opacity-100 focus-visible:opacity-100'}"

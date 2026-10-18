@@ -45,8 +45,8 @@
 </form>
 
 {@html `<script id="custom-resize-option" type="x-tmpl-mustache">
-  <li><a href="#" data-height="{{height}}" data-width="{{width}}" class="custom-resize-window flex items-center gap-1.5 rounded px-1.5 py-1 text-xs text-ink no-underline hover:bg-surface-raised"><span class="size-3.5 shrink-0"></span>{{description}}</a></li>
+  <li><a href="#" data-height="{{height}}" data-width="{{width}}" class="custom-resize-window flex items-center gap-1.5 rounded py-1 pr-1.5 pl-6 text-xs text-ink no-underline hover:bg-surface-raised"><span class="size-3.5 shrink-0"></span>{{description}}</a></li>
 </script>
 <script id="custom-tool" type="x-tmpl-mustache">
-  <li><a href="#" data-url="{{url}}" class="custom-tool flex items-center gap-1.5 rounded px-1.5 py-1 text-xs text-ink no-underline hover:bg-surface-raised"><span class="size-3.5 shrink-0"></span>{{description}}</a></li>
+  <li><a href="#" data-url="{{url}}" class="custom-tool flex items-center gap-1.5 rounded py-1 pr-1.5 pl-6 text-xs text-ink no-underline hover:bg-surface-raised"><span class="size-3.5 shrink-0"></span>{{description}}</a></li>
 </script>`}
