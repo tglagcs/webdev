@@ -44,6 +44,7 @@ function context(overrides: Partial<ActionContext> = {}) {
   const base: ActionContext = {
     requirePage: () => 7,
     pageTab: () => ({ id: 7, index: 2, windowId: 1 }),
+    openDialog: () => {},
     notify: (message) => notified.push(message),
     confirm: (message, _buttonText, _buttonIcon, run) => asked.push({ message, run }),
     ...overrides,

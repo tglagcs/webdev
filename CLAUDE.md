@@ -450,6 +450,30 @@ cannot know when the frame's module has loaded. Firefox's built-in viewer
 takes JSON documents first, so auto mode there needs
 `devtools.jsonview.enabled` off.
 
+Time travel (Miscellaneous → Change Date and Time...) is WebDev's own too.
+`entrypoints/time-travel.content.ts` runs in the MAIN world at
+`document_start` in every frame and installs `features/fake-clock.ts` --
+`Date`, `Intl.DateTimeFormat` given no date, `Temporal.Now` -- only once the
+tab has a fake time. The state is in the page's `sessionStorage` under one
+key (`lib/time-travel.ts`), so it is per tab and origin and readable
+synchronously at `document_start`; the popup's dialog writes it from the
+isolated world in every frame and fires the same-named event, and the page
+switches clocks without a reload. MAIN-world manifest content scripts are why
+Firefox needs 128.
+
+The state can also carry a time zone. `lib/time-zone.ts` does the arithmetic
+over `Intl.DateTimeFormat` (offset at an instant; wall time back to an
+instant, a repeated time taking the earlier instant and a skipped one the
+offset from before the change, as the spec and browsers do), and
+`installFakeZone` replaces every local-time method on `Date.prototype`, plus
+the `Intl.DateTimeFormat` constructor's default zone. It is installed only
+once a state has a zone, and each replacement calls straight through while
+`zone()` is unset. A string is read in the zone unless it carries `Z`, an
+offset, or is an ISO date alone, which the spec reads as UTC. The tests run
+in a `node:vm` realm, because patching the prototype would otherwise leak
+into every other test in the file. The fake zone names itself in English in
+`toString`, where native Chrome uses the browser's language.
+
 Then the Svelte popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.
 

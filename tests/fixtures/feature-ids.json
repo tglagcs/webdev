@@ -380,6 +380,10 @@
     "stateful": false
   },
   {
+    "id": "time-travel",
+    "stateful": false
+  },
+  {
     "id": "outline-absolute-positioned-elements",
     "stateful": true
   },

@@ -42,6 +42,9 @@ export interface ActionContext {
    */
   pageTab(): { id: number; index: number; windowId: number } | undefined;
 
+  /** Shows one of the popup's own dialogs in place of the menus. */
+  openDialog(dialog: PopupDialog): void;
+
   notify(message: string, type?: NotificationType): void;
 
   /**
@@ -50,6 +53,9 @@ export interface ActionContext {
    */
   confirm(message: string, buttonText: string, buttonIcon: string, run: () => void): void;
 }
+
+/** The dialogs the popup renders itself, rather than legacy markup it shows. */
+export type PopupDialog = "time-travel";
 
 export type PopupAction = (context: ActionContext) => void | Promise<void>;
 
@@ -163,6 +169,14 @@ async function pageCookies(
 }
 
 export const POPUP_ACTIONS: Record<string, PopupAction> = {
+  // A dialog, because the time has to be chosen first. It reads and writes the
+  // page itself, so it needs a page it may touch.
+  "time-travel": ({ requirePage, openDialog }) => {
+    if (requirePage() !== undefined) {
+      openDialog("time-travel");
+    }
+  },
+
   // Opens the viewer in a tab of its own, beside the page. The viewer asks
   // the page's content script for the document itself, so nothing as large
   // as a JSON response is passed through the popup or put in storage.

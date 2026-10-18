@@ -356,6 +356,29 @@ export type PlainMessageKey =
   | "text"
   | "theme"
   | "themeSystem"
+  | "timeTravel"
+  | "timeTravelApply"
+  | "timeTravelFakeTime"
+  | "timeTravelInvalid"
+  | "timeTravelMinusDay"
+  | "timeTravelNote"
+  | "timeTravelNow"
+  | "timeTravelPageSees"
+  | "timeTravelPlusDay"
+  | "timeTravelPlusMonth"
+  | "timeTravelPlusWeek"
+  | "timeTravelPlusYear"
+  | "timeTravelRealTime"
+  | "timeTravelReload"
+  | "timeTravelReset"
+  | "timeTravelResetDone"
+  | "timeTravelSet"
+  | "timeTravelStop"
+  | "timeTravelTitle"
+  | "timeTravelUnreadable"
+  | "timeTravelZone"
+  | "timeTravelZoneNone"
+  | "timeTravelZoneSearch"
   | "tool_1_description"
   | "tool_2_description"
   | "tool_3_description"
@@ -439,6 +462,8 @@ export type SubstitutedMessageKey =
   | "populateFormFieldsMultipleResult"
   | "removeFormValidationMultipleResult"
   | "removeMaximumLengthsMultipleResult"
+  | "timeTravelApplied"
+  | "timeTravelSetIn"
   | "uncheckAllCheckboxesMultipleResult";
 
 export type MessageKey = PlainMessageKey | SubstitutedMessageKey;
@@ -837,6 +862,31 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "text",
   "theme",
   "themeSystem",
+  "timeTravel",
+  "timeTravelApplied",
+  "timeTravelApply",
+  "timeTravelFakeTime",
+  "timeTravelInvalid",
+  "timeTravelMinusDay",
+  "timeTravelNote",
+  "timeTravelNow",
+  "timeTravelPageSees",
+  "timeTravelPlusDay",
+  "timeTravelPlusMonth",
+  "timeTravelPlusWeek",
+  "timeTravelPlusYear",
+  "timeTravelRealTime",
+  "timeTravelReload",
+  "timeTravelReset",
+  "timeTravelResetDone",
+  "timeTravelSet",
+  "timeTravelSetIn",
+  "timeTravelStop",
+  "timeTravelTitle",
+  "timeTravelUnreadable",
+  "timeTravelZone",
+  "timeTravelZoneNone",
+  "timeTravelZoneSearch",
   "tool_1_description",
   "tool_2_description",
   "tool_3_description",

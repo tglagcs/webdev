@@ -16,7 +16,7 @@ import { FEATURES } from "@/features/registry";
 import { runInjected, runContentSetting, refusalFor } from "./run-feature";
 import { clearContentSettings, isBlocked } from "@/lib/content-settings";
 import { runFeature } from "./bridge";
-import { POPUP_ACTIONS } from "./actions";
+import { POPUP_ACTIONS, type PopupDialog } from "./actions";
 import { t } from "@/lib/i18n";
 import type { SettingKey } from "@/lib/storage/schema";
 
@@ -58,9 +58,13 @@ class PopupState {
 
   selectMenu(menu: Tab): void {
     this.menu = menu;
+    this.dialog = null;
     this.notification = null;
     this.confirmation = null;
   }
+
+  /** One of the popup's own dialogs, shown over the menus, or none. */
+  dialog = $state<PopupDialog | null>(null);
 
   /** Starred feature ids, oldest first. */
   favorites = $state<string[]>([]);
@@ -190,6 +194,10 @@ class PopupState {
         }
 
         return this.tab?.id;
+      },
+      openDialog: (dialog) => {
+        this.notification = null;
+        this.dialog = dialog;
       },
       pageTab: () => {
         const tab = this.tab;

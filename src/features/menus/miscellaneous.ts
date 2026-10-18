@@ -151,4 +151,13 @@ export const MISCELLANEOUS_FEATURES: Feature[] = [
     kind: "action",
     resetsContentSettings: true,
   },
+  {
+    // WebDeveloper's own, not one that shipped. The dialog is the popup's;
+    // the clock it sets is the MAIN-world content script's.
+    id: "time-travel",
+    labelKey: "timeTravel",
+    column: 3,
+    kind: "dialog",
+    popupAction: true,
+  },
 ];

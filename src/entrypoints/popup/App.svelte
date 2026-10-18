@@ -20,6 +20,7 @@
   import FeatureRow from "./FeatureRow.svelte";
   import ResizeDialog from "./ResizeDialog.svelte";
   import SearchPane from "./SearchPane.svelte";
+  import TimeTravelDialog from "./TimeTravelDialog.svelte";
 
   const menus = visibleMenus();
 
@@ -188,6 +189,10 @@
     -->
     <div class="tab-content relative grid grow p-2">
       <SearchPane active={ui.menu === "search"} />
+
+      {#if ui.dialog === "time-travel"}
+        <TimeTravelDialog />
+      {/if}
 
       {#each menus as menu (menu.id)}
         <div
