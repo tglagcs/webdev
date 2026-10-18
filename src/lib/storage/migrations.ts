@@ -93,6 +93,14 @@ async function toV2(): Promise<void> {
 }
 
 /**
+ * The popup always opens on its Search tab now, so the menu it was last on is
+ * no longer remembered.
+ */
+async function toV3(): Promise<void> {
+  await settings.remove("menu");
+}
+
+/**
  * Keyed by the version each one produces. Adding an entry means bumping
  * SCHEMA_VERSION in schema.ts to match.
  *
@@ -104,6 +112,7 @@ async function toV2(): Promise<void> {
 const MIGRATIONS: Record<number, () => Promise<void>> = {
   1: toV1,
   2: toV2,
+  3: toV3,
 };
 
 /** Runs every migration the profile has not seen, oldest first. */

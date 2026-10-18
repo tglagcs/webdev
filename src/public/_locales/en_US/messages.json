@@ -442,5 +442,14 @@
   "jsonEdit": { "message": "Edit" },
   "jsonNotFound": { "message": "This page is not JSON. Paste some below to view it." },
   "jsonPrefix": { "message": "Skipped the $prefix$ prefix before the JSON.", "placeholders": { "prefix": { "content": "$1" } } },
-  "jsonPlain": { "message": "Too large to colour, so shown as plain text." }
+  "jsonPlain": { "message": "Too large to colour, so shown as plain text." },
+
+  "search": { "message": "Search" },
+  "searchFeatures": { "message": "Search features" },
+  "favorites": { "message": "Favorites" },
+  "favoritesHint": { "message": "Star a feature to keep it at the top here." },
+  "allFeatures": { "message": "All features" },
+  "noFeaturesFound": { "message": "No features match" },
+  "addToFavorites": { "message": "Add to favorites" },
+  "removeFromFavorites": { "message": "Remove from favorites" }
 }

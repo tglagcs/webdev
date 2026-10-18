@@ -15,33 +15,27 @@
   import { visibleMenus } from "@/features/registry";
   import { FEATURE_KINDS, type Feature, type FeatureKind, type MenuId } from "@/features/types";
   import { t } from "@/lib/i18n";
-  import { ui } from "./ui.svelte";
+  import { ui, type Tab } from "./ui.svelte";
   import AddCookieDialog from "./AddCookieDialog.svelte";
+  import FeatureRow from "./FeatureRow.svelte";
   import ResizeDialog from "./ResizeDialog.svelte";
+  import SearchPane from "./SearchPane.svelte";
 
   const menus = visibleMenus();
-  const current = $derived(menus.find((menu) => menu.id === ui.menu) ?? menus[0]!);
 
-  function label(feature: Feature): string {
-    return t(feature.labelKey);
-  }
-
-  function click(feature: Feature, event: MouseEvent): void {
-    event.preventDefault();
-
-    void ui.run(feature);
-  }
+  /** Search first, then the menus. Search has no features of its own. */
+  const tabs: Tab[] = ["search", ...menus.map((menu) => menu.id)];
 
   // A sprite reference rather than an <img>: an external SVG in an <img> is
   // its own document and cannot see this page's CSS, so currentColor never
   // resolves and the icon cannot follow the theme.
-  function menuIcon(menu: MenuId): string {
+  function menuIcon(menu: Tab): string {
     return `/svg/overlay/menus.svg#${menu}`;
   }
 
   // The menu ids are message keys in their own right -- "cookies", "css" and
   // the rest are already in the locale, named by what the tab shows.
-  function menuName(menu: MenuId): string {
+  function menuName(menu: Tab): string {
     return t(menu);
   }
 
@@ -114,24 +108,24 @@
 -->
 <div class="flex min-h-full w-[800px] max-w-full bg-surface text-ink">
   <nav class="flex w-40 shrink-0 flex-col gap-0.5 border-r border-line bg-surface-raised p-1.5">
-    {#each menus as menu (menu.id)}
+    {#each tabs as tab (tab)}
       <button
         type="button"
-        aria-current={menu.id === current.id}
+        aria-current={tab === ui.menu}
         class="flex items-center gap-2 rounded-md border border-transparent px-2 py-1.5 text-left
                text-xs text-ink-muted transition-colors hover:bg-surface hover:text-ink
                aria-[current=true]:border-line aria-[current=true]:bg-surface
                aria-[current=true]:text-ink aria-[current=true]:shadow-sm"
-        onclick={() => ui.selectMenu(menu.id)}
+        onclick={() => ui.selectMenu(tab)}
       >
-        <svg
-          class="size-4 shrink-0 {menu.id === current.id ? 'text-accent' : ''}"
-          aria-hidden="true"
-        >
-          <use href={menuIcon(menu.id)}></use>
+        <svg class="size-4 shrink-0 {tab === ui.menu ? 'text-accent' : ''}" aria-hidden="true">
+          <use href={menuIcon(tab)}></use>
         </svg>
-        <span class="truncate">{menuName(menu.id)}</span>
+        <span class="truncate">{menuName(tab)}</span>
       </button>
+      {#if tab === "search"}
+        <hr class="mx-1 my-1 border-line" />
+      {/if}
     {/each}
   </nav>
 
@@ -192,12 +186,14 @@
       regardless -- resize.js and tools.js fill their lists in at startup and
       find them by id, whichever menu is open.
     -->
-    <div class="tab-content grid grow p-2">
+    <div class="tab-content relative grid grow p-2">
+      <SearchPane active={ui.menu === "search"} />
+
       {#each menus as menu (menu.id)}
         <div
           class="col-start-1 row-start-1 space-y-2.5"
-          class:invisible={menu.id !== current.id}
-          inert={menu.id !== current.id}
+          class:invisible={menu.id !== ui.menu}
+          inert={menu.id !== ui.menu}
         >
           {#each groups(menu.features) as group (group.kind)}
             <section>
@@ -219,42 +215,8 @@
                 id={group.kind === "dialog" ? listId(menu.id) : undefined}
               >
                 {#each group.features as feature (feature.id)}
-                  <li>
-                    <a
-                      href="#{feature.id}"
-                      id={feature.id}
-                      class="group flex items-start gap-1.5 rounded px-1.5 py-1 text-xs text-ink
-                             no-underline hover:bg-surface-raised"
-                      class:font-medium={ui.isActive(feature.id)}
-                      onclick={(event) => click(feature, event)}
-                    >
-                      <!--
-                        A toggle that is off draws nothing: a marker on every
-                        item is noise, and the group already says what kind of
-                        item this is. A tick means on, and hovering it shows
-                        the cross that says clicking will switch it off.
-                      -->
-                      {#if feature.stateful && ui.isActive(feature.id)}
-                        <svg
-                          class="mt-px size-3.5 shrink-0 text-on group-hover:hidden"
-                          aria-hidden="true"
-                        >
-                          <use href="/svg/icons/icons.svg#i-check"></use>
-                        </svg>
-                        <svg
-                          class="mt-px hidden size-3.5 shrink-0 text-off group-hover:block"
-                          aria-hidden="true"
-                        >
-                          <use href="/svg/icons/icons.svg#s-remove"></use>
-                        </svg>
-                      {:else}
-                        <span class="mt-px size-3.5 shrink-0"></span>
-                      {/if}
-                      {label(feature)}
-                    </a>
-                  </li>
+                  <FeatureRow {feature} withId />
                 {/each}
-
               </ul>
             </section>
           {/each}

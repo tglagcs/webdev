@@ -226,7 +226,7 @@ Two things follow. Per-tab feature state lives in **`storage.session`** under
 session-scoped, so entries for tabs open at shutdown used to persist forever
 and then collide with a reused id. And the numbered settings (`tool_3_url`,
 `resize_1_width`) are still flat, because the legacy options page reads and
-writes those exact names; collapsing them to arrays is migration v3, in the
+writes those exact names; collapsing them to arrays is migration v4, in the
 phase that rewrites that page.
 
 ### A shim must be imported _after_ the legacy file it overwrites
@@ -298,8 +298,9 @@ Phase 2 has landed the core: typed storage with ordered migrations, per-tab
 state in `storage.session`, generated message keys, the typed background
 contract, and `background.js`/`storage.js`/`locales.js`/`upgrade.js` deleted in
 favour of `src/lib` plus the two shims. Verified in-browser. Still open in this
-phase: collapsing the numbered settings (v3, deferred with the options page;
-v2 removed the `overlay_icon` and `display_overlay_with` options).
+phase: collapsing the numbered settings (v4, deferred with the options page;
+v2 removed the `overlay_icon` and `display_overlay_with` options, v3 the
+remembered popup menu).
 
 The `chrome.i18n` spike is half answered. `chrome.i18n.getMessage` **is**
 reachable from the page-side widgets — `Dashboard.closeLabel()` uses it in
@@ -428,6 +429,14 @@ and `.btn-danger`. The Theme select there is the only UI for the `theme`
 setting. Its options are added by `main.ts`, not the markup: `options.js`
 localises the syntax-highlighting select by the first `[value="dark"]` in the
 document.
+
+The popup opens on a Search tab, which is not a menu: every visible feature
+A–Z under the user's favourites (`favorites` in settings, starred from any
+row), narrowed by what is typed. Rows are `popup/FeatureRow.svelte` in both
+places, and only the menu copy carries the feature id as its element id. Its
+`<li>` must stay a block with the star positioned: `tools.js` and
+`resize.js` prepend the user's own entries inside the parent of
+`#edit-tools` / `#edit-resize-dimensions`.
 
 The JSON viewer is WebDev's own, not upstream's: `src/json-viewer` (Svelte)
 over `src/lib/json-view.ts` (parsing, paths, depth, search -- tested). One

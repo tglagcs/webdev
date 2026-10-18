@@ -29,8 +29,12 @@ export interface Confirmation {
   confirm: () => void;
 }
 
+/** A rail tab: one of the menus, or Search, which is not a menu of its own. */
+export type Tab = MenuId | "search";
+
 class PopupState {
-  menu = $state<MenuId>("cookies");
+  /** Search first, every time: it is where a feature is quickest to reach. */
+  menu = $state<Tab>("search");
   active = $state(new SvelteSet<string>());
   notification = $state<{ message: string; type: NotificationType } | null>(null);
   confirmation = $state<Confirmation | null>(null);
@@ -52,22 +56,30 @@ class PopupState {
     this.notification = { message, type };
   }
 
-  /** The menu the user was last on, so the popup reopens where they left it. */
-  async restoreMenu(menus: MenuId[]): Promise<void> {
-    // Stored as "cookies-toolbar" by the markup-driven popup, which keyed it
-    // by the tab element's id. The suffix is dropped on the way in rather than
-    // migrated, since it is a preference and costs nothing to reinterpret.
-    const stored = (await settings.get("menu"))?.replace(/-toolbar$/, "") as MenuId | undefined;
-
-    this.menu = stored && menus.includes(stored) ? stored : menus[0]!;
-  }
-
-  async selectMenu(menu: MenuId): Promise<void> {
+  selectMenu(menu: Tab): void {
     this.menu = menu;
     this.notification = null;
     this.confirmation = null;
+  }
 
-    await settings.set("menu", menu);
+  /** Starred feature ids, oldest first. */
+  favorites = $state<string[]>([]);
+
+  isFavorite(id: string): boolean {
+    return this.favorites.includes(id);
+  }
+
+  /** Drops ids the registry no longer has, so a removed feature leaves no hole. */
+  async restoreFavorites(known: Set<string>): Promise<void> {
+    this.favorites = (await settings.getOr("favorites", [])).filter((id) => known.has(id));
+  }
+
+  async toggleFavorite(id: string): Promise<void> {
+    this.favorites = this.isFavorite(id)
+      ? this.favorites.filter((favorite) => favorite !== id)
+      : [...this.favorites, id];
+
+    await settings.set("favorites", [...this.favorites]);
   }
 
   /** The tab the popup was opened over, which is what every feature acts on. */

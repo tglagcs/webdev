@@ -16,11 +16,7 @@
  */
 
 /** Bumped whenever MIGRATIONS gains an entry. */
-export const SCHEMA_VERSION = 2;
-
-// Type-only, so no runtime dependency from storage on the registry: the
-// popup's menu list is defined once, next to the features it groups.
-import type { MenuId } from "@/features/types";
+export const SCHEMA_VERSION = 3;
 
 export type Theme = "system" | "light" | "dark";
 
@@ -42,8 +38,11 @@ export interface Settings {
    */
   syntax_highlight_theme: string;
 
-  /** Which menu the popup was last on, so it reopens where the user left it. */
-  menu: MenuId;
+  /**
+   * The ids of the features the user starred, in the order they were starred.
+   * The popup's Search tab lists them first.
+   */
+  favorites: string[];
 
   /**
    * Whether the outline features also label each element with its tag name.
@@ -107,7 +106,7 @@ export type AnySettingKey = SettingKey | keyof NumberedSettings;
  * Keys nothing writes any more. Named only so a migration can delete them
  * without widening the accessor's key type back to string.
  */
-export type RemovedSettingKey = "icon_color" | "overlay_icon" | "display_overlay_with";
+export type RemovedSettingKey = "icon_color" | "overlay_icon" | "display_overlay_with" | "menu";
 
 /**
  * Defaults applied on install and after every migration, so a key added in a

@@ -31,7 +31,7 @@ import "@/app.css";
 import { WebDeveloper } from "@/legacy/globals";
 import { capabilities } from "@/lib/capabilities";
 import { initTheme } from "@/lib/theme";
-import { FEATURES, visibleMenus } from "@/features/registry";
+import { FEATURES } from "@/features/registry";
 import App from "./App.svelte";
 import { ui, type NotificationType } from "./ui.svelte";
 
@@ -81,7 +81,7 @@ if (capabilities.contentSettings) {
   await ui.restoreContentSettings(FEATURES);
 }
 
-await ui.restoreMenu(visibleMenus().map((menu) => menu.id));
+await ui.restoreFavorites(new Set(FEATURES.map((feature) => feature.id)));
 
 // What the popup shows as switched on is per tab, and the popup is opened over
 // one specific tab.

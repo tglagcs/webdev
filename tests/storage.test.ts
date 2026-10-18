@@ -133,6 +133,16 @@ describe("migrations", () => {
 
     expect(await browser.storage.local.get(["overlay_icon", "display_overlay_with"])).toEqual({});
   });
+
+  it("forgets the popup's last menu, now that it always opens on Search", async () => {
+    await browser.storage.local.set({ menu: "css", favorites: ["view-json"] });
+
+    await runMigrations();
+
+    expect(await browser.storage.local.get(["menu", "favorites"])).toEqual({
+      favorites: ["view-json"],
+    });
+  });
 });
 
 describe("seedDefaults", () => {

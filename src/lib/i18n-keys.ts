@@ -14,8 +14,10 @@ export type PlainMessageKey =
   | "addLabel"
   | "addResizeOption"
   | "addResponsiveLayout"
+  | "addToFavorites"
   | "addTool"
   | "addVerticalLineGuide"
+  | "allFeatures"
   | "alt"
   | "ancestors"
   | "anchor"
@@ -178,6 +180,8 @@ export type PlainMessageKey =
   | "extensionDescription"
   | "extensionGalleryError"
   | "extensionName"
+  | "favorites"
+  | "favoritesHint"
   | "findBrokenImages"
   | "findDuplicateIds"
   | "followOnTwitter"
@@ -264,6 +268,7 @@ export type PlainMessageKey =
   | "namePlaceholder"
   | "nextPosition"
   | "no"
+  | "noFeaturesFound"
   | "noHeadingText"
   | "none"
   | "options"
@@ -311,6 +316,7 @@ export type PlainMessageKey =
   | "reloadLinkedStyleSheetsResult"
   | "removeFormValidation"
   | "removeFormValidationSingleResult"
+  | "removeFromFavorites"
   | "removeMaximumLengths"
   | "removeMaximumLengthsSingleResult"
   | "replaceImagesWithAltAttributes"
@@ -331,6 +337,8 @@ export type PlainMessageKey =
   | "responsive_layout_6_description"
   | "ruler"
   | "save"
+  | "search"
+  | "searchFeatures"
   | "secure"
   | "secureCookie"
   | "selectAnElementDisplayInformation"
@@ -452,8 +460,10 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "addLabel",
   "addResizeOption",
   "addResponsiveLayout",
+  "addToFavorites",
   "addTool",
   "addVerticalLineGuide",
+  "allFeatures",
   "alt",
   "ancestors",
   "anchor",
@@ -640,6 +650,8 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "extensionDescription",
   "extensionGalleryError",
   "extensionName",
+  "favorites",
+  "favoritesHint",
   "findBrokenImages",
   "findDuplicateIds",
   "followOnTwitter",
@@ -734,6 +746,7 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "namePlaceholder",
   "nextPosition",
   "no",
+  "noFeaturesFound",
   "noHeadingText",
   "none",
   "options",
@@ -783,6 +796,7 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "removeFormValidation",
   "removeFormValidationMultipleResult",
   "removeFormValidationSingleResult",
+  "removeFromFavorites",
   "removeMaximumLengths",
   "removeMaximumLengthsMultipleResult",
   "removeMaximumLengthsSingleResult",
@@ -804,6 +818,8 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "responsive_layout_6_description",
   "ruler",
   "save",
+  "search",
+  "searchFeatures",
   "secure",
   "secureCookie",
   "selectAnElementDisplayInformation",
