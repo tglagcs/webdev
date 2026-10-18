@@ -2,12 +2,13 @@
 import { mount } from "svelte";
 
 import "@/app.css";
-import { t } from "@/lib/i18n";
+import { loadLanguage, t } from "@/lib/i18n";
 import { initTheme } from "@/lib/theme";
 import App from "./App.svelte";
 
-// Before the mount, so a dark setup never sees a light frame.
-await initTheme();
+// Before the mount, so a dark setup never sees a light frame and no label
+// is rendered in the browser's language first.
+await Promise.all([initTheme(), loadLanguage()]);
 
 document.title = t("jsonViewer");
 

@@ -309,6 +309,20 @@ and the ~40 call sites still pass pre-resolved strings through `args`.
 Converting them is a Phase 4 job, once the registry owns the payloads.
 `hasI18n()` in `lib/i18n.ts` is there for that check.
 
+That spike now has a second reason not to happen: Options → General →
+Language overrides the browser's language, and `chrome.i18n` cannot be told
+to. With `language` set, `lib/i18n` reads `_locales/<lang>/messages.json`
+itself, with en_US under it for untranslated keys, and resolves placeholders
+as `getMessage` would. It is loaded by a top-level await in
+`shims/locales.ts`, which holds back every legacy file imported after it,
+and explicitly in pages without the shim (the JSON viewer). Only strings
+resolved in an extension page follow it: the report pages and widgets get
+theirs from the popup, so they do too, but anything calling `chrome.i18n`
+directly in the page, and the badge tooltip in the worker, still use the
+browser's language. `ru` is complete; pt_BR still falls back for the newer
+keys. `smoke-serve.py` takes `?smoke-store={"language":"ru"}` to start a page
+with settings, since its storage is in memory.
+
 `Generated.addItem` takes the target id now. It used to assume `item-N`, which
 only the reports built through `Generated.output` use — the cookie and form
 reports label their entries `cookie-N` and `form-N`, so every sidebar link on

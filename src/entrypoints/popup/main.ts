@@ -30,6 +30,7 @@ import { mount } from "svelte";
 import "@/app.css";
 import { WebDeveloper } from "@/legacy/globals";
 import { capabilities } from "@/lib/capabilities";
+import { t } from "@/lib/i18n";
 import { initTheme } from "@/lib/theme";
 import { FEATURES } from "@/features/registry";
 import App from "./App.svelte";
@@ -93,4 +94,4 @@ if (tab?.id !== undefined) {
   await ui.restoreFeatures(tab.id);
 }
 
-document.title = browser.i18n.getMessage("extensionName");
+document.title = t("extensionName");

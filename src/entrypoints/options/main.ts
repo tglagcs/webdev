@@ -10,8 +10,9 @@ import "@/legacy/shims/storage";
 import "@/legacy/js/options/options.js";
 
 import "./style.css";
-import { t } from "@/lib/i18n";
+import { LANGUAGES, LANGUAGE_NAMES, t } from "@/lib/i18n";
 import { getOr, set } from "@/lib/storage/settings";
+import type { Language } from "@/lib/storage/schema";
 import { initTheme, setTheme, type Theme } from "@/lib/theme";
 
 // Bootstrap draws the select arrow, the close button and the check mark as
@@ -47,6 +48,20 @@ themeSelect.value = await getOr("theme", "system");
 
 themeSelect.addEventListener("change", () => {
   void setTheme(themeSelect.value as Theme);
+});
+
+// The page is reloaded on a change: options.js localised it once, at load,
+// and has no way to do it again.
+const languageSelect = document.getElementById("language") as HTMLSelectElement;
+
+document.querySelector('[for="language"]')!.append(t("language"));
+languageSelect.append(
+  new Option(t("languageAuto"), "auto"),
+  ...LANGUAGES.map((language) => new Option(LANGUAGE_NAMES[language], language)),
+);
+languageSelect.value = await getOr("language", "auto");
+languageSelect.addEventListener("change", () => {
+  void set("language", languageSelect.value as Language).then(() => location.reload());
 });
 
 // Not in options.js, which predates the JSON viewer.

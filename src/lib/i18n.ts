@@ -12,6 +12,8 @@
  */
 
 import type { MessageKey, PlainMessageKey, SubstitutedMessageKey } from "./i18n-keys";
+import type { Language } from "./storage/schema";
+import { getOr } from "./storage/settings";
 
 export type { MessageKey, PlainMessageKey, SubstitutedMessageKey };
 export { MESSAGE_KEYS } from "./i18n-keys";
@@ -23,10 +25,106 @@ export { MESSAGE_KEYS } from "./i18n-keys";
  * callers see, and they are stricter than WXT's, which make the substitution
  * optional on every message including the ones that need it.
  */
-const getMessage = browser.i18n.getMessage as (
+const browserMessage = browser.i18n.getMessage as (
   name: string,
   substitutions?: string | string[],
 ) => string;
+
+interface Message {
+  message: string;
+  placeholders?: Record<string, { content: string }>;
+}
+
+type Catalogue = Record<string, Message>;
+
+/**
+ * The catalogue the user picked in Options, and English under it for the
+ * keys a translation does not have yet. Both null while the setting is
+ * "auto", which leaves every lookup to the browser.
+ *
+ * chrome.i18n cannot be pointed at another language: it follows the
+ * browser's UI language and nothing else. So a chosen language means reading
+ * its messages.json ourselves and resolving it the way getMessage would.
+ */
+let chosen: Catalogue | null = null;
+let english: Catalogue | null = null;
+
+/** The languages there is a catalogue for, by their folder in _locales. */
+export const LANGUAGES = ["en_US", "ru", "pt_BR"] as const satisfies readonly Language[];
+
+/** Each language in its own name, which is how a language list should read. */
+export const LANGUAGE_NAMES: Record<(typeof LANGUAGES)[number], string> = {
+  en_US: "English",
+  ru: "Русский",
+  pt_BR: "Português (Brasil)",
+};
+
+/**
+ * Resolves a message as chrome.i18n does: each named placeholder through its
+ * positional content ("$count$" -> "$1" -> the first substitution), and "$$"
+ * as a literal dollar sign.
+ */
+export function format(entry: Message, substitutions?: string | string[]): string {
+  const values = substitutions === undefined ? [] : [substitutions].flat();
+  let text = entry.message;
+
+  for (const [name, { content }] of Object.entries(entry.placeholders ?? {})) {
+    const resolved = content.replace(/\$(\d)/g, (_match, index: string) => {
+      return values[Number(index) - 1] ?? "";
+    });
+
+    // A function replacement, so a "$" in the substituted value is literal.
+    text = text.replace(new RegExp(`\\$${name}\\$`, "gi"), () => resolved);
+  }
+
+  return text.replaceAll("$$", "$");
+}
+
+function getMessage(name: string, substitutions?: string | string[]): string {
+  const entry = chosen?.[name] ?? english?.[name];
+
+  return entry ? format(entry, substitutions) : browserMessage(name, substitutions);
+}
+
+async function fetchCatalogue(language: string): Promise<Catalogue> {
+  // WXT types getURL as the paths it built, and _locales is not among them.
+  const path = `/_locales/${language}/messages.json` as Parameters<
+    typeof browser.runtime.getURL
+  >[0];
+  const response = await fetch(browser.runtime.getURL(path));
+
+  return (await response.json()) as Catalogue;
+}
+
+/**
+ * Loads the language chosen in Options, if one was, before anything is
+ * rendered. Every extension page that resolves its own strings awaits this
+ * first; the legacy shim does so at its top level, which holds back every
+ * module imported after it. A catalogue that fails to load leaves the
+ * browser's language in place rather than a page of empty labels.
+ */
+export async function loadLanguage(): Promise<void> {
+  const language = await getOr("language", "auto");
+
+  chosen = null;
+  english = null;
+
+  if (!(LANGUAGES as readonly string[]).includes(language)) {
+    return;
+  }
+
+  try {
+    [chosen, english] = await Promise.all([
+      fetchCatalogue(language),
+      language === "en_US" ? Promise.resolve(null) : fetchCatalogue("en_US"),
+    ]);
+
+    document.documentElement.lang = language.replace("_", "-");
+  } catch {
+    chosen = null;
+    english = null;
+  }
+}
 
 export function t(key: PlainMessageKey): string;
 export function t(key: SubstitutedMessageKey, substitutions: string | string[]): string;

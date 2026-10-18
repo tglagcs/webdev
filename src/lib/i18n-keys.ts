@@ -238,6 +238,8 @@ export type PlainMessageKey =
   | "jsonViewerAuto"
   | "keyboard"
   | "label"
+  | "language"
+  | "languageAuto"
   | "layout"
   | "layouts"
   | "light"
@@ -738,6 +740,8 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "jsonViewerAuto",
   "keyboard",
   "label",
+  "language",
+  "languageAuto",
   "layout",
   "layouts",
   "light",

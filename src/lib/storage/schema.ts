@@ -20,6 +20,9 @@ export const SCHEMA_VERSION = 3;
 
 export type Theme = "system" | "light" | "dark";
 
+/** "auto" is the browser's language; the rest are folders in _locales. */
+export type Language = "auto" | "en_US" | "ru" | "pt_BR";
+
 export interface Settings {
   /** Set once the migrations for that version have run. Absent means v0. */
   schema_version: number;
@@ -54,6 +57,13 @@ export interface Settings {
   "outline.show.element.tag.names": boolean;
 
   // General
+  /**
+   * The language of the extension's own pages. Absent or "auto" follows the
+   * browser; anything else is loaded by lib/i18n in place of chrome.i18n.
+   * Not seeded, so an existing profile keeps following the browser.
+   */
+  language: Language;
+
   /**
    * The extension's own UI theme: "system", "light" or "dark". Only the
    * extension's pages and its in-page widgets follow it -- the feature

@@ -11,7 +11,12 @@
  */
 
 import { WebDeveloper } from "../globals";
-import { generatedLocale, tUnchecked } from "@/lib/i18n";
+import { generatedLocale, loadLanguage, tUnchecked } from "@/lib/i18n";
+
+// The language chosen in Options, loaded before any legacy file that imports
+// after this one is evaluated: a top-level await holds those back, so none of
+// them can resolve a string in the browser's language first.
+await loadLanguage();
 
 WebDeveloper.Locales = WebDeveloper.Locales || {};
 

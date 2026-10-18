@@ -79,6 +79,8 @@
   "text": { "message": "Text" },
   "theme": { "message": "Theme" },
   "themeSystem": { "message": "Same as the system" },
+  "language": { "message": "Language" },
+  "languageAuto": { "message": "Same as the browser" },
   "windowSizes": { "message": "Window Sizes" },
   "tools": { "message": "Tools" },
   "type": { "message": "Type" },

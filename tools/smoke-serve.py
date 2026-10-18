@@ -34,6 +34,14 @@ STUB = """
   // settings the options page reads back into form controls are seeded, or
   // they come up blank -- which says nothing about the build.
   const store = { populate_email_address: "example@example.com", syntax_highlight_theme: "light" };
+
+  // ?smoke-store={"language":"ru"} starts the page with those settings too,
+  // since this store is in memory and a reload would otherwise forget them.
+  try {
+    Object.assign(store, JSON.parse(new URLSearchParams(location.search).get("smoke-store") || "{}"));
+  } catch (error) {
+    console.error("SMOKE: smoke-store is not JSON", error);
+  }
   const session = {};
   let messages = {};
 
