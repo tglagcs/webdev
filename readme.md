@@ -2,7 +2,7 @@
 
 # <img src="src/public/img/logos/color/128.png" alt="" height="45" align="top"> WebDev
 
-<a href="#english"><img src="https://img.shields.io/badge/version-1.0.0-0097FF?style=flat-square" alt="Version"></a>
+<a href="#english"><img src="https://img.shields.io/badge/version-1.0.1-0097FF?style=flat-square" alt="Version"></a>
 <a href="license.txt"><img src="https://img.shields.io/badge/license-GPL--3.0-0097FF?style=flat-square" alt="License: GPL-3.0"></a>
 <img src="https://img.shields.io/badge/Manifest-V3-0097FF?style=flat-square" alt="Manifest V3">
 <img src="https://img.shields.io/badge/no%20telemetry-100%25%20local-0097FF?style=flat-square" alt="No telemetry">

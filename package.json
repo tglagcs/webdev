@@ -1,7 +1,7 @@
 {
   "name": "webdev",
-  "version": "1.0.0",
-  "description": "WebDev \u2014 a toolbar button with various web developer tools",
+  "version": "1.0.1",
+  "description": "WebDev — a toolbar button with various web developer tools",
   "license": "GPL-3.0",
   "private": true,
   "type": "module",
