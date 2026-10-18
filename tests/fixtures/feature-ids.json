@@ -324,6 +324,10 @@
     "stateful": false
   },
   {
+    "id": "view-json",
+    "stateful": false
+  },
+  {
     "id": "view-link-information",
     "stateful": false
   },

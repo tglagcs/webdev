@@ -72,6 +72,13 @@ export interface Settings {
    */
   popup_in_window: boolean;
 
+  /**
+   * Whether a JSON response opens in the JSON viewer rather than as the
+   * browser's plain text. On by default; Firefox's own viewer takes over
+   * first unless it is switched off in about:config.
+   */
+  json_viewer_auto: boolean;
+
   // Set by the in-page dashboard as the user drags it.
   dashboard_height: number;
 
@@ -110,12 +117,17 @@ export type RemovedSettingKey = "icon_color" | "overlay_icon" | "display_overlay
  */
 export const DEFAULTS: Pick<
   Settings,
-  "populate_email_address" | "syntax_highlight_theme" | "theme" | "popup_in_window"
+  | "populate_email_address"
+  | "syntax_highlight_theme"
+  | "theme"
+  | "popup_in_window"
+  | "json_viewer_auto"
 > = {
   populate_email_address: "example@example.com",
   syntax_highlight_theme: "light",
   theme: "system",
   popup_in_window: false,
+  json_viewer_auto: true,
 };
 
 /**

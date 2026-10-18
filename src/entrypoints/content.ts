@@ -6,11 +6,13 @@
 import "@/legacy/globals";
 import "@/legacy/shims/dom";
 
+import { mountJsonViewer } from "@/content/json";
 import { handleContentMessages } from "@/content/messages";
 
 export default defineContentScript({
   matches: ["<all_urls>"],
   main() {
     handleContentMessages();
+    void mountJsonViewer();
   },
 });

@@ -29,7 +29,7 @@ exports[`kinds > groups each menu the way the popup shows it 1`] = `
   "information": [
     "toggle:16",
     "action:0",
-    "report:8",
+    "report:9",
     "dialog:0",
   ],
   "miscellaneous": [

@@ -210,6 +210,28 @@ export type PlainMessageKey =
   | "information"
   | "internalBrowserPagesError"
   | "javaScript"
+  | "jsonCopied"
+  | "jsonCopy"
+  | "jsonCopyMinified"
+  | "jsonCopyPath"
+  | "jsonCopyValue"
+  | "jsonDownload"
+  | "jsonEdit"
+  | "jsonInvalid"
+  | "jsonItem"
+  | "jsonKey"
+  | "jsonLevel"
+  | "jsonNoMatches"
+  | "jsonNotFound"
+  | "jsonPastePrompt"
+  | "jsonPlain"
+  | "jsonPretty"
+  | "jsonRaw"
+  | "jsonSearch"
+  | "jsonTree"
+  | "jsonView"
+  | "jsonViewer"
+  | "jsonViewerAuto"
   | "keyboard"
   | "label"
   | "layout"
@@ -354,6 +376,7 @@ export type PlainMessageKey =
   | "viewDocumentOutline"
   | "viewFormInformation"
   | "viewImageInformation"
+  | "viewJSON"
   | "viewJavaScript"
   | "viewLinkInformation"
   | "viewMetaTagInformation"
@@ -397,6 +420,11 @@ export type SubstitutedMessageKey =
   | "enableAutoCompletionMultipleResult"
   | "enableFormFieldsMultipleResult"
   | "expandSelectElementsMultipleResult"
+  | "jsonErrorAt"
+  | "jsonItems"
+  | "jsonKeys"
+  | "jsonPrefix"
+  | "jsonShowMore"
   | "makeFormFieldsWritableMultipleResult"
   | "makeFramesResizableMultipleResult"
   | "makeImagesFullSizeMultipleResult"
@@ -644,6 +672,33 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "information",
   "internalBrowserPagesError",
   "javaScript",
+  "jsonCopied",
+  "jsonCopy",
+  "jsonCopyMinified",
+  "jsonCopyPath",
+  "jsonCopyValue",
+  "jsonDownload",
+  "jsonEdit",
+  "jsonErrorAt",
+  "jsonInvalid",
+  "jsonItem",
+  "jsonItems",
+  "jsonKey",
+  "jsonKeys",
+  "jsonLevel",
+  "jsonNoMatches",
+  "jsonNotFound",
+  "jsonPastePrompt",
+  "jsonPlain",
+  "jsonPrefix",
+  "jsonPretty",
+  "jsonRaw",
+  "jsonSearch",
+  "jsonShowMore",
+  "jsonTree",
+  "jsonView",
+  "jsonViewer",
+  "jsonViewerAuto",
   "keyboard",
   "label",
   "layout",
@@ -795,6 +850,7 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "viewDocumentOutline",
   "viewFormInformation",
   "viewImageInformation",
+  "viewJSON",
   "viewJavaScript",
   "viewLinkInformation",
   "viewMetaTagInformation",

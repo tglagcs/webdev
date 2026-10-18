@@ -11,7 +11,7 @@ import "@/legacy/js/options/options.js";
 
 import "./style.css";
 import { t } from "@/lib/i18n";
-import { getOr } from "@/lib/storage/settings";
+import { getOr, set } from "@/lib/storage/settings";
 import { initTheme, setTheme, type Theme } from "@/lib/theme";
 
 // Bootstrap draws the select arrow, the close button and the check mark as
@@ -47,4 +47,13 @@ themeSelect.value = await getOr("theme", "system");
 
 themeSelect.addEventListener("change", () => {
   void setTheme(themeSelect.value as Theme);
+});
+
+// Not in options.js, which predates the JSON viewer.
+const jsonViewerAuto = document.getElementById("json_viewer_auto") as HTMLInputElement;
+
+document.querySelector('[for="json_viewer_auto"]')!.append(t("jsonViewerAuto"));
+jsonViewerAuto.checked = await getOr("json_viewer_auto", true);
+jsonViewerAuto.addEventListener("change", () => {
+  void set("json_viewer_auto", jsonViewerAuto.checked);
 });

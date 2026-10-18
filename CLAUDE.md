@@ -429,6 +429,18 @@ setting. Its options are added by `main.ts`, not the markup: `options.js`
 localises the syntax-highlighting select by the first `[value="dark"]` in the
 document.
 
+The JSON viewer is WebDev's own, not upstream's: `src/json-viewer` (Svelte)
+over `src/lib/json-view.ts` (parsing, paths, depth, search -- tested). One
+page, `json-viewer.html`, reached three ways: framed by the content script
+over a JSON response (`?embed`, unless `json_viewer_auto` is off), opened
+from the popup's View JSON (`?tab=`, which asks that tab's content script for
+`get-json`), or on its own to paste into. The frame is its own
+`web_accessible_resources` entry without `use_dynamic_url`, and it gets the
+document by a ready/answer handshake (`lib/json-embed.ts`) because the page
+cannot know when the frame's module has loaded. Firefox's built-in viewer
+takes JSON documents first, so auto mode there needs
+`devtools.jsonview.enabled` off.
+
 Then the Svelte popup behind a typed feature registry. Full plan:
 `~/.claude/plans/chrispederick-web-developer-https-githu-adaptive-marble.md`.
 

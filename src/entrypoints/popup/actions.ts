@@ -35,6 +35,13 @@ export interface ActionContext {
    */
   requirePage(): number | undefined;
 
+  /**
+   * The same tab, without the refusal: for an action that still has
+   * something to do on a page it cannot read, such as View JSON opening an
+   * empty viewer to paste into.
+   */
+  pageTab(): { id: number; index: number; windowId: number } | undefined;
+
   notify(message: string, type?: NotificationType): void;
 
   /**
@@ -156,6 +163,18 @@ async function pageCookies(
 }
 
 export const POPUP_ACTIONS: Record<string, PopupAction> = {
+  // Opens the viewer in a tab of its own, beside the page. The viewer asks
+  // the page's content script for the document itself, so nothing as large
+  // as a JSON response is passed through the popup or put in storage.
+  "view-json": async ({ pageTab }) => {
+    const tab = pageTab();
+    const url = browser.runtime.getURL("/json-viewer.html");
+
+    await browser.tabs.create(
+      tab ? { url: `${url}?tab=${tab.id}`, index: tab.index + 1, windowId: tab.windowId } : { url },
+    );
+  },
+
   "clear-cache": ({ confirm, notify }) => {
     confirm(t("clearCacheConfirmation"), t("clear"), "trash", () => {
       // since: 0 is everything, not nothing -- the argument is the point in

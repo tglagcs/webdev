@@ -71,7 +71,7 @@ class PopupState {
   }
 
   /** The tab the popup was opened over, which is what every feature acts on. */
-  tab = $state<{ id?: number; url?: string } | null>(null);
+  tab = $state<{ id?: number; url?: string; index: number; windowId: number } | null>(null);
 
   /**
    * Runs a feature, by whichever route it declares.
@@ -178,6 +178,15 @@ class PopupState {
         }
 
         return this.tab?.id;
+      },
+      pageTab: () => {
+        const tab = this.tab;
+
+        if (!tab || tab.id === undefined || refusalFor(tab.url)) {
+          return undefined;
+        }
+
+        return { id: tab.id, index: tab.index, windowId: tab.windowId };
       },
     });
   }

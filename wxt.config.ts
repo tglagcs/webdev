@@ -91,6 +91,14 @@ export default defineConfig({
           // manifest for the same reason.
           ...(chromium ? { use_dynamic_url: true } : {}),
         },
+        {
+          // The JSON viewer, framed over JSON responses by the content
+          // script. Its own entry, without use_dynamic_url: the frame is a
+          // whole extension page that loads its chunks from its own origin,
+          // and that origin has to be the extension's fixed one.
+          matches: ["<all_urls>"],
+          resources: ["json-viewer.html"],
+        },
       ],
     };
   },

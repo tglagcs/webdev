@@ -15,6 +15,7 @@
 import { getColors } from "./colors";
 import { getDomainCookies, getPathCookies, type Cookie } from "./cookies";
 import { getForms } from "./forms";
+import { getJson } from "./json";
 import {
   getDocumentDetails,
   getLinks,
@@ -41,6 +42,7 @@ const HANDLERS = {
   "get-forms": getForms,
   "get-images": getImages,
   "get-javascript": getJavaScript,
+  "get-json": getJson,
   "get-links": getLinks,
   "get-location-details": getLocationDetails,
   "get-meta-tags": getMetaTags,

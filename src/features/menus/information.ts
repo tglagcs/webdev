@@ -224,6 +224,15 @@ export const INFORMATION_FEATURES: Feature[] = [
     handler: "WebDeveloper.Overlay.Information.viewJavaScript",
   },
   {
+    // Not one that shipped: WebDev's own, so it runs from the popup rather
+    // than through a legacy handler.
+    id: "view-json",
+    labelKey: "viewJSON",
+    column: 3,
+    kind: "report",
+    popupAction: true,
+  },
+  {
     id: "view-link-information",
     labelKey: "viewLinkInformation",
     column: 3,
