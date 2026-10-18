@@ -125,6 +125,14 @@ describe("migrations", () => {
 
     expect(await browser.storage.local.get("icon_color")).toEqual({});
   });
+
+  it("removes the deleted icon and tab-label settings", async () => {
+    await browser.storage.local.set({ overlay_icon: "gray", display_overlay_with: "icons" });
+
+    await runMigrations();
+
+    expect(await browser.storage.local.get(["overlay_icon", "display_overlay_with"])).toEqual({});
+  });
 });
 
 describe("seedDefaults", () => {
@@ -132,7 +140,6 @@ describe("seedDefaults", () => {
     await seedDefaults();
 
     expect(await settings.get("populate_email_address")).toBe("example@example.com");
-    expect(await settings.get("overlay_icon")).toBe("color");
     // Highlighting is on out of the box; upstream shipped it off.
     expect(await settings.get("syntax_highlight_theme")).toBe("light");
     expect(await settings.get("tool_count")).toBe(DEFAULT_TOOLS.length);

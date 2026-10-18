@@ -30,11 +30,10 @@ STUB = """
 // Minimal stand-in for the extension APIs the pages call while loading.
 (() => {
   // A never-installed profile is a state that does not occur: the worker
-  // seeds the defaults on install, and there is no worker here. Without at
-  // least the two the options page reads back into form controls, it crashes
-  // on getElementById("overlay_icon_" + null) -- a false positive that says
-  // nothing about the build.
-  const store = { overlay_icon: "color", display_overlay_with: "icons_text" };
+  // seeds the defaults on install, and there is no worker here. So the
+  // settings the options page reads back into form controls are seeded, or
+  // they come up blank -- which says nothing about the build.
+  const store = { populate_email_address: "example@example.com", syntax_highlight_theme: "light" };
   const session = {};
   let messages = {};
 

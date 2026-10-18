@@ -16,7 +16,6 @@ export type PlainMessageKey =
   | "addResponsiveLayout"
   | "addTool"
   | "addVerticalLineGuide"
-  | "advanced"
   | "alt"
   | "ancestors"
   | "anchor"
@@ -129,7 +128,6 @@ export type PlainMessageKey =
   | "displayLineGuides"
   | "displayLinkDetails"
   | "displayObjectInformation"
-  | "displayOverlayWith"
   | "displayPasswords"
   | "displayPasswordsSingleResult"
   | "displayPrintStyles"
@@ -187,7 +185,6 @@ export type PlainMessageKey =
   | "forms"
   | "from"
   | "general"
-  | "gray"
   | "groupActions"
   | "groupDialogs"
   | "groupReports"
@@ -207,8 +204,6 @@ export type PlainMessageKey =
   | "hostPlaceholder"
   | "hoverColor"
   | "httpOnly"
-  | "icons"
-  | "iconsText"
   | "id"
   | "image"
   | "images"
@@ -242,7 +237,6 @@ export type PlainMessageKey =
   | "method"
   | "miscellaneous"
   | "missingHeading"
-  | "monochrome"
   | "name"
   | "nameCannotBeEmpty"
   | "namePlaceholder"
@@ -274,7 +268,6 @@ export type PlainMessageKey =
   | "outlineTableCaptions"
   | "outlineTableCells"
   | "outlineTables"
-  | "overlayIcon"
   | "password"
   | "path"
   | "pathCannotBeEmpty"
@@ -307,7 +300,6 @@ export type PlainMessageKey =
   | "resizeWindowMenu"
   | "resize_1_description"
   | "responseHeaders"
-  | "responsive"
   | "responsiveLayouts"
   | "responsive_layout_1_description"
   | "responsive_layout_2_description"
@@ -375,6 +367,7 @@ export type PlainMessageKey =
   | "widthCannotBeEmpty"
   | "widthNotValid"
   | "widthPlaceholder"
+  | "windowSizes"
   | "yLabel"
   | "yes";
 
@@ -433,7 +426,6 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "addResponsiveLayout",
   "addTool",
   "addVerticalLineGuide",
-  "advanced",
   "alt",
   "ancestors",
   "anchor",
@@ -565,7 +557,6 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "displayLineGuides",
   "displayLinkDetails",
   "displayObjectInformation",
-  "displayOverlayWith",
   "displayPasswords",
   "displayPasswordsMultipleResult",
   "displayPasswordsSingleResult",
@@ -628,7 +619,6 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "forms",
   "from",
   "general",
-  "gray",
   "groupActions",
   "groupDialogs",
   "groupReports",
@@ -648,8 +638,6 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "hostPlaceholder",
   "hoverColor",
   "httpOnly",
-  "icons",
-  "iconsText",
   "id",
   "image",
   "images",
@@ -686,7 +674,6 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "method",
   "miscellaneous",
   "missingHeading",
-  "monochrome",
   "name",
   "nameCannotBeEmpty",
   "namePlaceholder",
@@ -718,7 +705,6 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "outlineTableCaptions",
   "outlineTableCells",
   "outlineTables",
-  "overlayIcon",
   "password",
   "path",
   "pathCannotBeEmpty",
@@ -754,7 +740,6 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "resizeWindowMenu",
   "resize_1_description",
   "responseHeaders",
-  "responsive",
   "responsiveLayouts",
   "responsive_layout_1_description",
   "responsive_layout_2_description",
@@ -823,6 +808,7 @@ export const MESSAGE_KEYS: ReadonlySet<string> = new Set([
   "widthCannotBeEmpty",
   "widthNotValid",
   "widthPlaceholder",
+  "windowSizes",
   "yLabel",
   "yes"
 ]);

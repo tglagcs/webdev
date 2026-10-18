@@ -114,8 +114,8 @@ statements of a concatenated script.
 So in `entrypoints/background.ts`: every `addListener` at module scope, and
 anything else inside `defineBackground`'s `main()`. That split is also load
 bearing for `wxt prepare`, which **imports the entrypoint** to read its options
-against a fake browser that implements listeners but not `action.setIcon` — a
-top-level `updateActionIcon()` fails the build with a `MockNotImplementedError`
+against a fake browser that implements listeners but not the `action` API — a
+top-level `setBadgeColour()` fails the build with a `MockNotImplementedError`
 pointing into `src/lib`, not into WXT.
 
 Subscribing to `runtime.onStartup` is what makes the browser wake the worker at
@@ -226,7 +226,7 @@ Two things follow. Per-tab feature state lives in **`storage.session`** under
 session-scoped, so entries for tabs open at shutdown used to persist forever
 and then collide with a reused id. And the numbered settings (`tool_3_url`,
 `resize_1_width`) are still flat, because the legacy options page reads and
-writes those exact names; collapsing them to arrays is migration v2, in the
+writes those exact names; collapsing them to arrays is migration v3, in the
 phase that rewrites that page.
 
 ### A shim must be imported _after_ the legacy file it overwrites
@@ -298,7 +298,8 @@ Phase 2 has landed the core: typed storage with ordered migrations, per-tab
 state in `storage.session`, generated message keys, the typed background
 contract, and `background.js`/`storage.js`/`locales.js`/`upgrade.js` deleted in
 favour of `src/lib` plus the two shims. Verified in-browser. Still open in this
-phase: collapsing the numbered settings (v2, deferred with the options page).
+phase: collapsing the numbered settings (v3, deferred with the options page;
+v2 removed the `overlay_icon` and `display_overlay_with` options).
 
 The `chrome.i18n` spike is half answered. `chrome.i18n.getMessage` **is**
 reachable from the page-side widgets — `Dashboard.closeLabel()` uses it in

@@ -124,17 +124,13 @@
                aria-[current=true]:text-ink aria-[current=true]:shadow-sm"
         onclick={() => ui.selectMenu(menu.id)}
       >
-        {#if ui.labels !== "text"}
-          <svg
-            class="size-4 shrink-0 {menu.id === current.id ? 'text-accent' : ''}"
-            aria-hidden="true"
-          >
-            <use href={menuIcon(menu.id)}></use>
-          </svg>
-        {/if}
-        {#if ui.labels !== "icons"}
-          <span class="truncate">{menuName(menu.id)}</span>
-        {/if}
+        <svg
+          class="size-4 shrink-0 {menu.id === current.id ? 'text-accent' : ''}"
+          aria-hidden="true"
+        >
+          <use href={menuIcon(menu.id)}></use>
+        </svg>
+        <span class="truncate">{menuName(menu.id)}</span>
       </button>
     {/each}
   </nav>

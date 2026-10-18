@@ -73,7 +73,6 @@ mount(App, { target: document.getElementById("app")! });
 
 flushDomReady();
 
-await ui.restoreLabels();
 await ui.restoreSettings(FEATURES);
 
 // Chromium only, and asked of the browser rather than of our own storage --

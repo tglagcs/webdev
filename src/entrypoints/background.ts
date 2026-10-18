@@ -10,7 +10,7 @@
  * script; here it is deliberate.
  */
 
-import { setBadgeColour, updateActionIcon, updateBadge } from "@/lib/badge";
+import { setBadgeColour, updateBadge } from "@/lib/badge";
 import { resetAllowedContentSettings } from "@/lib/content-settings";
 import { handleBackgroundMessages } from "@/lib/messaging";
 import { seedDefaults } from "@/lib/storage/defaults";
@@ -171,7 +171,6 @@ browser.runtime.onInstalled.addListener((details) => {
     await runMigrations();
     await seedDefaults();
     await settings.set("version", browser.runtime.getManifest().version);
-    await updateActionIcon();
   })();
 });
 
@@ -191,10 +190,9 @@ export default defineBackground(() => {
   //
   // In main() rather than at module scope because WXT imports this file
   // during `wxt prepare` to read the entrypoint's options, against a fake
-  // browser that implements listeners but not setIcon. Listeners still have
+  // browser that implements listeners but not the action API. Listeners still have
   // to be registered above, at the top level, or the worker misses the event
   // that woke it.
   void setBadgeColour();
-  void updateActionIcon();
   void applyPopupMode();
 });

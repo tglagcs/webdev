@@ -245,20 +245,6 @@ WebDeveloper.Overlay.isValidTab = function(tab)
   return true;
 };
 
-// Labels a menu
-WebDeveloper.Overlay.labelMenu = function(menu, label, displayOverlayWith)
-{
-  // If the display overlay with setting is set to icons only
-  if(displayOverlayWith == "icons")
-  {
-    menu.setAttribute("title", label);
-  }
-  else
-  {
-    menu.append(label);
-  }
-};
-
 // Handles any overlay messages
 WebDeveloper.Overlay.message = function(message, sender, sendResponse)
 {

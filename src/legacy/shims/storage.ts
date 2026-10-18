@@ -18,7 +18,7 @@
  */
 
 import { WebDeveloper } from "../globals";
-import { updateActionIcon, updateBadge } from "@/lib/badge";
+import { updateBadge } from "@/lib/badge";
 import * as settings from "@/lib/storage/settings";
 import type { AnySettingKey } from "@/lib/storage/schema";
 import * as tabState from "@/lib/storage/tab-state";
@@ -89,8 +89,4 @@ WebDeveloper.Storage.toggleFeatureOnTab = function (
 
 WebDeveloper.Storage.updateBadgeText = function (tabId: number, callback?: () => void): void {
   void updateBadge(tabId).then(() => callback?.());
-};
-
-WebDeveloper.Storage.updateOverlayIcon = function (): void {
-  void updateActionIcon();
 };

@@ -208,11 +208,24 @@ WebDeveloper.Options.initialize = function()
 {
   var hash = window.location.hash;
 
+  // Shows a tab by its id, if the page still has one by that name -- the
+  // stored option can name a tab that has since been removed, like Advanced
+  var showTab = function(id)
+  {
+    var tab = document.querySelector("#" + id + " > a");
+
+    // If the tab exists
+    if(tab)
+    {
+      bootstrap.Tab.getOrCreateInstance(tab).show();
+    }
+  };
+
   // If the hash is set
   if(hash)
   {
     WebDeveloper.Storage.setItem("option", hash);
-    bootstrap.Tab.getOrCreateInstance(document.querySelector("#" + hash + " > a")).show();
+    showTab(hash);
   }
   else
   {
@@ -221,12 +234,11 @@ WebDeveloper.Options.initialize = function()
       // If the option is set
       if(option)
       {
-        bootstrap.Tab.getOrCreateInstance(document.querySelector("#" + option + " > a")).show();
+        showTab(option);
       }
     });
   }
 
-  WebDeveloper.Options.initializeAdvancedTab();
   WebDeveloper.Options.initializeColorsTab();
   WebDeveloper.Options.initializeGeneralTab();
   WebDeveloper.Options.initializeResizeTab();
@@ -236,19 +248,6 @@ WebDeveloper.Options.initialize = function()
 
   document.getElementById("delete-submit").addEventListener("click", WebDeveloper.Options.deleteOptionSubmit);
   document.querySelector(".nav-tabs").addEventListener("click", WebDeveloper.Options.changeTab);
-};
-
-// Initializes the advanced tab
-WebDeveloper.Options.initializeAdvancedTab = function()
-{
-  var populateEmailAddress = document.getElementById("populate_email_address");
-
-  WebDeveloper.Storage.getItem("populate_email_address", function(item)
-  {
-    populateEmailAddress.value = item;
-  });
-
-  populateEmailAddress.addEventListener("change", WebDeveloper.Options.updatePopulateEmailAddress);
 };
 
 // Initializes the colors tab
@@ -267,16 +266,11 @@ WebDeveloper.Options.initializeColorsTab = function()
 // Initializes the general tab
 WebDeveloper.Options.initializeGeneralTab = function()
 {
-  var displayOverlayWith = document.getElementById("display_overlay_with");
+  var populateEmailAddress = document.getElementById("populate_email_address");
 
-  WebDeveloper.Storage.getItem("display_overlay_with", function(item)
+  WebDeveloper.Storage.getItem("populate_email_address", function(item)
   {
-    displayOverlayWith.value = item;
-  });
-
-  WebDeveloper.Storage.getItem("overlay_icon", function(item)
-  {
-    document.getElementById("overlay_icon_" + item).checked = true;
+    populateEmailAddress.value = item;
   });
 
   WebDeveloper.Storage.getItem("popup_in_window", function(item)
@@ -285,8 +279,7 @@ WebDeveloper.Options.initializeGeneralTab = function()
   });
 
   document.getElementById("popup_in_window").addEventListener("change", WebDeveloper.Options.updatePopupInWindow);
-  displayOverlayWith.addEventListener("change", WebDeveloper.Options.updateDisplayOverlayWith);
-  document.getElementById("overlay-icon-form").addEventListener("change", WebDeveloper.Options.updateOverlayIcon);
+  populateEmailAddress.addEventListener("change", WebDeveloper.Options.updatePopulateEmailAddress);
 };
 
 // Initializes the resize tab
@@ -526,29 +519,19 @@ WebDeveloper.Options.localize = function()
 
   document.title = extensionName + " " + WebDeveloper.Locales.getString("options");
 
-  document.getElementById("advanced-tab").querySelector("a").append(WebDeveloper.Locales.getString("advanced"));
-  document.getElementById("colors-tab").querySelector("a").append(WebDeveloper.Locales.getString("colors"));
   document.getElementById("delete-dialog").querySelector(".btn-outline-secondary").append(WebDeveloper.Locales.getString("cancel"));
   document.getElementById("delete-submit").append(WebDeveloper.Locales.getString("delete"));
   document.getElementById("general-tab").querySelector("a").append(WebDeveloper.Locales.getString("general"));
   document.getElementById("resize-tab").querySelector("a").append(WebDeveloper.Locales.getString("resize"));
-  document.getElementById("responsive-layouts-tab").querySelector("a").append(WebDeveloper.Locales.getString("responsive"));
   document.getElementById("tools-tab").querySelector("a").append(WebDeveloper.Locales.getString("tools"));
   document.querySelector(".navbar-brand span").replaceChildren(extensionName + " " + WebDeveloper.Locales.getString("options"));
   document.querySelector("h1.visually-hidden").replaceChildren(extensionName + " " + WebDeveloper.Locales.getString("options"));
 
-  WebDeveloper.Options.localizeAdvancedTab();
   WebDeveloper.Options.localizeColorsTab();
   WebDeveloper.Options.localizeGeneralTab();
   WebDeveloper.Options.localizeResizeTab();
   WebDeveloper.Options.localizeResponsiveLayoutsTab();
   WebDeveloper.Options.localizeToolsTab();
-};
-
-// Localizes the advanced tab
-WebDeveloper.Options.localizeAdvancedTab = function()
-{
-  document.querySelector('[for="populate_email_address"]').append(WebDeveloper.Locales.getString("populateEmailAddress"));
 };
 
 // Localizes the colors tab
@@ -565,15 +548,8 @@ WebDeveloper.Options.localizeColorsTab = function()
 // Localizes the general tab
 WebDeveloper.Options.localizeGeneralTab = function()
 {
-  document.getElementById("overlay-icon").append(WebDeveloper.Locales.getString("overlayIcon"));
-  document.querySelector('[for="display_overlay_with"]').append(WebDeveloper.Locales.getString("displayOverlayWith"));
   document.querySelector('[for="popup_in_window"]').append(WebDeveloper.Locales.getString("popupInWindow"));
-  document.querySelector('[for="overlay_icon_color"]').append(WebDeveloper.Locales.getString("color"));
-  document.querySelector('[for="overlay_icon_gray"]').append(WebDeveloper.Locales.getString("gray"));
-  document.querySelector('[for="overlay_icon_monochrome"]').append(WebDeveloper.Locales.getString("monochrome"));
-  document.querySelector('[value="icons_text"]').append(WebDeveloper.Locales.getString("iconsText"));
-  document.querySelector('[value="icons"]').append(WebDeveloper.Locales.getString("icons"));
-  document.querySelector('[value="text"]').append(WebDeveloper.Locales.getString("text"));
+  document.querySelector('[for="populate_email_address"]').append(WebDeveloper.Locales.getString("populateEmailAddress"));
 };
 
 // Localizes the resize tab
@@ -855,18 +831,6 @@ WebDeveloper.Options.toolsClick = function(event)
 WebDeveloper.Options.updatePopupInWindow = function()
 {
   WebDeveloper.Storage.setItem("popup_in_window", document.getElementById("popup_in_window").checked);
-};
-
-// Updates the display overlay with setting
-WebDeveloper.Options.updateDisplayOverlayWith = function()
-{
-  WebDeveloper.Storage.setItem("display_overlay_with", document.getElementById("display_overlay_with").value);
-};
-
-// Updates the overlay icon with setting
-WebDeveloper.Options.updateOverlayIcon = function(event)
-{
-  WebDeveloper.Storage.setItem("overlay_icon", event.target.value, WebDeveloper.Storage.updateOverlayIcon);
 };
 
 // Updates the populate email address

@@ -85,6 +85,14 @@ async function toV1(): Promise<void> {
 }
 
 /**
+ * Two options taken out: the toolbar icon is always the colour logo, and the
+ * popup tabs always show both icon and name.
+ */
+async function toV2(): Promise<void> {
+  await settings.remove(["overlay_icon", "display_overlay_with"]);
+}
+
+/**
  * Keyed by the version each one produces. Adding an entry means bumping
  * SCHEMA_VERSION in schema.ts to match.
  *
@@ -95,6 +103,7 @@ async function toV1(): Promise<void> {
  */
 const MIGRATIONS: Record<number, () => Promise<void>> = {
   1: toV1,
+  2: toV2,
 };
 
 /** Runs every migration the profile has not seen, oldest first. */

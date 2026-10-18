@@ -38,6 +38,9 @@ const THEMES: [Theme, string][] = [
   ["dark", t("dark")],
 ];
 
+document.getElementById("resize-options-heading")!.append(t("windowSizes"));
+document.getElementById("responsive-layouts-heading")!.append(t("responsiveLayouts"));
+
 document.querySelector('[for="theme"]')!.append(t("theme"));
 themeSelect.append(...THEMES.map(([value, label]) => new Option(label, value)));
 themeSelect.value = await getOr("theme", "system");

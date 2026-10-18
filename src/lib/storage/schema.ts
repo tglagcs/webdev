@@ -11,19 +11,17 @@
  * planned, but the legacy options page reads and writes the numbered keys
  * directly; converting the store while that reader is still shipping would
  * mean an adapter that synthesises the old names, which is more throwaway
- * code than the collapse saves. It becomes migration v2 in the phase that
+ * code than the collapse saves. It becomes a migration in the phase that
  * rewrites the options page, when there is only one reader left.
  */
 
 /** Bumped whenever MIGRATIONS gains an entry. */
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 
 // Type-only, so no runtime dependency from storage on the registry: the
 // popup's menu list is defined once, next to the features it groups.
 import type { MenuId } from "@/features/types";
 
-export type OverlayIcon = "color" | "gray" | "monochrome";
-export type DisplayOverlayWith = "icons_text" | "icons" | "text";
 export type Theme = "system" | "light" | "dark";
 
 export interface Settings {
@@ -33,7 +31,7 @@ export interface Settings {
   /** Last version that ran the install/update hook. */
   version: string;
 
-  // Advanced
+  /** What Populate Form Fields types into an e-mail field. */
   populate_email_address: string;
 
   /**
@@ -63,9 +61,6 @@ export interface Settings {
    * stylesheets injected into other people's pages stay theme-blind.
    */
   theme: Theme;
-
-  display_overlay_with: DisplayOverlayWith;
-  overlay_icon: OverlayIcon;
 
   /**
    * Whether the toolbar button opens a standalone window instead of a popup.
@@ -105,7 +100,7 @@ export type AnySettingKey = SettingKey | keyof NumberedSettings;
  * Keys nothing writes any more. Named only so a migration can delete them
  * without widening the accessor's key type back to string.
  */
-export type RemovedSettingKey = "icon_color";
+export type RemovedSettingKey = "icon_color" | "overlay_icon" | "display_overlay_with";
 
 /**
  * Defaults applied on install and after every migration, so a key added in a
@@ -115,18 +110,11 @@ export type RemovedSettingKey = "icon_color";
  */
 export const DEFAULTS: Pick<
   Settings,
-  | "populate_email_address"
-  | "syntax_highlight_theme"
-  | "theme"
-  | "display_overlay_with"
-  | "overlay_icon"
-  | "popup_in_window"
+  "populate_email_address" | "syntax_highlight_theme" | "theme" | "popup_in_window"
 > = {
   populate_email_address: "example@example.com",
   syntax_highlight_theme: "light",
   theme: "system",
-  display_overlay_with: "icons_text",
-  overlay_icon: "color",
   popup_in_window: false,
 };
 

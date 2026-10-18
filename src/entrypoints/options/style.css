@@ -225,7 +225,7 @@
   --bs-btn-hover-color: var(--wd-off);
 }
 
-/* Tables, alerts, the modal. */
+/* Tables and the modal. */
 
 [data-wd-theme] .table {
   --bs-table-bg: transparent;
@@ -253,14 +253,7 @@
   text-transform: uppercase;
 }
 
-[data-wd-theme] .alert-warning {
-  --bs-alert-bg: color-mix(in srgb, var(--wd-warn) 10%, transparent);
-  --bs-alert-border-color: color-mix(in srgb, var(--wd-warn) 40%, transparent);
-  --bs-alert-color: var(--wd-ink);
-  font-size: 0.8125rem;
-}
-
-[data-wd-theme] .alert-warning .bi {
+[data-wd-theme] #syntax-highlight-performance .bi {
   color: var(--wd-warn);
 }
 

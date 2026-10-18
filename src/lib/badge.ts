@@ -1,5 +1,5 @@
 /**
- * The toolbar button: badge count, tooltip and icon.
+ * The toolbar button: badge count and tooltip.
  *
  * Split out of the old storage.js, which owned both the per-tab state and
  * everything that displayed it. The tooltip was assembled from hardcoded
@@ -10,10 +10,6 @@
 import { BADGE_COLOUR, NAME } from "@/branding";
 import { t } from "./i18n";
 import { getFeaturesOnTab } from "./storage/tab-state";
-import { getOr } from "./storage/settings";
-import type { OverlayIcon } from "./storage/schema";
-
-const ICON_SIZES = [16, 32, 48, 64, 128, 256] as const;
 
 /** Reflects the number of features applied to a tab onto its button. */
 export async function updateBadge(tabId: number): Promise<void> {
@@ -30,16 +26,6 @@ export async function updateBadge(tabId: number): Promise<void> {
     browser.action.setBadgeText({ text, tabId }),
     browser.action.setTitle({ title, tabId }),
   ]);
-}
-
-/** Applies the icon variant the user picked in the options. */
-export async function updateActionIcon(): Promise<void> {
-  const variant = await getOr("overlay_icon", "color" as OverlayIcon);
-  const path = Object.fromEntries(
-    ICON_SIZES.map((size) => [size, `/img/logos/${variant}/${size}.png`]),
-  );
-
-  await browser.action.setIcon({ path });
 }
 
 export async function setBadgeColour(): Promise<void> {

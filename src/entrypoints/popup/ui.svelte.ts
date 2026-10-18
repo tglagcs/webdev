@@ -18,7 +18,7 @@ import { clearContentSettings, isBlocked } from "@/lib/content-settings";
 import { runFeature } from "./bridge";
 import { POPUP_ACTIONS } from "./actions";
 import { t } from "@/lib/i18n";
-import type { DisplayOverlayWith, SettingKey } from "@/lib/storage/schema";
+import type { SettingKey } from "@/lib/storage/schema";
 
 export type NotificationType = "success" | "info" | "warning" | "danger";
 
@@ -33,9 +33,6 @@ class PopupState {
   menu = $state<MenuId>("cookies");
   active = $state(new SvelteSet<string>());
   notification = $state<{ message: string; type: NotificationType } | null>(null);
-
-  /** Whether the tabs show their icon, their name, or both. */
-  labels = $state<DisplayOverlayWith>("icons_text");
   confirmation = $state<Confirmation | null>(null);
 
   isActive(id: string): boolean {
@@ -53,10 +50,6 @@ class PopupState {
   notify(message: string, type: NotificationType = "success"): void {
     this.confirmation = null;
     this.notification = { message, type };
-  }
-
-  async restoreLabels(): Promise<void> {
-    this.labels = await settings.getOr("display_overlay_with", "icons_text");
   }
 
   /** The menu the user was last on, so the popup reopens where they left it. */

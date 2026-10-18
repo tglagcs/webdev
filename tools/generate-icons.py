@@ -7,13 +7,9 @@ this script instead:
 
     python tools/generate-icons.py
 
-Three variants are produced, matching the `overlay_icon` option:
-
-  color       the logo as authored
-  gray        desaturated, tinted slightly blue so it reads as "inactive"
-              rather than "washed out" against browser chrome
-  monochrome  flat #212121 silhouette taken from the alpha channel, for
-              users who want the toolbar button to match a monochrome theme
+One variant is produced, the logo as authored. The gray and monochrome ones
+went with the option that chose between them; the toolbar button is always
+the colour logo.
 
 The SVGs are redrawn parametrically rather than traced, because the raster
 logo is a soft-shaded render and a trace of it would carry that shading into
@@ -34,13 +30,6 @@ SVG_OUTPUT = ROOT / "common" / "svg" / "logos"
 
 SIZES = (16, 32, 48, 64, 128, 256)
 
-# Blue-ish tint applied to the desaturated logo. Derived from the neutral the
-# upstream gray icons sat at (178, 182, 195) -- a flat gray looks muddy next to
-# browser chrome, a hint of blue does not.
-GRAY_TINT = (0.962, 0.984, 1.054)
-
-MONOCHROME = (33, 33, 33)
-
 # Gear geometry, measured off brand/logo.png and expressed against a 64x64
 # viewBox. Radii are from the centre; the tooth angle is the half-width of a
 # tooth measured at its mid radius.
@@ -53,12 +42,9 @@ GEAR = {
     "corner_radius": 2.22,
 }
 
-# Vertical gradients approximating the shading of the raster logo. Monochrome
-# is deliberately flat -- it exists to be a silhouette.
+# Vertical gradient approximating the shading of the raster logo.
 FILLS = {
     "color": ("#b8e63c", "#86c21f"),
-    "gray": ("#c3c7d3", "#9aa0b0"),
-    "monochrome": ("#212121", "#212121"),
 }
 
 
@@ -69,22 +55,6 @@ def load_source() -> Image.Image:
         raise SystemExit(f"expected a square logo, got {image.width}x{image.height}")
 
     return image
-
-
-def to_gray(image: Image.Image) -> Image.Image:
-    """Desaturate by luminance, then re-tint. Alpha is preserved untouched."""
-    luminance = image.convert("L")
-    red, green, blue = (luminance.point(lambda value, f=f: min(255, round(value * f))) for f in GRAY_TINT)
-
-    return Image.merge("RGBA", (red, green, blue, image.getchannel("A")))
-
-
-def to_monochrome(image: Image.Image) -> Image.Image:
-    """Flat silhouette -- the alpha channel is the only thing carried over."""
-    silhouette = Image.new("RGBA", image.size, (*MONOCHROME, 0))
-    silhouette.putalpha(image.getchannel("A"))
-
-    return silhouette
 
 
 def write_variant(name: str, image: Image.Image) -> None:
@@ -154,8 +124,6 @@ def main() -> None:
     print(f"source: {SOURCE.relative_to(ROOT)} ({source.width}x{source.height})")
 
     write_variant("color", source)
-    write_variant("gray", to_gray(source))
-    write_variant("monochrome", to_monochrome(source))
 
     for variant in FILLS:
         write_svg(variant)

@@ -17,9 +17,6 @@
   "add": {
     "message": "Adicionar"
   },
-  "advanced": {
-    "message": "Avançado"
-  },
   "alt": {
     "message": "Alt"
   },
@@ -107,9 +104,6 @@
   "general": {
     "message": "Geral"
   },
-  "gray": {
-    "message": "Cinza"
-  },
   "heading": {
     "message": "Título"
   },
@@ -121,9 +115,6 @@
   },
   "host": {
     "message": "Host"
-  },
-  "icons": {
-    "message": "Ícones"
   },
   "id": {
     "message": "Id"
@@ -167,9 +158,6 @@
   "miscellaneous": {
     "message": "Diversos"
   },
-  "monochrome": {
-    "message": "Monocromático"
-  },
   "name": {
     "message": "Nome"
   },
@@ -203,9 +191,6 @@
   "resize": {
     "message": "Redimensionar"
   },
-  "responsive": {
-    "message": "Responsivo"
-  },
   "ruler": {
     "message": "Régua"
   },
@@ -235,6 +220,9 @@
   },
   "themeSystem": {
     "message": "Igual ao sistema"
+  },
+  "windowSizes": {
+    "message": "Tamanhos de Janela"
   },
   "tools": {
     "message": "Ferramentas"
@@ -1268,9 +1256,6 @@
   "descriptionPlaceholder": {
     "message": "Digite uma descrição"
   },
-  "displayOverlayWith": {
-    "message": "Exibir a sobreposição com"
-  },
   "dragDropReorder": {
     "message": "Arraste e solte para reordenar."
   },
@@ -1285,12 +1270,6 @@
   },
   "heightPlaceholder": {
     "message": "Digite a altura em pixels"
-  },
-  "iconsText": {
-    "message": "Ícones e texto"
-  },
-  "overlayIcon": {
-    "message": "Ícone de sobreposição"
   },
   "populateEmailAddress": {
     "message": "Endereço de e-mail a ser usado para preencher campos de formulário de e-mail"
