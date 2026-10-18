@@ -33,6 +33,11 @@
 
 ## English
 
+> [!WARNING]
+> There is no signed Firefox `.xpi` yet — it comes with the addons.mozilla.org listing. Until
+> then Firefox loads WebDev from the zip in [Releases](../../releases) as a temporary add-on,
+> which lasts until Firefox restarts.
+
 Click the toolbar button and you get some 120 tools for the page in front of you: outline
 and inspect elements, switch styles off, edit CSS live, fill and unlock forms, find broken
 images, read cookies and response headers, resize the window to a device, and much more.
@@ -61,10 +66,10 @@ images, read cookies and response headers, resize the window to a device, and mu
 
 ### Install
 
-| Browser            | Link                                                                                                             |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| Chrome / Edge 111+ | Download the zip from [Releases](../../releases), unzip → `chrome://extensions` → Developer mode → Load unpacked |
-| Firefox 128+       | Download the `.xpi` from [Releases](../../releases) and drag it into any Firefox window                          |
+| Browser            | Link                                                                                                                                              |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Chrome / Edge 111+ | Download the zip from [Releases](../../releases), unzip → `chrome://extensions` → Developer mode → Load unpacked                                  |
+| Firefox 128+       | Download the Firefox zip from [Releases](../../releases), unzip → `about:debugging` → This Firefox → Load Temporary Add-on → pick `manifest.json` |
 
 > [!TIP]
 > Firefox has its own JSON viewer, which takes JSON pages first. To open them in WebDev's
@@ -103,6 +108,14 @@ Load unpacked from `.output/chrome-mv3` (`chrome://extensions`, Developer mode �
 unpacked) or `.output/firefox-mv3` (`about:debugging` → This Firefox → Load Temporary
 Add-on → pick `manifest.json`).
 
+To release, bump `version` in `package.json`, commit, and push a matching tag. The
+[Release workflow](.github/workflows/release.yml) checks, builds and publishes both zips:
+
+```bash
+git tag v1.0.1
+git push --tags
+```
+
 ### Project layout
 
 - `src/entrypoints/` — WXT entrypoints: popup, options, about, the JSON viewer, the report
@@ -138,6 +151,11 @@ WebDev is not endorsed by or affiliated with him; see [notice.md](notice.md).
 
 ## Русский
 
+> [!WARNING]
+> Подписанного `.xpi` для Firefox пока нет — он появится вместе с публикацией на
+> addons.mozilla.org. До тех пор Firefox загружает WebDev из zip в [Releases](../../releases)
+> как временное дополнение, которое работает до перезапуска Firefox.
+
 Нажмите кнопку на панели — и у вас около 120 инструментов для открытой страницы: обвести и
 изучить элементы, отключить стили, править CSS вживую, заполнить и разблокировать формы,
 найти битые картинки, посмотреть cookies и заголовки ответа, подогнать окно под устройство и
@@ -168,10 +186,10 @@ WebDev is not endorsed by or affiliated with him; see [notice.md](notice.md).
 
 ### Установка
 
-| Браузер            | Ссылка                                                                                                                    |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| Chrome / Edge 111+ | Скачай zip из [Releases](../../releases), распакуй → `chrome://extensions` → Режим разработчика → Загрузить распакованное |
-| Firefox 128+       | Скачай `.xpi` из [Releases](../../releases) и перетащи файл в любое окно Firefox                                          |
+| Браузер            | Ссылка                                                                                                                                                      |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Chrome / Edge 111+ | Скачай zip из [Releases](../../releases), распакуй → `chrome://extensions` → Режим разработчика → Загрузить распакованное                                   |
+| Firefox 128+       | Скачай zip для Firefox из [Releases](../../releases), распакуй → `about:debugging` → Этот Firefox → Загрузить временное дополнение → выбери `manifest.json` |
 
 > [!TIP]
 > В Firefox есть свой просмотрщик JSON, который перехватывает JSON-страницы первым. Чтобы они
@@ -201,6 +219,14 @@ npm run build            # -> .output/chrome-mv3
 npm run build:firefox    # -> .output/firefox-mv3
 npm run zip              # zip для Chrome Web Store
 npm run zip:firefox      # zip для AMO
+```
+
+Для релиза поднимите `version` в `package.json`, закоммитьте и запушьте тег с той же версией.
+[Release workflow](.github/workflows/release.yml) проверит, соберёт и опубликует оба zip:
+
+```bash
+git tag v1.0.1
+git push --tags
 ```
 
 ### Лицензия

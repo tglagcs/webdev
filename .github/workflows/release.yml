@@ -1,0 +1,93 @@
+name: Release
+
+# Builds the Chrome and Firefox packages and publishes them as a GitHub Release.
+# Fires when you push a version tag (bump "version" in package.json, commit, then
+# `git tag v1.0.1 && git push --tags`), or manually from the Actions tab, which
+# tags the current commit with the version in package.json.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write # needed to create the release and upload assets
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: v
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+          echo "Building WebDev v$version"
+
+      # The manifest's version comes from package.json, so a tag that says
+      # otherwise would publish packages whose version disagrees with the
+      # release they are attached to.
+      - name: Tag must match package.json
+        if: github.ref_type == 'tag'
+        run: |
+          if [ "$GITHUB_REF_NAME" != "${{ steps.v.outputs.tag }}" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match package.json (${{ steps.v.outputs.tag }})"
+            exit 1
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The same checks as CI, so a release cannot ship what CI would reject.
+      - name: Check
+        run: |
+          npm run lint
+          npm run typecheck
+          npx prettier --check .
+          npm test
+          python tools/check-locales.py
+          python tools/generate-i18n-keys.py --check
+          python tools/check-injected-closures.py
+
+      # Each zip is the unpacked build folder, manifest.json at its root.
+      - name: Build packages
+        run: |
+          npx wxt zip
+          npx wxt zip -b firefox
+          ls -la .output/*.zip
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.v.outputs.version }}
+          TAG: ${{ steps.v.outputs.tag }}
+        run: |
+          cat > notes.md <<EOF
+          Web developer tools for Chrome, Edge and Firefox.
+
+          **Downloads** (see assets below):
+          - \`webdev-${VERSION}-chrome.zip\` — Chrome / Edge 111+. Unzip, open \`chrome://extensions\`, turn on Developer mode, **Load unpacked** and pick the unzipped folder.
+          - \`webdev-${VERSION}-firefox.zip\` — Firefox 128+. Unzip, open \`about:debugging#/runtime/this-firefox\`, **Load Temporary Add-on** and pick \`manifest.json\` in the unzipped folder.
+
+          > No signed \`.xpi\` yet: until WebDev is on addons.mozilla.org, Firefox loads it as a temporary add-on, which lasts until Firefox restarts.
+          EOF
+
+          # A manual run tags the commit it was started on; a tag push already has one.
+          gh release create "$TAG" \
+            ".output/webdev-${VERSION}-chrome.zip" \
+            ".output/webdev-${VERSION}-firefox.zip" \
+            --title "WebDev $TAG" \
+            --notes-file notes.md \
+            --target "$GITHUB_SHA"
