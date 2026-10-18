@@ -42,6 +42,9 @@ Click the toolbar button and you get some 120 tools for the page in front of you
 and inspect elements, switch styles off, edit CSS live, fill and unlock forms, find broken
 images, read cookies and response headers, resize the window to a device, and much more.
 
+![Popup — Search over every tool, with favorites](docs/popup.png)
+![Options — theme, language, JSON viewer and syntax highlighting](docs/settings.png)
+
 ### Features
 
 - **Search first** — the popup opens on a search box over every tool; type a few letters,
@@ -160,6 +163,9 @@ WebDev is not endorsed by or affiliated with him; see [notice.md](notice.md).
 изучить элементы, отключить стили, править CSS вживую, заполнить и разблокировать формы,
 найти битые картинки, посмотреть cookies и заголовки ответа, подогнать окно под устройство и
 многое другое.
+
+![Попап — поиск по всем инструментам и избранное](docs/popup.png)
+![Настройки — тема, язык, просмотр JSON и подсветка синтаксиса](docs/settings.png)
 
 ### Возможности
 
