@@ -42,8 +42,12 @@ Click the toolbar button and you get some 120 tools for the page in front of you
 and inspect elements, switch styles off, edit CSS live, fill and unlock forms, find broken
 images, read cookies and response headers, resize the window to a device, and much more.
 
-![Popup — Search over every tool, with favorites](docs/popup.png)
-![Options — theme, language, JSON viewer and syntax highlighting](docs/settings.png)
+<table>
+  <tr>
+    <td width="25%"><img src="docs/popup.png" alt="Popup"></td>
+    <td width="25%"><img src="docs/settings.png" alt="Settings"></td>
+  </tr>
+</table>
 
 ### Features
 
