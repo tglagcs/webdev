@@ -168,8 +168,12 @@ WebDev is not endorsed by or affiliated with him; see [notice.md](notice.md).
 найти битые картинки, посмотреть cookies и заголовки ответа, подогнать окно под устройство и
 многое другое.
 
-![Попап — поиск по всем инструментам и избранное](docs/popup.png)
-![Настройки — тема, язык, просмотр JSON и подсветка синтаксиса](docs/settings.png)
+<table>
+  <tr>
+    <td width="25%"><img src="docs/popup.png" alt="Popup"></td>
+    <td width="25%"><img src="docs/settings.png" alt="Settings"></td>
+  </tr>
+</table>
 
 ### Возможности
 
