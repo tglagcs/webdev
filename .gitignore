@@ -17,3 +17,7 @@ playwright-report/
 
 # Real-engine extractor harness output.
 .harness/
+
+# Self-distribution build/source zips submitted to AMO for review; the signed
+# `webdev-<version>-firefox.xpi` AMO hands back is tracked, these aren't.
+/webdev-*.zip

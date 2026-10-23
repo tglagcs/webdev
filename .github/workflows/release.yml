@@ -68,26 +68,61 @@ jobs:
           npx wxt zip -b firefox
           ls -la .output/*.zip
 
+      # AMO signing happens outside CI, after Mozilla reviews a submission.
+      # Once it approves a version, download the signed .xpi and commit it at
+      # the repo root as `webdev-<version>-firefox.xpi` before tagging (or
+      # push it later and re-run this workflow against the existing tag).
+      # Its absence is not an error -- a version still in review just ships
+      # without it.
+      - name: Locate signed Firefox xpi
+        id: xpi
+        run: |
+          file="webdev-${{ steps.v.outputs.version }}-firefox.xpi"
+          if [ -f "$file" ]; then
+            echo "path=$file" >> "$GITHUB_OUTPUT"
+          else
+            echo "path=" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Create release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ steps.v.outputs.version }}
           TAG: ${{ steps.v.outputs.tag }}
+          XPI: ${{ steps.xpi.outputs.path }}
         run: |
           cat > notes.md <<EOF
           Web developer tools for Chrome, Edge and Firefox.
 
           **Downloads** (see assets below):
           - \`webdev-${VERSION}-chrome.zip\` — Chrome / Edge 111+. Unzip, open \`chrome://extensions\`, turn on Developer mode, **Load unpacked** and pick the unzipped folder.
-          - \`webdev-${VERSION}-firefox.zip\` — Firefox 128+. Unzip, open \`about:debugging#/runtime/this-firefox\`, **Load Temporary Add-on** and pick \`manifest.json\` in the unzipped folder.
-
-          > No signed \`.xpi\` yet: until WebDev is on addons.mozilla.org, Firefox loads it as a temporary add-on, which lasts until Firefox restarts.
+          - \`webdev-${VERSION}-firefox.zip\` — Firefox 128+, unsigned. Unzip, open \`about:debugging#/runtime/this-firefox\`, **Load Temporary Add-on** and pick \`manifest.json\` in the unzipped folder.
           EOF
+          if [ -n "$XPI" ]; then
+            cat >> notes.md <<EOF
+          - \`$(basename "$XPI")\` — signed by Mozilla. Install permanently from [addons.mozilla.org](https://addons.mozilla.org/ru/firefox/addon/webdev/), or open this file directly in Firefox.
+          EOF
+          else
+            cat >> notes.md <<'EOF'
 
-          # A manual run tags the commit it was started on; a tag push already has one.
-          gh release create "$TAG" \
-            ".output/webdev-${VERSION}-chrome.zip" \
-            ".output/webdev-${VERSION}-firefox.zip" \
-            --title "WebDev $TAG" \
-            --notes-file notes.md \
-            --target "$GITHUB_SHA"
+          > No signed `.xpi` for this version yet: until AMO review finishes, Firefox loads WebDev from the zip above as a temporary add-on, which lasts until Firefox restarts.
+          EOF
+          fi
+
+          assets=(".output/webdev-${VERSION}-chrome.zip" ".output/webdev-${VERSION}-firefox.zip")
+          [ -n "$XPI" ] && assets+=("$XPI")
+
+          # Idempotent: re-running this workflow for a tag that already has a
+          # release (e.g. to attach the xpi once AMO approves a version
+          # released earlier) uploads over it instead of failing on "release
+          # already exists". A manual run tags the commit it was started on;
+          # a tag push already has one.
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "${assets[@]}" --clobber
+            gh release edit "$TAG" --notes-file notes.md
+          else
+            gh release create "$TAG" "${assets[@]}" \
+              --title "WebDev $TAG" \
+              --notes-file notes.md \
+              --target "$GITHUB_SHA"
+          fi

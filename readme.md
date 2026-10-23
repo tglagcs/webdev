@@ -21,6 +21,8 @@
 > Modern **Manifest V3** fork of [chrispederick/web-developer](https://github.com/chrispederick/web-developer),
 > rebuilt with TypeScript, Svelte and [WXT](https://wxt.dev).
 
+<a href="https://addons.mozilla.org/ru/firefox/addon/webdev/"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="42"></a>
+
 </div>
 
 <div align="center">
@@ -33,10 +35,10 @@
 
 ## English
 
-> [!WARNING]
-> There is no signed Firefox `.xpi` yet — it comes with the addons.mozilla.org listing. Until
-> then Firefox loads WebDev from the zip in [Releases](../../releases) as a temporary add-on,
-> which lasts until Firefox restarts.
+> [!NOTE]
+> WebDev is live on [addons.mozilla.org](https://addons.mozilla.org/ru/firefox/addon/webdev/) —
+> install it there for a permanent, signed copy. The zip in [Releases](../../releases) is still
+> there for Chrome/Edge, and as a Firefox temporary add-on.
 
 Click the toolbar button and you get some 120 tools for the page in front of you: outline
 and inspect elements, switch styles off, edit CSS live, fill and unlock forms, find broken
@@ -73,15 +75,19 @@ images, read cookies and response headers, resize the window to a device, and mu
 
 ### Install
 
-| Browser            | Link                                                                                                                                              |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Chrome / Edge 111+ | Download the zip from [Releases](../../releases), unzip → `chrome://extensions` → Developer mode → Load unpacked                                  |
-| Firefox 128+       | Download the Firefox zip from [Releases](../../releases), unzip → `about:debugging` → This Firefox → Load Temporary Add-on → pick `manifest.json` |
+| Browser            | Link                                                                                                             |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| Firefox            | [addons.mozilla.org/firefox/addon/webdev](https://addons.mozilla.org/ru/firefox/addon/webdev/)                   |
+| Chrome / Edge 111+ | Download the zip from [Releases](../../releases), unzip → `chrome://extensions` → Developer mode → Load unpacked |
 
 > [!TIP]
 > Firefox has its own JSON viewer, which takes JSON pages first. To open them in WebDev's
 > viewer instead, set `devtools.jsonview.enabled` to `false` in `about:config`. The popup's
 > **View JSON** works either way.
+>
+> The signed `.xpi` from [Releases](../../releases) and the unsigned Firefox zip (unzip, then
+> `about:debugging` → This Firefox → Load Temporary Add-on → pick `manifest.json`) still work
+> too, if you'd rather not go through AMO.
 
 ### Develop
 
@@ -158,10 +164,10 @@ WebDev is not endorsed by or affiliated with him; see [notice.md](notice.md).
 
 ## Русский
 
-> [!WARNING]
-> Подписанного `.xpi` для Firefox пока нет — он появится вместе с публикацией на
-> addons.mozilla.org. До тех пор Firefox загружает WebDev из zip в [Releases](../../releases)
-> как временное дополнение, которое работает до перезапуска Firefox.
+> [!NOTE]
+> WebDev уже доступен на [addons.mozilla.org](https://addons.mozilla.org/ru/firefox/addon/webdev/) —
+> ставьте оттуда для постоянной подписанной копии. Zip в [Releases](../../releases) остаётся
+> для Chrome/Edge и как временное дополнение для Firefox.
 
 Нажмите кнопку на панели — и у вас около 120 инструментов для открытой страницы: обвести и
 изучить элементы, отключить стили, править CSS вживую, заполнить и разблокировать формы,
@@ -200,15 +206,19 @@ WebDev is not endorsed by or affiliated with him; see [notice.md](notice.md).
 
 ### Установка
 
-| Браузер            | Ссылка                                                                                                                                                      |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Chrome / Edge 111+ | Скачай zip из [Releases](../../releases), распакуй → `chrome://extensions` → Режим разработчика → Загрузить распакованное                                   |
-| Firefox 128+       | Скачай zip для Firefox из [Releases](../../releases), распакуй → `about:debugging` → Этот Firefox → Загрузить временное дополнение → выбери `manifest.json` |
+| Браузер            | Ссылка                                                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| Firefox            | [addons.mozilla.org/ru/firefox/addon/webdev](https://addons.mozilla.org/ru/firefox/addon/webdev/)                         |
+| Chrome / Edge 111+ | Скачай zip из [Releases](../../releases), распакуй → `chrome://extensions` → Режим разработчика → Загрузить распакованное |
 
 > [!TIP]
 > В Firefox есть свой просмотрщик JSON, который перехватывает JSON-страницы первым. Чтобы они
 > открывались в WebDev, выставьте `devtools.jsonview.enabled` в `false` в `about:config`.
 > Пункт **Просмотр JSON** в попапе работает в любом случае.
+>
+> Подписанный `.xpi` из [Releases](../../releases) и обычный zip для Firefox (распакуй →
+> `about:debugging` → Этот Firefox → Загрузить временное дополнение → выбери `manifest.json`)
+> тоже работают, если не хочется через AMO.
 
 ### Разработка
 
