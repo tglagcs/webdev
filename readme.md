@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1><img src="src/public/img/logos/color/128.png" alt="" height="45" align="top"> WebDev &nbsp; <a href="https://addons.mozilla.org/ru/firefox/addon/webdev/"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="42"></a></h1>
+<h1><img src="src/public/img/logos/color/128.png" alt="" height="45" align="top"> WebDev&nbsp;<a href="https://addons.mozilla.org/ru/firefox/addon/webdev/"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" height="42"></a></h1>
 
 <a href="#english"><img src="https://img.shields.io/badge/version-1.0.1-0097FF?style=flat-square" alt="Version"></a>
 <a href="license.txt"><img src="https://img.shields.io/badge/license-GPL--3.0-0097FF?style=flat-square" alt="License: GPL-3.0"></a>
